@@ -22,7 +22,8 @@ const formatResponse = (resp) => {
 const getLineups = async () => {
   let projectedLineups = [];
 
-  const dates = dateHelper.getTodayAndXMore(3);
+  const totalDatesToGet = 4;
+  const dates = dateHelper.getTodayAndXMore(totalDatesToGet);
 
   let requestPromises = [];
   dates.forEach((date) => {
