@@ -6,12 +6,15 @@ router.get('/:foo/:bar', (req, res) => {
   const fooValue = req.params.foo;
   const barValue = req.params.bar;
   // check if the cached data is available
-  const cachedData = cacheManager.getFromCache('team-stats');
-  if (cachedData) {
+  const teamStats = cacheManager.getFromCache('team-stats');
+  const projectedLineups = cacheManager.getFromCache('projected-lineups');
+  if (teamStats) {
     // use the cached data to get free agents
-    const freeAgents = cachedData;
+
     res.send(
-      `Free agents for foo=${fooValue} and bar=${barValue}: ${freeAgents}`
+      `Free agents for foo=${fooValue} and bar=${barValue}: Team Stats: ${JSON.stringify(
+        teamStats
+      )} and Projected Lineups: ${JSON.stringify(projectedLineups)}`
     );
   } else {
     res.send('Data not available. Please try again later.');

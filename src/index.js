@@ -4,6 +4,7 @@ const app = express();
 
 // import the team stats cacher
 const teamStatsRefresher = require('./team-stats/team-stats-refresher');
+const projectedLineupRefresher = require('./projected-lineups/projected-lineup-refresher');
 
 // import the controllers
 const freeAgentsController = require('./controllers/freeAgentsController');
