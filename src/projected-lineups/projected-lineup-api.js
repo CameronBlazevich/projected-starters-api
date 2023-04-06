@@ -16,12 +16,9 @@ const formatResponse = (resp) => {
   };
 
   return formatted;
-  // console.log(formatted);
 };
 
 const getLineups = async () => {
-  let projectedLineups = [];
-
   const totalDatesToGet = 4;
   const dates = dateHelper.getTodayAndXMore(totalDatesToGet);
 
@@ -61,7 +58,6 @@ const getLineups = async () => {
   const completedRequestPromises = await Promise.all(requestPromises);
 
   const result = completedRequestPromises;
-  // const result = await makeAPIRequest(filter);
   return result;
 };
 
