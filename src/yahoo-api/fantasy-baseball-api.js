@@ -63,7 +63,7 @@ async function getCredentials(userId) {
   try {
     const credentials = await credentialManager.getCredentials(USER_ID);
 
-    console.log(`Found credentials in db: ${credentials}`);
+    // console.log(`Found credentials in db: ${JSON.stringify(credentials)}`);
 
     return credentials;
     // Use the credentials to make API calls
@@ -127,12 +127,6 @@ exports.yfbb = {
     return `${this.YAHOO}/users;use_login=1/games`;
   },
   statsID() {
-    const fs = require('fs');
-    const qs = require('qs');
-    const axios = require('axios');
-    const parser = require('xml2json');
-    const CONFIG = require('../config.json');
-
     return `${this.YAHOO}/game/${CONFIG.LEAGUE_KEY.substr(
       0,
       3
@@ -181,10 +175,10 @@ exports.yfbb = {
 
   // Hit the Yahoo Fantasy API
   async makeAPIrequest(url) {
-    const credentials = getCredentials();
-    console.log(
-      `Making API request with credentials: ${JSON.stringify(credentials)}`
-    );
+    const credentials = await getCredentials();
+    // console.log(
+    //   `Making API request with credentials: ${JSON.stringify(credentials)}`
+    // );
 
     let response;
     try {
