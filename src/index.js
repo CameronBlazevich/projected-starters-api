@@ -1,5 +1,9 @@
 // import the express module and create an express app
 const express = require('express');
+
+const database = require('./database/initialize-database');
+database.init();
+
 const app = express();
 
 // import the team stats cacher
