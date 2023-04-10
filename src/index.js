@@ -1,10 +1,13 @@
 // import the express module and create an express app
 const express = require('express');
 
+const cors = require('cors')
+
 const database = require('./database/initialize-database');
 database.init();
 
 const app = express();
+app.use(cors());
 
 // import the team stats cacher
 const teamStatsRefresher = require('./team-stats/team-stats-refresher');
