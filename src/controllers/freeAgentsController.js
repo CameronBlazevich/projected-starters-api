@@ -28,18 +28,19 @@ router.get('/:foo/:bar', async (req, res) => {
     teamStats
   );
 
-  if (teamStats) {
+  if (combined) {
     // use the cached data to get free agents
 
     res.send(
+      combined
       // `Free agents for foo=${fooValue} and bar=${barValue}: FreeAgents: ${JSON.stringify(
       //   freeAgentsDTO
       // )} Team Stats: ${JSON.stringify(
       //   teamStats
       // )} and Projected Lineups: ${JSON.stringify(projectedLineups)}`
-      `Free agents that are starting: ${JSON.stringify(
-        combined
-      )}. Team Stats: ${JSON.stringify(teamStats)}`
+      //   `Free agents that are starting: ${JSON.stringify(
+      //     combined
+      //   )}. Team Stats: ${JSON.stringify(teamStats)}`
     );
   } else {
     res.send('Data not available. Please try again later.');
