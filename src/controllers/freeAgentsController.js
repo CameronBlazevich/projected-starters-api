@@ -29,8 +29,6 @@ router.get('/:foo/:bar', async (req, res) => {
   );
 
   if (combined) {
-    // use the cached data to get free agents
-
     res.send(
       combined
       // `Free agents for foo=${fooValue} and bar=${barValue}: FreeAgents: ${JSON.stringify(
