@@ -3,7 +3,7 @@ function getTodayAndXMore(numberToGet) {
   let nextDate = new Date(today);
 
   let formattedDates = [];
-  for (let i = 0; i < numberToGet; i++) {
+  for (let i = 1; i <= numberToGet; i++) {
     nextDate.setDate(today.getDate() + i);
     const formattedDate = nextDate.toISOString().slice(0, 10);
     formattedDates.push(formattedDate);

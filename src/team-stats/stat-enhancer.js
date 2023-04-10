@@ -7,20 +7,20 @@ const rawStatsExample = [
 
 function addRankings(arr) {
   const sortedByRuns = [...arr].sort((a, b) => b.runsScored - a.runsScored);
-  const sortedByStrikeouts = [...arr].sort(
+
+  for (let i = 0; i < sortedByRuns.length; i++) {
+    sortedByRuns[i].runsRank = i + 1;
+  }
+
+  const sortedByStrikeouts = [...sortedByRuns].sort(
     (a, b) => b.strikeouts - a.strikeouts
   );
 
-  const rankings = sortedByRuns.map((item, index) => {
-    const itemWithRunsRank = { ...item, runsRank: index + 1 };
-    const matchingItem = sortedByStrikeouts.find(
-      (element) => element.teamAbbr === item.teamAbbr
-    );
-    const strikeoutsRank = sortedByStrikeouts.indexOf(matchingItem) + 1;
-    return { ...itemWithRunsRank, strikeoutsRank };
-  });
+  for (let i = 0; i < sortedByStrikeouts.length; i++) {
+    sortedByStrikeouts[i].strikeoutsRank = i + 1;
+  }
 
-  return rankings;
+  return sortedByStrikeouts;
 }
 
 function enhance(teamStats) {

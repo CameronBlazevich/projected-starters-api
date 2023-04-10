@@ -1,44 +1,53 @@
-function convertPitchers(arr, teamStats) {
-  return arr.map((obj) => {
-    const games = obj.games.map((game) => {
-      const updatedGame = {};
-      if (game.awayPitcher !== null) {
-        const opposingTeam = teamStats.find(
-          (team) => team.teamAbbr === game.homeTeam
-        );
-        updatedGame.awayPitcher = {
-          name: game.awayPitcher,
-          opposingTeam: opposingTeam,
-        };
-      }
-      if (game.homePitcher !== null) {
-        const opposingTeam = teamStats.find(
-          (team) => team.teamAbbr === game.awayTeam
-        );
-        updatedGame.homePitcher = {
-          name: game.homePitcher,
-          opposingTeam: opposingTeam,
-        };
-      }
-      return Object.assign({}, game, updatedGame);
-    });
-    return Object.assign({}, obj, { games });
-  });
+// function convertPitchers(arr, teamStats) {
+//   return arr.map((obj) => {
+//     const games = obj.games.map((game) => {
+//       const updatedGame = {};
+//       if (game.awayPitcher) {
+//         const opposingTeam = teamStats.find(
+//           (team) => team.teamAbbr === game.homeTeam
+//         );
+//         updatedGame.awayPitcher = {
+//           name: game.awayPitcher.name,
+//           opposingTeam: opposingTeam,
+//         };
+//       }
+//       if (game.homePitcher) {
+//         const opposingTeam = teamStats.find(
+//           (team) => team.teamAbbr === game.awayTeam
+//         );
+//         updatedGame.homePitcher = {
+//           name: game.homePitcher.name,
+//           opposingTeam: opposingTeam,
+//         };
+//       }
+//       return Object.assign({}, game, updatedGame);
+//     });
+//     return Object.assign({}, obj, { games });
+//   });
+// }
+
+function getTeamStats(abbr, teamStats) {
+  const stats = teamStats.find((team) => team.teamAbbr === abbr);
+  if (stats) {
+    return stats;
+  }
+  console.log(`No stats for ${abbr}`);
+  return {};
 }
 
-function extractGameDates(arr) {
+function extractGameDates(arr, teamStats) {
   const result = [];
   arr.forEach((subArr) => {
     subArr.forEach((game) => {
       const gameDate = game.gameDate.split(',')[0]; // extract just the date
       const gameObj = {
         // create object with just the necessary data
-        awayTeam: game.awayTeam,
-        homeTeam: game.homeTeam,
+        awayTeam: getTeamStats(game.awayTeam, teamStats),
+        homeTeam: getTeamStats(game.homeTeam, teamStats),
         awayPitcher: game.awayPitcher,
         homePitcher: game.homePitcher,
       };
-      if (Object.values(gameObj).some((val) => val)) {
+      if (gameObj.awayPitcher || gameObj.homePitcher) {
         // check if gameObj contains at least one non-empty value
         let gameDateObj = result.find((obj) => obj.gameDate === gameDate); // check if gameDate already exists in result array
         if (!gameDateObj) {
@@ -107,7 +116,10 @@ function combineMatchupsAndFreeAgents(
     combinedData.push(dailyData);
   }
   // Return the combined data array
-  const result = convertPitchers(extractGameDates(combinedData), teamStats);
+  const result = //convertPitchers(
+    extractGameDates(combinedData, teamStats);
+  //  teamStats
+  //);
   // replaceOpposingTeams(result, teamStats);
   return result;
 }
