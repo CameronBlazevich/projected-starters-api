@@ -83,7 +83,7 @@ function combineMatchupsAndFreeAgents(
   const combinedData = [];
 
   // Loop through each game in the projected matchups
-  for (let i = 0; i < projectedMatchups.length; i++) {
+  for (let i = 0; i < projectedMatchups?.length; i++) {
     const dailyData = [];
     for (const game of projectedMatchups[i].games) {
       // Check if there is a matching free agent for the away pitcher
