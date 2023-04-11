@@ -58,6 +58,7 @@ router.post("/", async (req, res) => {
                     );
 
                     user.Token = token;
+                    user.email = email;
 
                 });
             }
