@@ -176,9 +176,6 @@ exports.yfbb = {
   // Hit the Yahoo Fantasy API
   async makeAPIrequest(url) {
     const credentials = await getCredentials();
-    // console.log(
-    //   `Making API request with credentials: ${JSON.stringify(credentials)}`
-    // );
 
     let response;
     try {
@@ -211,12 +208,6 @@ exports.yfbb = {
             newToken.data.refresh_token
           );
 
-          // KEEP THIS HERE TEMPORARILY UNTIL I FIGURE OUT WHAT FORMAT TO STORE CREDS IN
-          // this.writeToFile(
-          //   JSON.stringify(newToken.data),
-          //   CONFIG.AUTH_FILE,
-          //   'w'
-          // );
           return this.makeAPIrequest(
             url,
             newToken.data.access_token,
@@ -228,7 +219,7 @@ exports.yfbb = {
           `Error with credentials in makeAPIrequest()/refreshAuthorizationToken(): ${err}`
         );
       }
-      return err;
+      throw err;
     }
   },
 
@@ -333,7 +324,7 @@ exports.yfbb = {
       return results.fantasy_content.league.current_week;
     } catch (err) {
       console.error(`Error in getCurrentWeek(): ${err}`);
-      return err;
+      throw err;
     }
   },
 

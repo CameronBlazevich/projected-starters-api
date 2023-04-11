@@ -15,8 +15,12 @@ router.get('/:foo/:bar', async (req, res) => {
   const projectedLineups = cacheManager.getFromCache('projected-lineups');
 
   //temp
+  try {
+    console.log(`Getting current week...`);
   yahooApi.yfbb.WEEK = await yahooApi.yfbb.getCurrentWeek();
-  console.log(`Getting current week...`);
+  } catch (err) {
+    return res.status(400).send("Couldn't authenticate with Yahoo")
+  }
 
   const freeAgents = await yahooApi.yfbb.getFreeAgents();
 
