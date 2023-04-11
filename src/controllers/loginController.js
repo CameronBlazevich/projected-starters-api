@@ -17,7 +17,6 @@ router.post('/', async (req, res) => {
 
   try {      
     const { email, password } = req.body;
-    // console.log(Email, Password)
         // Make sure there is an Email and Password in the request
         if (!(email && password)) {
             return res.status(400).send("All input is required");
