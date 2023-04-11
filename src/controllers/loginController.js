@@ -46,7 +46,7 @@ router.post('/', async (req, res) => {
             if(PHash === user[0].Password) {
                 // * CREATE JWT TOKEN
                 const token = jwt.sign(
-                    { user_id: user[0].Id, Email: email },
+                    { user_id: user[0].Id, email: email },
                       process.env.TOKEN_KEY,
                     {
                       expiresIn: "1h", // 60s = 60 seconds - (60m = 60 minutes, 2h = 2 hours, 2d = 2 days)
