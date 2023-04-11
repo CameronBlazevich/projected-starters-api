@@ -20,7 +20,7 @@ router.post("/", async (req, res) => {
             return;
         }
         let userExists = false;
-        let user={};
+        let user = {};
 
 
         var sql = "SELECT * FROM Users WHERE Email = ?"
@@ -48,17 +48,34 @@ router.post("/", async (req, res) => {
                         res.status(400).json({ "error": err.message })
                         return;
                     }
+                });
+
+                let created = [];
+                var sql = "SELECT * FROM Users WHERE Email = ?";
+                db.all(sql, email, function (err, rows) {
+                    if (err) {
+                        res.status(400).json({ "error": err.message })
+                        return;
+                    }
+
+                    rows.forEach(function (row) {
+                        created.push(row);
+                    })
+
+
                     // * CREATE JWT TOKEN
                     const token = jwt.sign(
-                        { user_id: user.Id, email: user.email },
+                        { user_id: created[0].Id, email: email },
                         process.env.TOKEN_KEY,
                         {
                             expiresIn: "1h", // 60s = 60 seconds - (60m = 60 minutes, 2h = 2 hours, 2d = 2 days)
                         }
                     );
 
-                    user.Token = token;
-                    user.email = email;
+                    created[0].Token = token;
+
+                    user = created[0]
+
 
                 });
             }

@@ -59,7 +59,7 @@ router.post('/', async (req, res) => {
                 return res.status(400).send("No Match");          
             }
 
-           return res.status(200).send(user);                
+           return res.status(200).send(user[0]);                
         });	
     
     } catch (err) {
