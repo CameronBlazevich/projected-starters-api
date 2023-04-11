@@ -27,7 +27,16 @@
 // }
 
 function getTeamStats(abbr, teamStats) {
-  const stats = teamStats.find((team) => team.teamAbbr === abbr);
+  const replaced = teamStats.map(team => {
+    if (team.teamAbbr === "AZ") {
+      team.teamAbbr = "ARI"
+    }
+    if (team.teamAbbr === "CWS") {
+      team.teamAbbr = "CHW"
+    }
+    return team;
+  })
+  const stats = replaced.find((team) => team.teamAbbr === abbr);
   if (stats) {
     return stats;
   }
@@ -40,10 +49,18 @@ function extractGameDates(arr, teamStats) {
   arr.forEach((subArr) => {
     subArr.forEach((game) => {
       const gameDate = game.gameDate.split(',')[0]; // extract just the date
+      let awayStats = {};
+      let homeStats = {};
+      if (game.awayTeam) {
+        awayStats = getTeamStats(game.awayTeam, teamStats);
+      }
+      if (game.homeTeam) {
+        homeStats = getTeamStats(game.homeTeam, teamStats);
+      }
       const gameObj = {
         // create object with just the necessary data
-        awayTeam: getTeamStats(game.awayTeam, teamStats),
-        homeTeam: getTeamStats(game.homeTeam, teamStats),
+        awayTeam: awayStats,
+        homeTeam: homeStats,
         awayPitcher: game.awayPitcher,
         homePitcher: game.homePitcher,
       };
@@ -82,7 +99,7 @@ function combineMatchupsAndFreeAgents(
   // Create a new array to store the combined data
   const combinedData = [];
 
-  console.log(`Returned ${projectedMatchups?.length}`)
+  // console.log(`Returned ${projectedMatchups?.length}`)
   // Loop through each game in the projected matchups
   for (let i = 0; i < projectedMatchups?.length; i++) {
     const dailyData = [];

@@ -2,13 +2,15 @@ const sqlite3 = require('sqlite3').verbose();
 const db = new sqlite3.Database('./my-database.db');
 
 // Function to store user credentials
-async function storeCredentials(userId, accessToken, refreshToken) {
+async function storeAuthCode(userId, authCode) {
   return new Promise((resolve, reject) => {
+    console.log(`Storing auth code for user: ${userId} code: ${authCode}`)
     db.run(
-      'INSERT OR REPLACE INTO user_credentials (user_id, access_token, refresh_token) VALUES (?, ?, ?)',
-      [userId, accessToken, refreshToken],
+      'INSERT OR REPLACE INTO user_yahoo_auth_code (user_id, yahoo_auth_code) VALUES (?, ?)',
+      [userId, authCode],
       function (err) {
         if (err) {
+            console.error(`Error store auth code ${err}`)
           reject(err);
         } else {
           resolve();
@@ -19,13 +21,13 @@ async function storeCredentials(userId, accessToken, refreshToken) {
 }
 
 // Function to retrieve user credentials
-async function getCredentials(userEmail) {
+async function getAuthCode(userEmail) {
   return new Promise((resolve, reject) => {
 
-    const sql = `SELECT uc.access_token, uc.refresh_token 
-                  FROM user_credentials uc
+    const sql = `SELECT uac.yahoo_auth_code
+                  FROM user_yahoo_auth_code uac
                   INNER JOIN users u
-                    ON u.Id = uc.user_id
+                    ON u.Id = uac.user_id
                   WHERE u.Email = ?`
 
     db.get(
@@ -36,7 +38,7 @@ async function getCredentials(userEmail) {
         if (err) {
           reject(err);
         } else if (!row) {
-          reject(new Error(`Credentials not found for user ${userEmail}`));
+          reject(new Error(`Yahoo Auth Code not found for user ${userEmail}`));
         } else {
           resolve(row);
         }
@@ -45,4 +47,4 @@ async function getCredentials(userEmail) {
   });
 }
 
-module.exports = { getCredentials, storeCredentials };
+module.exports = { getAuthCode, storeAuthCode };

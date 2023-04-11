@@ -3,6 +3,7 @@ const qs = require('qs');
 const axios = require('axios');
 const parser = require('xml2json');
 const CONFIG = require('../../config.json');
+const { getAuthCode } = require('../database/auth-code');
 
 const USER_ID = 1;
 
@@ -19,7 +20,7 @@ function getAuthEndpoint() {
   return `https://api.login.yahoo.com/oauth2/get_token`;
 }
 
-async function getInitialAuthorization() {
+async function getInitialAuthorization(userAuthCode) {
   console.log(`GettingCreds`);
   return axios({
     url: getAuthEndpoint(),
@@ -34,7 +35,7 @@ async function getInitialAuthorization() {
       client_id: CONFIG.CONSUMER_KEY,
       client_secret: CONFIG.CONSUMER_SECRET,
       redirect_uri: 'oob',
-      code: CONFIG.YAHOO_AUTH_CODE,
+      code: userAuthCode,
       grant_type: 'authorization_code',
     }),
   }).catch((err) => {
@@ -59,9 +60,9 @@ async function getInitialAuthorization() {
 }
 
 // Read the Yahoo OAuth credentials from the db
-async function getCredentials(userId) {
+async function getCredentials(user) {
   try {
-    const credentials = await credentialManager.getCredentials(USER_ID);
+    const credentials = await credentialManager.getCredentials(user.email);
 
     // console.log(`Found credentials in db: ${JSON.stringify(credentials)}`);
 
@@ -72,10 +73,14 @@ async function getCredentials(userId) {
     console.error(err);
     if (err.message.startsWith('Credentials not found')) {
       console.log('No creds found in db...');
-      const newToken = await getInitialAuthorization();
+      console.log('Does user have a YahooAuthCode?')
+      const userAuthCode = await getAuthCode(user.email);
+      console.log(`User Auth Code Found: ${JSON.stringify(userAuthCode)}`);
+
+      const newToken = await getInitialAuthorization(userAuthCode.yahoo_auth_code);
       if (newToken && newToken.data && newToken.data.access_token) {
         const newCreds = await credentialManager.storeCredentials(
-          USER_ID,
+          user.user_id,
           newToken.data.access_token,
           newToken.data.refresh_token
         );
@@ -85,7 +90,7 @@ async function getCredentials(userId) {
         // ...
       }
     } else {
-      console.error(`Error retrieving credentials for user ${userId}: ${err}`);
+      console.error(`Error retrieving credentials for user ${userEmail}: ${err}`);
       process.exit();
     }
   }
@@ -174,8 +179,8 @@ exports.yfbb = {
   },
 
   // Hit the Yahoo Fantasy API
-  async makeAPIrequest(url) {
-    const credentials = await getCredentials();
+  async makeAPIrequest(url, user) {
+    const credentials = await getCredentials(user);
 
     let response;
     try {
@@ -203,7 +208,7 @@ exports.yfbb = {
         );
         if (newToken && newToken.data && newToken.data.access_token) {
           await credentialManager.storeCredentials(
-            USER_ID,
+            user.user_id,
             newToken.data.access_token,
             newToken.data.refresh_token
           );
@@ -224,7 +229,7 @@ exports.yfbb = {
   },
 
   // Get a list of free agents
-  async getFreeAgents() {
+  async getFreeAgents(user) {
     try {
       const freeAgentLimit =
         CONFIG.FREE_AGENTS && /\d/.test(CONFIG.FREE_AGENTS)
@@ -234,7 +239,7 @@ exports.yfbb = {
 
       for (let i = 0; i <= freeAgentLimit; i++) {
         const reqUrl = this.freeAgents(i);
-        promises.push(this.makeAPIrequest(reqUrl));
+        promises.push(this.makeAPIrequest(reqUrl, user));
       }
       // const completedPromises = [];
       const completedPromises = await Promise.all(promises);
@@ -317,10 +322,10 @@ exports.yfbb = {
   },
 
   // Get what week it is in the season
-  async getCurrentWeek() {
+  async getCurrentWeek(user) {
     try {
-      console.log('Getting current week...');
-      const results = await this.makeAPIrequest(this.metadata());
+      console.log(`Getting current week for userId: ${user.user_id} email: ${user.email}`);
+      const results = await this.makeAPIrequest(this.metadata(), user);
       return results.fantasy_content.league.current_week;
     } catch (err) {
       console.error(`Error in getCurrentWeek(): ${err}`);

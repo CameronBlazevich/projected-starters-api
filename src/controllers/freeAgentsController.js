@@ -6,23 +6,25 @@ const {
 } = require('../mappers/combine-fas-with-projected-starters');
 const { mapFACollection } = require('../mappers/map-yahoo-fa-to-dto');
 const yahooApi = require('../yahoo-api/fantasy-baseball-api');
+const auth = require('../request-handling/middleware')
 
-router.get('/:foo/:bar', async (req, res) => {
+router.get('/:foo/:bar', auth, async (req, res) => {
   const fooValue = req.params.foo;
   const barValue = req.params.bar;
   // check if the cached data is available
   const teamStats = cacheManager.getFromCache('team-stats');
   const projectedLineups = cacheManager.getFromCache('projected-lineups');
 
+  console.log(`USER FROM TOKEN: ${JSON.stringify(req.user)}`)
+
   //temp
   try {
-    console.log(`Getting current week...`);
-  yahooApi.yfbb.WEEK = await yahooApi.yfbb.getCurrentWeek();
+    yahooApi.yfbb.WEEK = await yahooApi.yfbb.getCurrentWeek(req.user);
   } catch (err) {
     return res.status(400).send("Couldn't authenticate with Yahoo")
   }
 
-  const freeAgents = await yahooApi.yfbb.getFreeAgents();
+  const freeAgents = await yahooApi.yfbb.getFreeAgents(req.user);
 
   const freeAgentsDTO = mapFACollection(freeAgents);
 
