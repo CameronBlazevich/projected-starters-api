@@ -82,6 +82,7 @@ function combineMatchupsAndFreeAgents(
   // Create a new array to store the combined data
   const combinedData = [];
 
+  console.log(`Returned ${projectedMatchups?.length}`)
   // Loop through each game in the projected matchups
   for (let i = 0; i < projectedMatchups?.length; i++) {
     const dailyData = [];

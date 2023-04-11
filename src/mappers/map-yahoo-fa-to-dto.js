@@ -81,6 +81,7 @@ function mapFA(yahooFA) {
 function mapFACollection(yahooFAs) {
   let mapped = [];
   if (yahooFAs?.length > 0) {
+    console.log(`Free Agents returned: ${yahooFAs.length}`)
     mapped = yahooFAs.map((fa) => mapFA(fa));
   } else {
     console.log("No free agents returned from Yahoo. Request must be bad.")

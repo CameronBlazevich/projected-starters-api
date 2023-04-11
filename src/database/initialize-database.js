@@ -22,7 +22,7 @@ const init = () => {
         console.error('Error creating users table:', err);
         process.exit(1);
       } else {
-        //  console.log('user table created successfully. Seeding data');
+        console.log('user table created successfully.');
         // var insert = 'INSERT INTO Users (Email, Password, Salt, DateCreated) VALUES (?,?,?,?,?)'
         //         db.run(insert, ["user1@example.com", bcrypt.hashSync("user1", salt), salt, Date('now')])
         //         db.run(insert, ["user2@example.com", bcrypt.hashSync("user2", salt), salt, Date('now')])
