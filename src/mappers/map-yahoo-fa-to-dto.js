@@ -79,7 +79,10 @@ function mapFA(yahooFA) {
 }
 
 function mapFACollection(yahooFAs) {
-  const mapped = yahooFAs.map((fa) => mapFA(fa));
+  let mapped = [];
+  if (yahooFAs?.length > 0) {
+    mapped = yahooFAs.map((fa) => mapFA(fa));
+  }
   return mapped;
 }
 
