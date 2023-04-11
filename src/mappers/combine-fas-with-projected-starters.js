@@ -75,7 +75,7 @@ function extractGameDates(arr, teamStats) {
           };
           result.push(gameDateObj);
         }
-        gameDateObj.games.push(gameObj); // push gameObj to the games array
+        gameDateObj.games.push(gameObj);
       } else {
         // gameObj is empty, but still need to create gameDate object if it doesn't exist
         const gameDateObj = result.find((obj) => obj.gameDate === gameDate);
