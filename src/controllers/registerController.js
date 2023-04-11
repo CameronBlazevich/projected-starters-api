@@ -10,9 +10,9 @@ const auth = require('../request-handling/middleware')
 router.post("/", async (req, res) => {
     var errors=[]
     try {
-        const { Email, Password } = req.body;
+        const { email, password } = req.body;
 
-        if (!Email){
+        if (!email){
             errors.push("Email is missing");
         }
         if (errors.length){
@@ -23,7 +23,7 @@ router.post("/", async (req, res) => {
         
         
         var sql = "SELECT * FROM Users WHERE Email = ?"        
-        await db.all(sql, Email, (err, result) => {
+        await db.all(sql, email, (err, result) => {
             if (err) {
                 res.status(402).json({"error":err.message});
                 return;
@@ -34,14 +34,14 @@ router.post("/", async (req, res) => {
                 var salt = bcrypt.genSaltSync(10);
 
                 var data = {
-                    Email: Email,
-                    Password: bcrypt.hashSync(Password, salt),
+                    email: email,
+                    password: bcrypt.hashSync(password, salt),
                     Salt: salt,
                     DateCreated: Date('now')
                 }
         
                 var sql ='INSERT INTO Users (Email, Password, Salt, DateCreated) VALUES (?,?,?,?)'
-                var params =[data.Email, data.Password, data.Salt, Date('now')]
+                var params =[data.email, data.password, data.Salt, Date('now')]
                 var user = db.run(sql, params, function (err, innerResult) {
                     if (err){
                         res.status(400).json({"error": err.message})
