@@ -216,9 +216,9 @@ exports.yfbb = {
           );
 
           return this.makeAPIrequest(
-            url, user
-            // newToken.data.access_token,
-            // newToken.data.refresh_token
+            url,
+            newToken.data.access_token,
+            newToken.data.refresh_token
           );
         }
       } else {
