@@ -218,7 +218,7 @@ exports.yfbb = {
 
           return this.makeAPIrequest(
             url,
-user
+newToken
           );
         }
       } else {
