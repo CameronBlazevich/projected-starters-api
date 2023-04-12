@@ -37,7 +37,7 @@ const init = () => {
     `
   CREATE TABLE IF NOT EXISTS user_credentials (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    user_id INTEGER NOT NULL,
+    user_id INTEGER UNIQUE NOT NULL,
     access_token TEXT,
     refresh_token TEXT,
     FOREIGN KEY (user_id) REFERENCES users(Id)

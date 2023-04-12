@@ -80,9 +80,14 @@ async function getCredentials(user) {
           newToken.data.access_token,
           newToken.data.refresh_token
         );
+        
+        const updatedCreds = {
+          access_token: newToken.data.access_token,
+          refresh_token: newToken.data.refresh_token
+        }
 
         console.log("Successfully got new creds...")
-        return newCreds;
+        return updatedCreds;
         // Use the new credentials to make API calls
         // ...
       }
@@ -104,9 +109,8 @@ exports.yfbb = {
   },
   freeAgents(i) {
     const startNum = typeof i !== 'number' || i < 0 || i > 20 ? 0 : i;
-    const url = `${this.YAHOO}/league/${
-      CONFIG.LEAGUE_KEY
-    }/players;status=A;count=100;start=${startNum * 25};position=P;sort=OR`;
+    const url = `${this.YAHOO}/league/${CONFIG.LEAGUE_KEY
+      }/players;status=A;count=100;start=${startNum * 25};position=P;sort=OR`;
     console.log(url);
     return url;
   },
@@ -243,17 +247,14 @@ exports.yfbb = {
           : 0;
       const promises = [];
 
-
+      const results = [];
       for (let i = 0; i <= freeAgentLimit; i++) {
         const reqUrl = this.freeAgents(i);
-        // promises.push(this.makeAPIrequest(reqUrl, user));
-        promises.push(this.makeApiRequestWithCreds(reqUrl, user, credentials))
-      }
-      // const completedPromises = [];
-      const completedPromises = await Promise.all(promises);
 
-      const results = [];
-      completedPromises.forEach((result) => {
+        const result = await this.makeApiRequestWithCreds(reqUrl, user, credentials);
+        // console.log(result.fantasy_content.league.players.player)
+        // console.log(`One call returned: ${result.fantasy_content.league.players.player.length} players`)
+
         if (
           result.fantasy_content &&
           result.fantasy_content.league &&
@@ -262,7 +263,8 @@ exports.yfbb = {
         ) {
           results.push(...result.fantasy_content.league.players.player);
         }
-      });
+
+      }
       return results;
     } catch (err) {
       console.error(`Error in getFreeAgents(): ${err}`);
