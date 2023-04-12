@@ -209,7 +209,7 @@ exports.yfbb = {
           credentials.refresh_token
         );
         if (newToken && newToken.data && newToken.data.access_token) {
-          console.log("Got new access token. Storing it.")
+          console.log(`Got new access token. ${JSON.stringify(user)} Storing it.`)
           await credentialManager.storeCredentials(
             user.user_id,
             newToken.data.access_token,
@@ -218,8 +218,7 @@ exports.yfbb = {
 
           return this.makeAPIrequest(
             url,
-            newToken.data.access_token,
-            newToken.data.refresh_token
+user
           );
         }
       } else {
