@@ -209,6 +209,7 @@ exports.yfbb = {
           credentials.refresh_token
         );
         if (newToken && newToken.data && newToken.data.access_token) {
+          console.log("Got new access token. Storing it.")
           await credentialManager.storeCredentials(
             user.user_id,
             newToken.data.access_token,
