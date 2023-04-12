@@ -245,15 +245,12 @@ exports.yfbb = {
         CONFIG.FREE_AGENTS && /\d/.test(CONFIG.FREE_AGENTS)
           ? parseInt(CONFIG.FREE_AGENTS, 10)
           : 0;
-      const promises = [];
 
       const results = [];
       for (let i = 0; i <= freeAgentLimit; i++) {
         const reqUrl = this.freeAgents(i);
 
         const result = await this.makeApiRequestWithCreds(reqUrl, user, credentials);
-        // console.log(result.fantasy_content.league.players.player)
-        // console.log(`One call returned: ${result.fantasy_content.league.players.player.length} players`)
 
         if (
           result.fantasy_content &&
