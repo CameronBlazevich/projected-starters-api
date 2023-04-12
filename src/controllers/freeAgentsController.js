@@ -15,7 +15,7 @@ router.get('/:foo/:bar', auth, async (req, res) => {
   const teamStats = cacheManager.getFromCache('team-stats');
   const projectedLineups = cacheManager.getFromCache('projected-lineups');
 
-  console.log(`USER FROM TOKEN: ${JSON.stringify(req.user)}`)
+  //  console.log(`USER FROM TOKEN: ${JSON.stringify(req.user)}`)
 
   //temp
   try {

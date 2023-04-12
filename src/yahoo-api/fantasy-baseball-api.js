@@ -62,6 +62,7 @@ async function getInitialAuthorization(userAuthCode) {
 // Read the Yahoo OAuth credentials from the db
 async function getCredentials(user) {
   try {
+    console.log(`Inside getCredentials(): ${user.email}`)
     const credentials = await credentialManager.getCredentials(user.email);
 
     // console.log(`Found credentials in db: ${JSON.stringify(credentials)}`);
@@ -203,6 +204,7 @@ exports.yfbb = {
         err.response.data.error.description &&
         err.response.data.error.description.includes('token_expired')
       ) {
+        console.log("Access token requires refresh")
         const newToken = await this.refreshAuthorizationToken(
           credentials.refresh_token
         );
