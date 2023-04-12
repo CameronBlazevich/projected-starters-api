@@ -21,7 +21,7 @@ function getAuthEndpoint() {
 }
 
 async function getInitialAuthorization(userAuthCode) {
-  console.log(`GettingCreds`);
+  console.log(`Getting initial authorization...`);
   return axios({
     url: getAuthEndpoint(),
     method: 'post',
@@ -64,12 +64,7 @@ async function getCredentials(user) {
   try {
     console.log(`Inside getCredentials(): ${user.email}`)
     const credentials = await credentialManager.getCredentials(user.email);
-
-    // console.log(`Found credentials in db: ${JSON.stringify(credentials)}`);
-
     return credentials;
-    // Use the credentials to make API calls
-    // ...
   } catch (err) {
     console.error(err);
     if (err.message.startsWith('Credentials not found')) {
@@ -86,6 +81,7 @@ async function getCredentials(user) {
           newToken.data.refresh_token
         );
 
+        console.log("Successfully got new creds...")
         return newCreds;
         // Use the new credentials to make API calls
         // ...
@@ -179,10 +175,7 @@ exports.yfbb = {
     });
   },
 
-  // Hit the Yahoo Fantasy API
-  async makeAPIrequest(url, user) {
-    const credentials = await getCredentials(user);
-
+  async makeApiRequestWithCreds(url, user, credentials) {
     let response;
     try {
       response = await axios({
@@ -199,7 +192,7 @@ exports.yfbb = {
       return jsonData;
     } catch (err) {
       if (
-        err.response.data &&
+        err.response?.data &&
         err.response.data.error &&
         err.response.data.error.description &&
         err.response.data.error.description.includes('token_expired')
@@ -216,9 +209,12 @@ exports.yfbb = {
             newToken.data.refresh_token
           );
 
-          return this.makeAPIrequest(
+          credentials.access_token = newToken.data.access_token;
+          credentials.refresh_token = newToken.data.refresh_token;
+          return this.makeApiRequestWithCreds(
             url,
-newToken
+            user,
+            credentials
           );
         }
       } else {
@@ -230,18 +226,28 @@ newToken
     }
   },
 
+  // Hit the Yahoo Fantasy API
+  async makeAPIrequest(url, user) {
+    const credentials = await getCredentials(user);
+
+    return await this.makeApiRequestWithCreds(url, user, credentials)
+  },
+
   // Get a list of free agents
   async getFreeAgents(user) {
     try {
+      const credentials = await getCredentials(user);
       const freeAgentLimit =
         CONFIG.FREE_AGENTS && /\d/.test(CONFIG.FREE_AGENTS)
           ? parseInt(CONFIG.FREE_AGENTS, 10)
           : 0;
       const promises = [];
 
+
       for (let i = 0; i <= freeAgentLimit; i++) {
         const reqUrl = this.freeAgents(i);
-        promises.push(this.makeAPIrequest(reqUrl, user));
+        // promises.push(this.makeAPIrequest(reqUrl, user));
+        promises.push(this.makeApiRequestWithCreds(reqUrl, user, credentials))
       }
       // const completedPromises = [];
       const completedPromises = await Promise.all(promises);
