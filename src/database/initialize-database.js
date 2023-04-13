@@ -56,19 +56,21 @@ const init = () => {
 
   db.run(
     `
-  CREATE TABLE IF NOT EXISTS user_yahoo_auth_code (
+  CREATE TABLE IF NOT EXISTS user_yahoo_info (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     user_id INTEGER UNIQUE NOT NULL,
     yahoo_auth_code TEXT,
+    yahoo_league_id TEXT,
+    yahoo_team_id INTEGER,
     FOREIGN KEY (user_id) REFERENCES users(Id)
   )
 `,
     (err) => {
       if (err) {
-        console.error('Error creating user_yahoo_auth_code table:', err);
+        console.error('Error creating user_yahoo_info table:', err);
         process.exit(1);
       } else {
-        console.log('user_yahoo_auth_code table created successfully');
+        console.log('user_yahoo_info table created successfully');
         // You can now start using the database
       }
     }

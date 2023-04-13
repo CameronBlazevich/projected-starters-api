@@ -6,7 +6,7 @@ async function storeAuthCode(userId, authCode) {
   return new Promise((resolve, reject) => {
     console.log(`Storing auth code for user: ${userId} code: ${authCode}`)
     db.run(
-      'INSERT OR REPLACE INTO user_yahoo_auth_code (user_id, yahoo_auth_code) VALUES (?, ?)',
+      'INSERT OR REPLACE INTO user_yahoo_info (user_id, yahoo_auth_code) VALUES (?, ?)',
       [userId, authCode],
       function (err) {
         if (err) {
@@ -24,14 +24,13 @@ async function storeAuthCode(userId, authCode) {
 async function getAuthCode(userEmail) {
   return new Promise((resolve, reject) => {
 
-    const sql = `SELECT uac.yahoo_auth_code
-                  FROM user_yahoo_auth_code uac
+    const sql = `SELECT uyi.yahoo_auth_code
+                  FROM user_yahoo_info uyi
                   INNER JOIN users u
-                    ON u.Id = uac.user_id
+                    ON u.Id = uyi.user_id
                   WHERE u.Email = ?`
 
     db.get(
-      // 'SELECT access_token, refresh_token FROM user_credentials WHERE user_id = ?',
       sql,
       [userEmail],
       function (err, row) {
@@ -47,4 +46,29 @@ async function getAuthCode(userEmail) {
   });
 }
 
-module.exports = { getAuthCode, storeAuthCode };
+async function getInfo(user) {
+  return new Promise((resolve, reject) => {
+
+    const sql = `SELECT uyi.yahoo_auth_code, uyi.yahoo_league_id, uyi.yahoo_team_id
+                  FROM user_yahoo_info uyi
+                  INNER JOIN users u
+                    ON u.Id = uyi.user_id
+                  WHERE u.Id = ?`
+
+    db.get(
+      sql,
+      [user.user_id],
+      function (err, row) {
+        if (err) {
+          reject(err);
+        } else if (!row) {
+          reject(new Error(`No Yahoo info for user with email: ${user.Email}`));
+        } else {
+          resolve(row);
+        }
+      }
+    );
+  });
+}
+
+module.exports = { getAuthCode, storeAuthCode, getInfo };

@@ -24,12 +24,12 @@ const projectedLineupRefresher = require('./projected-lineups/projected-lineup-r
 const freeAgentsController = require('./controllers/freeAgentsController');
 const loginController = require('./controllers/loginController')
 const registerController = require('./controllers/registerController')
-const authCodeController = require('./controllers/authCodeController')
+const yahooController = require('./controllers/yahooController')
 
 app.use('/getFreeAgents', freeAgentsController);
 app.use('/login', loginController);
 app.use('/register', registerController);
-app.use('/setCode', authCodeController);
+app.use('/yahoo', yahooController);
 
 // start the server
 const port = (process.env.PORT || 3000);

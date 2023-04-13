@@ -3,7 +3,7 @@ const qs = require('qs');
 const axios = require('axios');
 const parser = require('xml2json');
 const CONFIG = require('../../config.json');
-const { getAuthCode } = require('../database/auth-code');
+const { getAuthCode } = require('../database/user-yahoo-info');
 
 const USER_ID = 1;
 
