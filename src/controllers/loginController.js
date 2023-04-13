@@ -17,9 +17,8 @@ router.post('/', async (req, res) => {
 
   try {      
     const { email, password } = req.body;
-        // Make sure there is an Email and Password in the request
         if (!(email && password)) {
-            return res.status(400).send("All input is required");
+            return res.status(400).send("Email and Password are required");
         }
             
         let user = [];
@@ -27,8 +26,8 @@ router.post('/', async (req, res) => {
         var sql = "SELECT * FROM Users WHERE Email = ?";
         db.all(sql, email, function(err, rows) {
             if (err){
-                res.status(400).json({"error": err.message})
-                return;
+                console.error(err)
+                return res.status(500).send("Database error")
             }
 
             rows.forEach(function (row) {
@@ -36,14 +35,12 @@ router.post('/', async (req, res) => {
             })
             
             if (user?.length === 0) {
-                // console.log("no user found")
                 return res.status(400).send("Email not found");  
             }
 
             var PHash = bcrypt.hashSync(password, user[0].Salt);
        
             if(PHash === user[0].Password) {
-                // * CREATE JWT TOKEN
                 const token = jwt.sign(
                     { user_id: user[0].Id, email: email },
                       process.env.TOKEN_KEY,
@@ -55,14 +52,15 @@ router.post('/', async (req, res) => {
                 user[0].Token = token;
 
             } else {
-                return res.status(400).send("No Match");          
+                return res.status(401).send("Incorrect password");          
             }
 
            return res.status(200).send(user[0]);                
         });	
     
     } catch (err) {
-      console.log(err);
+      console.error(err);
+      return res.status(500).send("Something went wrong")
     }    
 });
 

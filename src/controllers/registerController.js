@@ -26,12 +26,12 @@ router.post("/", async (req, res) => {
         var sql = "SELECT * FROM Users WHERE Email = ?"
         await db.all(sql, email, (err, result) => {
             if (err) {
-                res.status(402).json({ "error": err.message });
-                return;
+                console.error("Something went wrong querying db for user in registerController")
+                console.error(err)
+                return res.status(500).send("Database error");
             }
 
             if (result.length === 0) {
-
                 var salt = bcrypt.genSaltSync(10);
 
                 var data = {
@@ -45,8 +45,9 @@ router.post("/", async (req, res) => {
                 var params = [data.email, data.password, data.Salt, Date('now')]
                 user = db.run(sql, params, function (err, innerResult) {
                     if (err) {
-                        res.status(400).json({ "error": err.message })
-                        return;
+                        console.error("Could not insert new user into database for register request");
+                        console.error(err);
+                        return res.status(500).json({ "error": err.message })
                     }
                 });
 
@@ -54,8 +55,7 @@ router.post("/", async (req, res) => {
                 var sql = "SELECT * FROM Users WHERE Email = ?";
                 db.all(sql, email, function (err, rows) {
                     if (err) {
-                        res.status(400).json({ "error": err.message })
-                        return;
+                        return res.status(500).json({ "error": err.message })
                     }
 
                     rows.forEach(function (row) {
@@ -90,13 +90,14 @@ router.post("/", async (req, res) => {
 
                 res.status(201).json(user);
             } else {
-                res.status(201).json("Record already exists. Please login");
+                res.status(400).json({error: "Record already exists. Please login"});
             }
         }, 500);
 
 
     } catch (err) {
-        console.log(err);
+        console.error(err);
+        return res.status(500).send("Something went wrong")
     }
 })
 
