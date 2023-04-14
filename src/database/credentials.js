@@ -1,4 +1,4 @@
-const {storeApiCreds, getApiCreds} = require('./user-yahoo-info')
+const {storeApiCreds, getUserYahooInfo} = require('./user-yahoo-info')
 
 
 async function storeCredentials(userId, accessToken, refreshToken) {
@@ -8,7 +8,7 @@ async function storeCredentials(userId, accessToken, refreshToken) {
 
 // Function to retrieve user credentials
 async function getCredentials(userId) {
-  const result = await getApiCreds(userId);
+  const result = await getUserYahooInfo(userId);
   // console.log(`Credentials obj returned from db: ${JSON.stringify(result)}`)
   return result;
 }

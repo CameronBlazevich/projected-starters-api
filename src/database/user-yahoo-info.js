@@ -32,7 +32,7 @@ async function storeAuthCode(userId, authCode) {
     } else {
       res = await pool.query(insertSql, [userId, authCode]);
     }
-    
+
     return res;
   } catch (err) {
     console.error("Something went wrong storing the auth code:")
@@ -56,14 +56,14 @@ async function getAuthCode(userId) {
 
 }
 
-async function getInfo(user) {
+async function getInfo(userId) {
 
   const sql = `SELECT auth_code, league_id, team_id
                   FROM user_yahoo_info
                   WHERE user_id = $1`
 
   try {
-    const res = await pool.query(sql, [user.user_id])
+    const res = await pool.query(sql, [userId])
     return res.rows[0];
   } catch (err) {
     console.error("Something went wrong getting the yahoo info:")
@@ -97,14 +97,30 @@ async function storeApiCreds(userId, accessToken, refreshToken) {
     if (doesRecordExist) {
       res = await pool.query(updateSql, [userId, accessToken, refreshToken])
     } else {
-       res = await pool.query(insertSql, [userId, accessToken, refreshToken])
-  }
-    return res;
+      res = await pool.query(insertSql, [userId, accessToken, refreshToken])
+    }
+    return res.rows[0];
   } catch (err) {
     console.error("Something went wrong storing the api creds:")
     console.error(err);
   }
 }
+
+async function getUserYahooInfo(userId) {
+  const sql = `SELECT *
+  FROM user_yahoo_info
+  WHERE user_id = $1`
+
+  try {
+    const res = await pool.query(sql, [userId])
+    return res.rows[0];
+  } catch (err) {
+    console.error("Something went wrong getting the user yahoo info:")
+    console.error(err);
+  }
+}
+
+
 
 async function getApiCreds(userId) {
 
@@ -121,4 +137,35 @@ async function getApiCreds(userId) {
   }
 }
 
-module.exports = { getAuthCode, storeAuthCode, getInfo, storeApiCreds, getApiCreds };
+async function setLeagueId(userId, leagueId) {
+  const updateSql = `
+    UPDATE user_yahoo_info
+    SET league_id = $2
+    WHERE user_id = $1
+    RETURNING *;
+`;
+
+  const insertSql = `
+    INSERT INTO user_yahoo_info(user_id, league_id)
+    VALUES($1, $2)
+    RETURNING *;
+`;
+
+  try {
+    let res;
+    const existing = await getInfo(userId);
+    if (existing) {
+      res = await pool.query(updateSql, [userId, leagueId])
+    } else {
+      res = await pool.query(insertSql, [userId, leagueId])
+    }
+    return res.rows[0];
+  } catch (err) {
+    console.error("Something went wrong saving leagueId:")
+    console.error(err);
+  }
+}
+
+
+
+module.exports = { getAuthCode, storeAuthCode, getInfo, storeApiCreds, getApiCreds, setLeagueId, getUserYahooInfo };

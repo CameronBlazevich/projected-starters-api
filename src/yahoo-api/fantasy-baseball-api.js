@@ -116,11 +116,11 @@ exports.yfbb = {
   gameKey() {
     return `${this.YAHOO}/game/mlb`;
   },
-  freeAgents(i) {
+  freeAgents(i, leagueId) {
     const startNum = typeof i !== 'number' || i < 0 || i > 20 ? 0 : i;
-    const url = `${this.YAHOO}/league/${CONFIG.LEAGUE_KEY
-      }/players;status=A;count=100;start=${startNum * 25};position=P;sort=OR`;
-    console.log(url);
+    const url = `${this.YAHOO}/league/422.l.${leagueId
+    }/players;status=A;count=100;start=${startNum * 25};position=P;sort=OR`;
+    // console.log(url);
     return url;
   },
   myTeam() {
@@ -258,7 +258,8 @@ exports.yfbb = {
 
       const results = [];
       for (let i = 0; i <= freeAgentLimit; i++) {
-        const reqUrl = this.freeAgents(i);
+        const reqUrl = this.freeAgents(i, credentials.league_id);
+        console.log(reqUrl)
 
         const result = await this.makeApiRequestWithCreds(reqUrl, user, credentials);
 
