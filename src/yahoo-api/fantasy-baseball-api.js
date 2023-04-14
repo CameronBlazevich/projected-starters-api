@@ -64,12 +64,15 @@ async function getCredentials(user) {
   try {
     console.log(`Inside getCredentials(): ${user.email}`)
     const credentials = await credentialManager.getCredentials(user.user_id);
-    if (credentials.access_token) { 
+    if (credentials?.access_token) { 
       return credentials;
     } else {
       console.log('No creds found in db...');
       console.log('Does user have a YahooAuthCode?')
       const userAuthCode = await getAuthCode(user.user_id);
+      if (!userAuthCode) {
+        return {};
+      }
       console.log(`User Auth Code Found: ${JSON.stringify(userAuthCode)}`);
 
       const newToken = await getInitialAuthorization(userAuthCode.auth_code);
@@ -98,7 +101,7 @@ async function getCredentials(user) {
       // ...
 
     } else {
-      console.error(`Error retrieving credentials for user ${userEmail}: ${err}`);
+      console.error(`Error retrieving credentials for user ${user.email}: ${err}`);
       process.exit();
     }
   }
@@ -186,7 +189,7 @@ exports.yfbb = {
   },
 
   async makeApiRequestWithCreds(url, user, credentials) {
-    console.log(`making an api request with credentials: ${JSON.stringify(credentials)}`)
+    // console.log(`making an api request with credentials: ${JSON.stringify(credentials)}`)
     let response;
     try {
       response = await axios({
