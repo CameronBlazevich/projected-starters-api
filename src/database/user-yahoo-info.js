@@ -58,13 +58,17 @@ async function getAuthCode(userId) {
 
 async function getInfo(userId) {
 
-  const sql = `SELECT auth_code, league_id, team_id
-                  FROM user_yahoo_info
-                  WHERE user_id = $1`
+  const sql = `
+    SELECT ul.user_id, uy.auth_code, ul.league_id, ut.team_id
+        FROM user_league ul
+          LEFT JOIN user_yahoo_info uy ON uy.user_id = ul.user_id
+          LEFT JOIN user_team ut ON ul.user_id = ut.user_id AND ul.league_id = ut.league_id
+        WHERE ul.user_id = $1
+    `
 
   try {
     const res = await pool.query(sql, [userId])
-    return res.rows[0];
+    return res.rows[0]; // ToDo: For now only one league is supported so just retuning first row
   } catch (err) {
     console.error("Something went wrong getting the yahoo info:")
     console.error(err);
@@ -137,29 +141,17 @@ async function getApiCreds(userId) {
   }
 }
 
-async function setLeagueId(userId, leagueId) {
-  const updateSql = `
-    UPDATE user_yahoo_info
-    SET league_id = $2
-    WHERE user_id = $1
-    RETURNING *;
-`;
-
+async function setLeagueId(userId, leagueId, leagueTypeId) {
   const insertSql = `
-    INSERT INTO user_yahoo_info(user_id, league_id)
-    VALUES($1, $2)
-    RETURNING *;
-`;
+      INSERT INTO user_league(user_id, league_id, league_type_id)
+      VALUES($1, $2, $3)
+      ON CONFLICT DO NOTHING;
+    `;
 
   try {
-    let res;
-    const existing = await getInfo(userId);
-    if (existing) {
-      res = await pool.query(updateSql, [userId, leagueId])
-    } else {
-      res = await pool.query(insertSql, [userId, leagueId])
-    }
-    return res.rows[0];
+      await pool.query(insertSql, [userId, leagueId, leagueTypeId])
+    
+    return {user_id: userId, league_id: leagueId, league_type_id: leagueTypeId};
   } catch (err) {
     console.error("Something went wrong saving leagueId:")
     console.error(err);

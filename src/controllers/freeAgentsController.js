@@ -8,9 +8,8 @@ const { mapFACollection } = require('../mappers/map-yahoo-fa-to-dto');
 const yahooApi = require('../yahoo-api/fantasy-baseball-api');
 const auth = require('../request-handling/middleware')
 
-router.get('/:foo/:bar', auth, async (req, res) => {
-  const fooValue = req.params.foo;
-  const barValue = req.params.bar;
+router.get('/:leagueId', auth, async (req, res) => {
+  const leagueId = req.params.leagueId;
   // check if the cached data is available
   const teamStats = cacheManager.getFromCache('team-stats');
   const projectedLineups = cacheManager.getFromCache('projected-lineups');
@@ -24,7 +23,7 @@ router.get('/:foo/:bar', auth, async (req, res) => {
     return res.status(400).send("Couldn't authenticate with Yahoo")
   }
 
-  const freeAgents = await yahooApi.yfbb.getFreeAgents(req.user);
+  const freeAgents = await yahooApi.yfbb.getFreeAgents(req.user, leagueId);
 
   const freeAgentsDTO = mapFACollection(freeAgents);
 

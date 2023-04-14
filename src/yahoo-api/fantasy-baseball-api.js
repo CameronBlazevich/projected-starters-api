@@ -248,7 +248,7 @@ exports.yfbb = {
   },
 
   // Get a list of free agents
-  async getFreeAgents(user) {
+  async getFreeAgents(user, leagueId) {
     try {
       const credentials = await getCredentials(user);
       const freeAgentLimit =
@@ -258,7 +258,7 @@ exports.yfbb = {
 
       const results = [];
       for (let i = 0; i <= freeAgentLimit; i++) {
-        const reqUrl = this.freeAgents(i, credentials.league_id);
+        const reqUrl = this.freeAgents(i, leagueId);
         console.log(reqUrl)
 
         const result = await this.makeApiRequestWithCreds(reqUrl, user, credentials);
