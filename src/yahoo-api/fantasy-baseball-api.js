@@ -21,7 +21,7 @@ function getAuthEndpoint() {
 }
 
 async function getInitialAuthorization(userAuthCode) {
-  console.log(`Getting initial authorization...`);
+  console.log(`Getting initial authorization... with auth code: ${userAuthCode}`);
   return axios({
     url: getAuthEndpoint(),
     method: 'post',
@@ -63,24 +63,23 @@ async function getInitialAuthorization(userAuthCode) {
 async function getCredentials(user) {
   try {
     console.log(`Inside getCredentials(): ${user.email}`)
-    const credentials = await credentialManager.getCredentials(user.email);
-    return credentials;
-  } catch (err) {
-    console.error(err);
-    if (err.message.startsWith('Credentials not found')) {
+    const credentials = await credentialManager.getCredentials(user.user_id);
+    if (credentials.access_token) { 
+      return credentials;
+    } else {
       console.log('No creds found in db...');
       console.log('Does user have a YahooAuthCode?')
-      const userAuthCode = await getAuthCode(user.email);
+      const userAuthCode = await getAuthCode(user.user_id);
       console.log(`User Auth Code Found: ${JSON.stringify(userAuthCode)}`);
 
-      const newToken = await getInitialAuthorization(userAuthCode.yahoo_auth_code);
+      const newToken = await getInitialAuthorization(userAuthCode.auth_code);
       if (newToken && newToken.data && newToken.data.access_token) {
         const newCreds = await credentialManager.storeCredentials(
           user.user_id,
           newToken.data.access_token,
           newToken.data.refresh_token
         );
-        
+
         const updatedCreds = {
           access_token: newToken.data.access_token,
           refresh_token: newToken.data.refresh_token
@@ -88,9 +87,16 @@ async function getCredentials(user) {
 
         console.log("Successfully got new creds...")
         return updatedCreds;
-        // Use the new credentials to make API calls
-        // ...
       }
+      return credentials;
+    }
+  } catch (err) {
+    console.error(err);
+    if (err.message.startsWith('Credentials not found')) {
+
+      // Use the new credentials to make API calls
+      // ...
+
     } else {
       console.error(`Error retrieving credentials for user ${userEmail}: ${err}`);
       process.exit();
@@ -180,6 +186,7 @@ exports.yfbb = {
   },
 
   async makeApiRequestWithCreds(url, user, credentials) {
+    console.log(`making an api request with credentials: ${JSON.stringify(credentials)}`)
     let response;
     try {
       response = await axios({

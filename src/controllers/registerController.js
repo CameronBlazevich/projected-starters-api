@@ -4,8 +4,7 @@ const db = new sqlite3.Database('./my-database.db');
 const router = express.Router();
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
-const auth = require('../request-handling/middleware')
-
+const { getUserByEmail, createUser } = require('../database/users')
 
 router.post("/", async (req, res) => {
     var errors = []
@@ -15,85 +14,45 @@ router.post("/", async (req, res) => {
         if (!email) {
             errors.push("Email is missing");
         }
-        if (errors.length) {
-            res.status(400).json({ "error": errors.join(",") });
-            return;
+
+        if (!password) {
+            errors.push("Password is missing");
         }
-        let userExists = false;
-        let user = {};
 
+        if (errors.length) {
+            return res.status(400).json({ "error": errors.join(",") });
+        }
 
-        var sql = "SELECT * FROM Users WHERE Email = ?"
-        await db.all(sql, email, (err, result) => {
-            if (err) {
-                console.error("Something went wrong querying db for user in registerController")
-                console.error(err)
-                return res.status(500).send("Database error");
+        const user = await getUserByEmail(email)
+
+        if (user) {
+            res.status(400).json({ error: "Record already exists. Please login" });
+        } else {
+            const salt = bcrypt.genSaltSync(10)
+            const phash = bcrypt.hashSync(password, salt);
+
+            const userData = {
+                email: email,
+                password: phash,
+                salt: salt,
             }
-
-            if (result.length === 0) {
-                var salt = bcrypt.genSaltSync(10);
-
-                var data = {
-                    email: email,
-                    password: bcrypt.hashSync(password, salt),
-                    Salt: salt,
-                    DateCreated: Date('now')
+            const created = await createUser(userData);
+            // * CREATE JWT TOKEN
+            const token = jwt.sign(
+                { user_id: created.id, email: email },
+                process.env.TOKEN_KEY,
+                {
+                    expiresIn: "1h", // 60s = 60 seconds - (60m = 60 minutes, 2h = 2 hours, 2d = 2 days)
                 }
+            );
 
-                var sql = 'INSERT INTO Users (Email, Password, Salt, DateCreated) VALUES (?,?,?,?)'
-                var params = [data.email, data.password, data.Salt, Date('now')]
-                user = db.run(sql, params, function (err, innerResult) {
-                    if (err) {
-                        console.error("Could not insert new user into database for register request");
-                        console.error(err);
-                        return res.status(500).json({ "error": err.message })
-                    }
-                });
-
-                let created = [];
-                var sql = "SELECT * FROM Users WHERE Email = ?";
-                db.all(sql, email, function (err, rows) {
-                    if (err) {
-                        return res.status(500).json({ "error": err.message })
-                    }
-
-                    rows.forEach(function (row) {
-                        created.push(row);
-                    })
-
-
-                    // * CREATE JWT TOKEN
-                    const token = jwt.sign(
-                        { user_id: created[0].Id, email: email },
-                        process.env.TOKEN_KEY,
-                        {
-                            expiresIn: "1h", // 60s = 60 seconds - (60m = 60 minutes, 2h = 2 hours, 2d = 2 days)
-                        }
-                    );
-
-                    created[0].Token = token;
-
-                    user = created[0]
-
-
-                });
+            const newUser = {
+                email: created.email,
+                token: token,
             }
-            else {
-                userExists = true;
-                // res.status(404).send("User Already Exist. Please Login");  
-            }
-        });
 
-        setTimeout(() => {
-            if (!userExists) {
-
-                res.status(201).json(user);
-            } else {
-                res.status(400).json({error: "Record already exists. Please login"});
-            }
-        }, 500);
-
+            return res.status(201).json(newUser);;
+        }
 
     } catch (err) {
         console.error(err);

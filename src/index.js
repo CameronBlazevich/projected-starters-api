@@ -10,8 +10,8 @@ const bodyParser = require('body-parser')
 
 
 
-const database = require('./database/initialize-database');
-database.init();
+// const database = require('./database/initialize-database');
+// database.init();
 
 const app = express();
 app.use(cors());
