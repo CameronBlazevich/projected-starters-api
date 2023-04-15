@@ -72,8 +72,10 @@ async function makeAPIRequest(filter) {
     });
 
     const jsonData = resp.data;
+    console.log(resp.data)
 
     const formatted = formatResponse(jsonData);
+    console.log()
     return formatted;
   } catch (err) {
     console.error(`Some shit hit the fan getting projected lineups: ${err}`);
