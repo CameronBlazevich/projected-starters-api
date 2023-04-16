@@ -1,5 +1,7 @@
 const axios = require('axios');
 const dateHelper = require('../utilities/dateHelper');
+const { getPlayerStats } = require('./player-stats-api');
+const fs = require("fs");
 
 const formatResponse = (resp) => {
   const mapGame = (game) => ({
@@ -72,14 +74,44 @@ async function makeAPIRequest(filter) {
     });
 
     const jsonData = resp.data;
-    console.log(resp.data)
-
     const formatted = formatResponse(jsonData);
-    console.log()
+    for (let i = 0; i < formatted.games.length; i++) {
+      const game = formatted.games[i];
+
+      const awayPitcherId = game.awayPitcher?.PlayerID;
+      const homePitcherId = game.homePitcher?.PlayerID;
+
+      if (awayPitcherId) {
+        const awayPitcherStats = await getPlayerStats(awayPitcherId);
+        game.awayPitcher.stats = mapStats(awayPitcherStats);
+      }
+
+      if (homePitcherId) {
+        const homePitcherStats = await getPlayerStats(homePitcherId);
+        game.homePitcher.stats = mapStats(homePitcherStats);
+      }
+    }
+    // console.log(JSON.stringify(formatted))
     return formatted;
   } catch (err) {
     console.error(`Some shit hit the fan getting projected lineups: ${err}`);
   }
 }
+
+const mapStats = (fullStats) => {
+  const season = 2023;
+  const thisSeason = fullStats.find((s) => s.Season === season);
+  if (thisSeason) {
+    mapped = {
+      innings_pitched: thisSeason.InningsPitched,
+      era: thisSeason.EarnedRunAverage,
+      strikeouts: thisSeason.PitchingStrikeouts,
+      whip: thisSeason.WalksHitsPerInningsPitched,
+    };
+
+    return mapped;
+  }
+  return {};
+};
 
 module.exports = { getLineups };

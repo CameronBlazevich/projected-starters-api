@@ -1,7 +1,7 @@
 const { pool } = require('./postgresDB');
 
 async function getUserLeagues(userId) {
-    console.log(`Getting user leagues for userId: ${userId}`);
+    // console.log(`Getting user leagues for userId: ${userId}`);
 
     const getSql = `
         SELECT * FROM user_league

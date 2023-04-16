@@ -38,4 +38,17 @@ const getTeamStats = async () => {
   return mapped;
 };
 
-module.exports = { getTeamStats };
+const getTeamStandings = async () => {
+  console.log(`Getting team standings...`)
+  try {
+    const reqUrl = `https://statsapi.mlb.com/api/v1/standings?leagueId=103,104&season=2023&standingsTypes=regularSeason`;
+    const resp = await axios.get(reqUrl);
+    if (resp?.data?.records) {
+      return resp.data.records;
+    }
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+module.exports = { getTeamStats, getTeamStandings };

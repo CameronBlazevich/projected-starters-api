@@ -262,6 +262,7 @@ exports.yfbb = {
         console.log(reqUrl)
 
         const result = await this.makeApiRequestWithCreds(reqUrl, user, credentials);
+        // console.log(JSON.stringify(result))
 
         if (
           result.fantasy_content &&

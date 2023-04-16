@@ -70,6 +70,7 @@ function mapFA(yahooFA) {
     name: yahooFA.name,
     team: yahooFA.editorial_team_abbr,
     playerUrl: yahooFA.url,
+    imageUrl: yahooFA.image_url,
     playerId: yahooFA.player_id,
     eligiblePositions: yahooFA.eligible_positions,
     // headshot: yahooFA.headshot,

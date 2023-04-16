@@ -110,6 +110,7 @@ function combineMatchupsAndFreeAgents(
           agent.name.full?.normalize().toLowerCase() ===
           game.awayPitcher?.Name?.normalize().toLowerCase()
       );
+      
 
       // Check if there is a matching free agent for the home pitcher
       const homePitcherMatch = freeAgents.find(
@@ -118,15 +119,28 @@ function combineMatchupsAndFreeAgents(
           game.homePitcher?.Name?.normalize().toLowerCase()
       );
 
+      if (homePitcherMatch) {
+        
+        homePitcherMatch.stats = game.homePitcher.stats;
+        // homePitcherMatch.mlbComPlayerId = game.homePitcher.PlayerID; // I thought this would be the id needed to get the same
+        // images from mlb.com/probable-pitchers but it's not
+      }
+
+      if (awayPitcherMatch) {
+        awayPitcherMatch.stats = game.awayPitcher.stats;
+        // awayPitcherMatch.mlbComPlayerId = game.awayPitcher.PlayerID;
+      }
+
       // If there is a match for either pitcher, add a new object to the combined data array
       if (awayPitcherMatch || homePitcherMatch) {
-        dailyData.push({
+        const pitcher = {
           gameDate: projectedMatchups[i].date,
           awayTeam: game.awayTeam,
           homeTeam: game.homeTeam,
           awayPitcher: awayPitcherMatch || null,
           homePitcher: homePitcherMatch || null,
-        });
+        }
+        dailyData.push(pitcher);
       } else {
         dailyData.push({ gameDate: projectedMatchups[i].date });
       }
