@@ -32,6 +32,7 @@ CREATE TABLE IF NOT EXISTS user_league (
 	id serial NOT NULL PRIMARY KEY,
 	user_id INTEGER NOT NULL,
 	league_id VARCHAR(150),
+    nickname VARCHAR(100),
 	league_type_id INTEGER NOT NULL,
 	FOREIGN KEY (league_type_id) REFERENCES league_type(league_type_id),
 	UNIQUE (league_id, user_id)

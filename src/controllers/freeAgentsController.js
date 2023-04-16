@@ -10,17 +10,13 @@ const auth = require('../request-handling/middleware')
 
 router.get('/:leagueId', auth, async (req, res) => {
   const leagueId = req.params.leagueId;
-  // check if the cached data is available
   const teamStats = cacheManager.getFromCache('team-stats');
   const projectedLineups = cacheManager.getFromCache('projected-lineups');
 
-  //  console.log(`USER FROM TOKEN: ${JSON.stringify(req.user)}`)
-
-  //temp
   try {
     yahooApi.yfbb.WEEK = await yahooApi.yfbb.getCurrentWeek(req.user);
   } catch (err) {
-    return res.status(400).send("Couldn't authenticate with Yahoo")
+    return res.status(400).json({error: "Yahoo authentication failure"})
   }
 
   const freeAgents = await yahooApi.yfbb.getFreeAgents(req.user, leagueId);
@@ -36,14 +32,6 @@ router.get('/:leagueId', auth, async (req, res) => {
   if (combined) {
     res.send(
       combined
-      // `Free agents for foo=${fooValue} and bar=${barValue}: FreeAgents: ${JSON.stringify(
-      //   freeAgentsDTO
-      // )} Team Stats: ${JSON.stringify(
-      //   teamStats
-      // )} and Projected Lineups: ${JSON.stringify(projectedLineups)}`
-      //   `Free agents that are starting: ${JSON.stringify(
-      //     combined
-      //   )}. Team Stats: ${JSON.stringify(teamStats)}`
     );
   } else {
     res.send('Data not available. Please try again later.');
