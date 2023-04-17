@@ -62,7 +62,7 @@ async function getInitialAuthorization(userAuthCode) {
 // Read the Yahoo OAuth credentials from the db
 async function getCredentials(user) {
   try {
-    console.log(`Inside getCredentials(): ${user.email}`)
+    console.log(`Inside getCredentials(): ${user?.email}`)
     const credentials = await credentialManager.getCredentials(user.user_id);
     if (credentials?.access_token) { 
       return credentials;
@@ -101,7 +101,7 @@ async function getCredentials(user) {
       // ...
 
     } else {
-      console.error(`Error retrieving credentials for user ${user.email}: ${err}`);
+      console.error(`Error retrieving credentials for user ${user?.email}: ${err}`);
       process.exit();
     }
   }
@@ -123,8 +123,10 @@ exports.yfbb = {
     // console.log(url);
     return url;
   },
-  myTeam() {
-    return `${this.YAHOO}/team/${CONFIG.LEAGUE_KEY}.t.${CONFIG.TEAM}/roster/`;
+  myTeam(leagueId) {
+    const url =  `${this.YAHOO}/team/422.l.${leagueId}.t.${CONFIG.TEAM}/roster/`;
+    console.log(url)
+    return url;
   },
   myWeeklyStats() {
     return `${this.YAHOO}/team/${CONFIG.LEAGUE_KEY}.t.${CONFIG.TEAM}/stats;type=week;week=${this.WEEK}`;
@@ -282,9 +284,9 @@ exports.yfbb = {
   },
 
   // Get a list of players on my team
-  async getMyPlayers() {
+  async getMyPlayers(user, leagueId) {
     try {
-      const results = await this.makeAPIrequest(this.myTeam());
+      const results = await this.makeAPIrequest(this.myTeam(leagueId), user);
       return results.fantasy_content.team.roster.players.player;
     } catch (err) {
       console.error(`Error in getMyPlayers(): ${err}`);
@@ -343,7 +345,7 @@ exports.yfbb = {
   // Get what week it is in the season
   async getCurrentWeek(user) {
     try {
-      console.log(`Getting current week for userId: ${user.user_id} email: ${user.email}`);
+      console.log(`Getting current week for userId: ${user.user_id} email: ${user?.email}`);
       const results = await this.makeAPIrequest(this.metadata(), user);
       return results.fantasy_content.league.current_week;
     } catch (err) {

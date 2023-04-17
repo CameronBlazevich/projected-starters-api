@@ -21,7 +21,7 @@ const formatResponse = (resp) => {
 };
 
 const getLineups = async () => {
-  const totalDatesToGet = 4;
+  const totalDatesToGet = 5;
   const dates = dateHelper.getTodayAndXMore(totalDatesToGet);
 
   let requestPromises = [];
@@ -59,24 +59,11 @@ const getLineups = async () => {
 
   const completedRequestPromises = await Promise.all(requestPromises);
 
-  const result = completedRequestPromises;
-  return result;
-};
-
-async function makeAPIRequest(filter) {
-  console.log(`Getting projected lineups for ${filter.filters.date}...`);
-  let resp;
-  try {
-    resp = await axios({
-      url: 'https://fantasydata.com/MLB_Lineups/RefreshLineups',
-      method: 'post',
-      data: filter,
-    });
-
-    const jsonData = resp.data;
-    const formatted = formatResponse(jsonData);
-    for (let i = 0; i < formatted.games.length; i++) {
-      const game = formatted.games[i];
+  for (let j = 0; j < completedRequestPromises.length; j++) {
+    const dayOfGames = completedRequestPromises[j];
+    console.log(`Getting pitcher stats for ${dayOfGames.date}`)
+    for (let i = 0; i < dayOfGames.games.length; i++) {
+      const game = dayOfGames.games[i];
 
       const awayPitcherId = game.awayPitcher?.PlayerID;
       const homePitcherId = game.homePitcher?.PlayerID;
@@ -91,7 +78,23 @@ async function makeAPIRequest(filter) {
         game.homePitcher.stats = mapStats(homePitcherStats);
       }
     }
-    // console.log(JSON.stringify(formatted))
+  }
+  
+  return completedRequestPromises;
+};
+
+async function makeAPIRequest(filter) {
+  console.log(`Getting projected lineups for ${filter.filters.date}...`);
+  let resp;
+  try {
+    resp = await axios({
+      url: 'https://fantasydata.com/MLB_Lineups/RefreshLineups',
+      method: 'post',
+      data: filter,
+    });
+
+    const jsonData = resp.data;
+    const formatted = formatResponse(jsonData);
     return formatted;
   } catch (err) {
     console.error(`Some shit hit the fan getting projected lineups: ${err}`);

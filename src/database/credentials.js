@@ -8,8 +8,9 @@ async function storeCredentials(userId, accessToken, refreshToken) {
 
 // Function to retrieve user credentials
 async function getCredentials(userId) {
+  console.log(`Getting creds for userId: ${userId}`)
   const result = await getUserYahooInfo(userId);
-  // console.log(`Credentials obj returned from db: ${JSON.stringify(result)}`)
+  //console.log(`Credentials obj returned from db: ${JSON.stringify(result)}`)
   return result;
 }
 

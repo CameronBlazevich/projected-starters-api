@@ -1,31 +1,3 @@
-// function convertPitchers(arr, teamStats) {
-//   return arr.map((obj) => {
-//     const games = obj.games.map((game) => {
-//       const updatedGame = {};
-//       if (game.awayPitcher) {
-//         const opposingTeam = teamStats.find(
-//           (team) => team.teamAbbr === game.homeTeam
-//         );
-//         updatedGame.awayPitcher = {
-//           name: game.awayPitcher.name,
-//           opposingTeam: opposingTeam,
-//         };
-//       }
-//       if (game.homePitcher) {
-//         const opposingTeam = teamStats.find(
-//           (team) => team.teamAbbr === game.awayTeam
-//         );
-//         updatedGame.homePitcher = {
-//           name: game.homePitcher.name,
-//           opposingTeam: opposingTeam,
-//         };
-//       }
-//       return Object.assign({}, game, updatedGame);
-//     });
-//     return Object.assign({}, obj, { games });
-//   });
-// }
-
 function getTeamStats(abbr, teamStats) {
   const replaced = teamStats.map(team => {
     if (team.teamAbbr === "AZ") {
