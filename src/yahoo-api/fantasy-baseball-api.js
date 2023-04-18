@@ -9,7 +9,7 @@ const USER_ID = 1;
 
 function getAuthHeader() {
   const authHeader = Buffer.from(
-    `${CONFIG.CONSUMER_KEY}:${CONFIG.CONSUMER_SECRET}`,
+    `${process.env.YAHOO_CLIENT_ID}:${process.env.YAHOO_CLIENT_SECRET}`,
     `binary`
   ).toString(`base64`);
 
@@ -32,8 +32,8 @@ async function getInitialAuthorization(userAuthCode) {
         'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.109 Safari/537.36',
     },
     data: qs.stringify({
-      client_id: CONFIG.CONSUMER_KEY,
-      client_secret: CONFIG.CONSUMER_SECRET,
+      client_id: process.env.YAHOO_CLIENT_ID,
+      client_secret: process.env.YAHOO_CLIENT_SECRET,
       redirect_uri: 'oob',
       code: userAuthCode,
       grant_type: 'authorization_code',
