@@ -16,7 +16,10 @@ router.get('/:leagueId', auth, async (req, res) => {
   try {
     yahooApi.yfbb.WEEK = await yahooApi.yfbb.getCurrentWeek(req.user);
   } catch (err) {
-    return res.status(400).json({error: "Yahoo authentication failure"})
+    if (err.message?.includes("401")) {
+      return res.status(400).json({error: "Yahoo authentication failure"})
+    }
+    return res.status(500).json({ error: "Something went wrong" })
   }
 
   const freeAgents = await yahooApi.yfbb.getFreeAgents(req.user, leagueId);

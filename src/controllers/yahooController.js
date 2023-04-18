@@ -3,8 +3,6 @@ const router = express.Router();
 const auth = require('../request-handling/middleware');
 const { storeAuthCode } = require('../database/user-yahoo-info');
 
-
-
 router.post("/setCode", auth, async (req, res) => {
 
     if (!req.body.code) {

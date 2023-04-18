@@ -117,9 +117,9 @@ exports.yfbb = {
     return `${this.YAHOO}/game/mlb`;
   },
   freeAgents(i, leagueId) {
-    const startNum = typeof i !== 'number' || i < 0 || i > 20 ? 0 : i;
+    const startNum = i;
     const url = `${this.YAHOO}/league/422.l.${leagueId
-    }/players;status=A;count=100;start=${startNum * 25};position=P;sort=OR`;
+    }/players;status=A;count=25;start=${startNum * 25};position=SP;sort=AR`;
     // console.log(url);
     return url;
   },
@@ -253,13 +253,10 @@ exports.yfbb = {
   async getFreeAgents(user, leagueId) {
     try {
       const credentials = await getCredentials(user);
-      const freeAgentLimit =
-        CONFIG.FREE_AGENTS && /\d/.test(CONFIG.FREE_AGENTS)
-          ? parseInt(CONFIG.FREE_AGENTS, 10)
-          : 0;
+      const freeAgentPageLimit = 10;
 
       const results = [];
-      for (let i = 0; i <= freeAgentLimit; i++) {
+      for (let i = 0; i <= freeAgentPageLimit; i++) {
         const reqUrl = this.freeAgents(i, leagueId);
         console.log(reqUrl)
 
