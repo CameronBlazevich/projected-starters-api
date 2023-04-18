@@ -26,6 +26,7 @@ const getRosteredPlayerProjections = async (user, leagueId) => {
 
     } catch (err) {
         console.error(err)
+        throw err;
     }
 
 }

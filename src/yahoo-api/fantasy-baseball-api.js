@@ -290,7 +290,7 @@ exports.yfbb = {
       return results.fantasy_content.team.roster.players.player;
     } catch (err) {
       console.error(`Error in getMyPlayers(): ${err}`);
-      return err;
+      throw err;
     }
   },
 

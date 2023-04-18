@@ -19,7 +19,9 @@ router.get("/getProjectedStarters/:leagueId", auth, async (req, res) => {
         
         return res.status(200).json(result);
     } catch (err) {
-        console.error(err);
+        if (err.message?.includes("401")) {
+            return res.status(400).json({error: "Yahoo authentication failure"})
+        }
         return res.status(500).json({ error: "Something went wrong" })
     }
 })
