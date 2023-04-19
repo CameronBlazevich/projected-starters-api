@@ -7,15 +7,20 @@ const {getRosteredPlayerProjections, getRosteredPlayers} = require('../roster/ro
 
 
 // router.get("/getProjectedStarters/:leagueId", auth, async (req, res) => {
-router.get("/getProjectedStarters/:leagueId", auth, async (req, res) => {
+router.get("/getProjectedStarters/:leagueId/:teamId", auth, async (req, res) => {
     const leagueId = req.params.leagueId;
+    const teamId = req.params.teamId;
     if (!leagueId) {
         return res.status(400).json({error: "LeagueId is required."})
     }
 
+    if (!teamId) {
+        return res.status(400).json({error: "teamId is required."})
+    }
+
     const user = req.user;
     try {
-        const result = await getRosteredPlayerProjections(user, leagueId)
+        const result = await getRosteredPlayerProjections(user, leagueId, teamId)
         
         return res.status(200).json(result);
     } catch (err) {

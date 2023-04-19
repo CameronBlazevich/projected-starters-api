@@ -21,7 +21,7 @@ const formatResponse = (resp) => {
 };
 
 const getLineups = async () => {
-  const totalDatesToGet = process.env.NODE_ENV === 'production' ? 7 : 1;
+  const totalDatesToGet = process.env.NODE_ENV === 'production' ? 7 : 3;
   const dates = dateHelper.getTodayAndXMore(totalDatesToGet);
 
   let requestPromises = [];

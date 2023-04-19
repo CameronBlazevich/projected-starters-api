@@ -6,10 +6,11 @@ const {
   } = require('../mappers/combine-fas-with-projected-starters');
 
 
-const getRosteredPlayerProjections = async (user, leagueId) => {
+const getRosteredPlayerProjections = async (user, leagueId, teamId) => {
 
     try {
-        const teamPlayers = await yahooApi.yfbb.getMyPlayers(user, leagueId);
+        const teamPlayers = await yahooApi.yfbb.getMyPlayers(user, leagueId, teamId);
+        // console.log(`teamPlayers = ${teamPlayers}`);
         const mappedTeamPlayers = mapFACollection(teamPlayers);
 
         const teamStats = cacheManager.getFromCache('team-stats');

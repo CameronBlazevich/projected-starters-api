@@ -123,8 +123,8 @@ exports.yfbb = {
     // console.log(url);
     return url;
   },
-  myTeam(leagueId) {
-    const url =  `${this.YAHOO}/team/422.l.${leagueId}.t.${CONFIG.TEAM}/roster/`;
+  myTeam(leagueId, teamId) {
+    const url =  `${this.YAHOO}/team/422.l.${leagueId}.t.${teamId}/roster/`;
     console.log(url)
     return url;
   },
@@ -278,9 +278,9 @@ exports.yfbb = {
   },
 
   // Get a list of players on my team
-  async getMyPlayers(user, leagueId) {
+  async getMyPlayers(user, leagueId, teamId) {
     try {
-      const results = await this.makeAPIrequest(this.myTeam(leagueId), user);
+      const results = await this.makeAPIrequest(this.myTeam(leagueId, teamId), user);
       return results.fantasy_content.team.roster.players.player;
     } catch (err) {
       console.error(`Error in getMyPlayers(): ${err}`);

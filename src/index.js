@@ -28,6 +28,7 @@ const yahooController = require('./controllers/yahooController')
 const userLeagueController = require('./controllers/userLeaguesController')
 const rosterController = require('./controllers/rosterController')
 const teamStatsController = require('./controllers/teamStatsController')
+const userTeamController = require('./controllers/userTeamController')
 
 app.use('/getFreeAgents', freeAgentsController);
 app.use('/login', loginController);
@@ -36,6 +37,7 @@ app.use('/yahoo', yahooController);
 app.use('/leagues', userLeagueController);
 app.use('/roster', rosterController);
 app.use('/teamStats', teamStatsController)
+app.use('/userTeams', userTeamController)
 
 // start the server
 const port = (process.env.PORT || 3000);
