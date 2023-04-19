@@ -144,13 +144,10 @@ exports.yfbb = {
     return `${this.YAHOO}/users;use_login=1/games`;
   },
   statsID() {
-    return `${this.YAHOO}/game/${CONFIG.LEAGUE_KEY.substr(
-      0,
-      3
-    )}/stat_categories`;
+    return `${this.YAHOO}/game/422/stat_categories`;
   },
-  roster() {
-    return `${this.YAHOO}/team/${CONFIG.LEAGUE_KEY}.t.${CONFIG.TEAM}/roster/players`;
+  roster(leagueId) {
+    return `${this.YAHOO}/team/422.l.${leagueId}.t.${CONFIG.TEAM}/roster/players`;
   },
 
   // If authorization token is stale, refresh it
@@ -314,9 +311,10 @@ exports.yfbb = {
   },
 
   // Get a JSON object of your players
-  async getMyPlayersStats() {
+  async getMyPlayersStats(user , leagueId) {
     try {
-      const players = await this.getMyPlayers(this.myTeam());
+      const players = await this.getMyPlayers(user, leagueId);;
+      console.log(`Players: ${players}`)
 
       // Build the list
       let playerIDList = '';
@@ -328,11 +326,14 @@ exports.yfbb = {
         // Remove trailing comma
         playerIDList = playerIDList.substring(0, playerIDList.length - 1);
 
-        const playerStats = `${this.YAHOO}/players;player_keys=${playerIDList};out=stats`;
+        const playerStatsUrl = `${this.YAHOO}/players;player_keys=${playerIDList};out=stats`;
 
-        return await this.makeAPIrequest(playerStats);
+        const playerStatsResponse  =  await this.makeAPIrequest(playerStatsUrl, user);
+
+        const playerStats = playerStatsResponse.fantasy_content.players.player;
+        // console.log(playerStats)
+        return playerStats;
       }
-      return 'Error';
     } catch (err) {
       console.error(`Error in getMyPlayersStats(): ${err}`);
       return err;
@@ -385,9 +386,9 @@ exports.yfbb = {
   },
 
   // Get stats IDs
-  async getStatsIDs() {
+  async getStatsIDs(user) {
     try {
-      const results = await this.makeAPIrequest(this.statsID());
+      const results = await this.makeAPIrequest(this.statsID(), user);
       return results.fantasy_content.game.stat_categories.stats;
     } catch (err) {
       console.error(`Error in getStatsIDs(): ${err}`);

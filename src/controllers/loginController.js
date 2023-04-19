@@ -16,12 +16,12 @@ router.post('/', async (req, res) => {
     try {
         const { email, password } = req.body;
         if (!(email && password)) {
-            return res.status(400).send("Email and Password are required");
+            return res.status(400).json({message: "Email and Password are required"});
         }
 
         const user = await getUserByEmail(email);
         if (!user) {
-            return res.status(400).send("Email not found");
+            return res.status(400).json({message:"Email not found"});
         }
 
         const PHash = bcrypt.hashSync(password, user.salt);
@@ -40,14 +40,14 @@ router.post('/', async (req, res) => {
                 token: token
             }
 
-            return res.status(200).send(loggedIn);
+            return res.status(200).json(loggedIn);
         } else {
-            return res.status(401).send("Incorrect password");
+            return res.status(401).json({message: "Incorrect password"});
         }
 
     } catch (err) {
         console.error(err);
-        return res.status(500).send("Something went wrong")
+        return res.status(500).json({message:"Something went wrong"})
     }
 });
 

@@ -20,13 +20,13 @@ router.post("/", async (req, res) => {
         }
 
         if (errors.length) {
-            return res.status(400).json({ "error": errors.join(",") });
+            return res.status(400).json({message: errors.join(",") });
         }
 
         const user = await getUserByEmail(email)
 
         if (user) {
-            res.status(400).json({ error: "Record already exists. Please login" });
+            res.status(400).json({ message: "Record already exists. Please login" });
         } else {
             const salt = bcrypt.genSaltSync(10)
             const phash = bcrypt.hashSync(password, salt);
@@ -56,7 +56,7 @@ router.post("/", async (req, res) => {
 
     } catch (err) {
         console.error(err);
-        return res.status(500).send("Something went wrong")
+        return res.status(500).json({message: "Something went wrong"})
     }
 })
 

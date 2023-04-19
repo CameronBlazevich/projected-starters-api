@@ -1,0 +1,1360 @@
+[
+    {
+        "player_key": "422.p.9015",
+        "player_id": "9015",
+        "name": {
+            "full": "Salvador Perez",
+            "first": "Salvador",
+            "last": "Perez",
+            "ascii_first": "Salvador",
+            "ascii_last": "Perez"
+        },
+        "url": "https://sports.yahoo.com/mlb/players/9015",
+        "editorial_player_key": "mlb.p.9015",
+        "editorial_team_key": "mlb.t.7",
+        "editorial_team_full_name": "Kansas City Royals",
+        "editorial_team_abbr": "KC",
+        "editorial_team_url": "https://sports.yahoo.com/mlb/teams/kansas-city/",
+        "is_keeper": {
+            "status": {},
+            "cost": {},
+            "kept": {}
+        },
+        "uniform_number": "13",
+        "display_position": "C",
+        "headshot": {
+            "url": "https://s.yimg.com/iu/api/res/1.2/ceS9fNxOM981AtubMY5nsA--~C/YXBwaWQ9eXNwb3J0cztjaD0yMzM2O2NyPTE7Y3c9MTc5MDtkeD04NTc7ZHk9MDtmaT11bGNyb3A7aD02MDtxPTEwMDt3PTQ2/https://s.yimg.com/xe/i/us/sp/v/mlb_cutout/players_l/04182023/9015.png",
+            "size": "small"
+        },
+        "image_url": "https://s.yimg.com/iu/api/res/1.2/ceS9fNxOM981AtubMY5nsA--~C/YXBwaWQ9eXNwb3J0cztjaD0yMzM2O2NyPTE7Y3c9MTc5MDtkeD04NTc7ZHk9MDtmaT11bGNyb3A7aD02MDtxPTEwMDt3PTQ2/https://s.yimg.com/xe/i/us/sp/v/mlb_cutout/players_l/04182023/9015.png",
+        "is_undroppable": "0",
+        "position_type": "B",
+        "primary_position": "C",
+        "eligible_positions": {
+            "position": [
+                "C",
+                "Util"
+            ]
+        },
+        "selected_position": {
+            "coverage_type": "date",
+            "date": "2023-04-18",
+            "position": "C",
+            "is_flex": "0"
+        },
+        "starting_status": {
+            "coverage_type": "date",
+            "date": "2023-04-18",
+            "is_starting": "1"
+        },
+        "batting_order": {
+            "order_num": "3"
+        },
+        "is_editable": "0"
+    },
+    {
+        "player_key": "422.p.12449",
+        "player_id": "12449",
+        "name": {
+            "full": "Vinnie Pasquantino",
+            "first": "Vinnie",
+            "last": "Pasquantino",
+            "ascii_first": "Vinnie",
+            "ascii_last": "Pasquantino"
+        },
+        "url": "https://sports.yahoo.com/mlb/players/12449",
+        "editorial_player_key": "mlb.p.12449",
+        "editorial_team_key": "mlb.t.7",
+        "editorial_team_full_name": "Kansas City Royals",
+        "editorial_team_abbr": "KC",
+        "editorial_team_url": "https://sports.yahoo.com/mlb/teams/kansas-city/",
+        "is_keeper": {
+            "status": "1",
+            "cost": {},
+            "kept": "1"
+        },
+        "uniform_number": "9",
+        "display_position": "1B",
+        "headshot": {
+            "url": "https://s.yimg.com/iu/api/res/1.2/XFmJ9i8Nj0jvAm_WfrPlJA--~C/YXBwaWQ9eXNwb3J0cztjaD0yMzM2O2NyPTE7Y3c9MTc5MDtkeD04NTc7ZHk9MDtmaT11bGNyb3A7aD02MDtxPTEwMDt3PTQ2/https://s.yimg.com/xe/i/us/sp/v/mlb_cutout/players_l/04182023/12449.png",
+            "size": "small"
+        },
+        "image_url": "https://s.yimg.com/iu/api/res/1.2/XFmJ9i8Nj0jvAm_WfrPlJA--~C/YXBwaWQ9eXNwb3J0cztjaD0yMzM2O2NyPTE7Y3c9MTc5MDtkeD04NTc7ZHk9MDtmaT11bGNyb3A7aD02MDtxPTEwMDt3PTQ2/https://s.yimg.com/xe/i/us/sp/v/mlb_cutout/players_l/04182023/12449.png",
+        "is_undroppable": "0",
+        "position_type": "B",
+        "primary_position": "1B",
+        "eligible_positions": {
+            "position": [
+                "1B",
+                "Util"
+            ]
+        },
+        "has_player_notes": "1",
+        "player_notes_last_timestamp": "1681714529",
+        "selected_position": {
+            "coverage_type": "date",
+            "date": "2023-04-18",
+            "position": "1B",
+            "is_flex": "0"
+        },
+        "starting_status": {
+            "coverage_type": "date",
+            "date": "2023-04-18",
+            "is_starting": "1"
+        },
+        "batting_order": {
+            "order_num": "4"
+        },
+        "is_editable": "0"
+    },
+    {
+        "player_key": "422.p.10236",
+        "player_id": "10236",
+        "name": {
+            "full": "Gleyber Torres",
+            "first": "Gleyber",
+            "last": "Torres",
+            "ascii_first": "Gleyber",
+            "ascii_last": "Torres"
+        },
+        "url": "https://sports.yahoo.com/mlb/players/10236",
+        "editorial_player_key": "mlb.p.10236",
+        "editorial_team_key": "mlb.t.10",
+        "editorial_team_full_name": "New York Yankees",
+        "editorial_team_abbr": "NYY",
+        "editorial_team_url": "https://sports.yahoo.com/mlb/teams/ny-yankees/",
+        "is_keeper": {
+            "status": {},
+            "cost": {},
+            "kept": {}
+        },
+        "uniform_number": "25",
+        "display_position": "2B",
+        "headshot": {
+            "url": "https://s.yimg.com/iu/api/res/1.2/AsQ7Y7phxoaqI59mmW_V6w--~C/YXBwaWQ9eXNwb3J0cztjaD0yMzM2O2NyPTE7Y3c9MTc5MDtkeD04NTc7ZHk9MDtmaT11bGNyb3A7aD02MDtxPTEwMDt3PTQ2/https://s.yimg.com/xe/i/us/sp/v/mlb_cutout/players_l/04032023/10236.png",
+            "size": "small"
+        },
+        "image_url": "https://s.yimg.com/iu/api/res/1.2/AsQ7Y7phxoaqI59mmW_V6w--~C/YXBwaWQ9eXNwb3J0cztjaD0yMzM2O2NyPTE7Y3c9MTc5MDtkeD04NTc7ZHk9MDtmaT11bGNyb3A7aD02MDtxPTEwMDt3PTQ2/https://s.yimg.com/xe/i/us/sp/v/mlb_cutout/players_l/04032023/10236.png",
+        "is_undroppable": "0",
+        "position_type": "B",
+        "primary_position": "2B",
+        "eligible_positions": {
+            "position": [
+                "2B",
+                "Util"
+            ]
+        },
+        "has_player_notes": "1",
+        "player_notes_last_timestamp": "1681424723",
+        "selected_position": {
+            "coverage_type": "date",
+            "date": "2023-04-18",
+            "position": "2B",
+            "is_flex": "0"
+        },
+        "starting_status": {
+            "coverage_type": "date",
+            "date": "2023-04-18",
+            "is_starting": "1"
+        },
+        "batting_order": {
+            "order_num": "4"
+        },
+        "is_editable": "0"
+    },
+    {
+        "player_key": "422.p.9507",
+        "player_id": "9507",
+        "name": {
+            "full": "José Ramírez",
+            "first": "José",
+            "last": "Ramírez",
+            "ascii_first": "José",
+            "ascii_last": "Ramírez"
+        },
+        "url": "https://sports.yahoo.com/mlb/players/9507",
+        "editorial_player_key": "mlb.p.9507",
+        "editorial_team_key": "mlb.t.5",
+        "editorial_team_full_name": "Cleveland Guardians",
+        "editorial_team_abbr": "CLE",
+        "editorial_team_url": "https://sports.yahoo.com/mlb/teams/cleveland/",
+        "is_keeper": {
+            "status": "1",
+            "cost": {},
+            "kept": "1"
+        },
+        "uniform_number": "11",
+        "display_position": "3B",
+        "headshot": {
+            "url": "https://s.yimg.com/iu/api/res/1.2/ebQ6RldC477zABAZUJQq3g--~C/YXBwaWQ9eXNwb3J0cztjaD0yMzM2O2NyPTE7Y3c9MTc5MDtkeD04NTc7ZHk9MDtmaT11bGNyb3A7aD02MDtxPTEwMDt3PTQ2/https://s.yimg.com/xe/i/us/sp/v/mlb_cutout/players_l/04132023/9507.png",
+            "size": "small"
+        },
+        "image_url": "https://s.yimg.com/iu/api/res/1.2/ebQ6RldC477zABAZUJQq3g--~C/YXBwaWQ9eXNwb3J0cztjaD0yMzM2O2NyPTE7Y3c9MTc5MDtkeD04NTc7ZHk9MDtmaT11bGNyb3A7aD02MDtxPTEwMDt3PTQ2/https://s.yimg.com/xe/i/us/sp/v/mlb_cutout/players_l/04132023/9507.png",
+        "is_undroppable": "0",
+        "position_type": "B",
+        "primary_position": "3B",
+        "eligible_positions": {
+            "position": [
+                "3B",
+                "Util"
+            ]
+        },
+        "has_player_notes": "1",
+        "player_notes_last_timestamp": "1681627876",
+        "selected_position": {
+            "coverage_type": "date",
+            "date": "2023-04-18",
+            "position": "3B",
+            "is_flex": "0"
+        },
+        "starting_status": {
+            "coverage_type": "date",
+            "date": "2023-04-18",
+            "is_starting": "1"
+        },
+        "batting_order": {
+            "order_num": "3"
+        },
+        "is_editable": "0"
+    },
+    {
+        "player_key": "422.p.11169",
+        "player_id": "11169",
+        "name": {
+            "full": "Jon Berti",
+            "first": "Jon",
+            "last": "Berti",
+            "ascii_first": "Jon",
+            "ascii_last": "Berti"
+        },
+        "url": "https://sports.yahoo.com/mlb/players/11169",
+        "editorial_player_key": "mlb.p.11169",
+        "editorial_team_key": "mlb.t.28",
+        "editorial_team_full_name": "Miami Marlins",
+        "editorial_team_abbr": "MIA",
+        "editorial_team_url": "https://sports.yahoo.com/mlb/teams/miami/",
+        "is_keeper": {
+            "status": {},
+            "cost": {},
+            "kept": {}
+        },
+        "uniform_number": "5",
+        "display_position": "2B,3B,SS,OF",
+        "headshot": {
+            "url": "https://s.yimg.com/iu/api/res/1.2/ypdewrQf893nUDXZXqiVYA--~C/YXBwaWQ9eXNwb3J0cztjaD0yMzM2O2NyPTE7Y3c9MTc5MDtkeD04NTc7ZHk9MDtmaT11bGNyb3A7aD02MDtxPTEwMDt3PTQ2/https://s.yimg.com/xe/i/us/sp/v/mlb_cutout/players_l/04132023/11169.png",
+            "size": "small"
+        },
+        "image_url": "https://s.yimg.com/iu/api/res/1.2/ypdewrQf893nUDXZXqiVYA--~C/YXBwaWQ9eXNwb3J0cztjaD0yMzM2O2NyPTE7Y3c9MTc5MDtkeD04NTc7ZHk9MDtmaT11bGNyb3A7aD02MDtxPTEwMDt3PTQ2/https://s.yimg.com/xe/i/us/sp/v/mlb_cutout/players_l/04132023/11169.png",
+        "is_undroppable": "0",
+        "position_type": "B",
+        "primary_position": "2B",
+        "eligible_positions": {
+            "position": [
+                "2B",
+                "3B",
+                "SS",
+                "OF",
+                "Util"
+            ]
+        },
+        "has_player_notes": "1",
+        "player_notes_last_timestamp": "1681756128",
+        "selected_position": {
+            "coverage_type": "date",
+            "date": "2023-04-18",
+            "position": "SS",
+            "is_flex": "0"
+        },
+        "starting_status": {
+            "coverage_type": "date",
+            "date": "2023-04-18",
+            "is_starting": "1"
+        },
+        "batting_order": {
+            "order_num": "1"
+        },
+        "is_editable": "0"
+    },
+    {
+        "player_key": "422.p.12339",
+        "player_id": "12339",
+        "name": {
+            "full": "James Outman",
+            "first": "James",
+            "last": "Outman",
+            "ascii_first": "James",
+            "ascii_last": "Outman"
+        },
+        "url": "https://sports.yahoo.com/mlb/players/12339",
+        "editorial_player_key": "mlb.p.12339",
+        "editorial_team_key": "mlb.t.19",
+        "editorial_team_full_name": "Los Angeles Dodgers",
+        "editorial_team_abbr": "LAD",
+        "editorial_team_url": "https://sports.yahoo.com/mlb/teams/la-dodgers/",
+        "is_keeper": {
+            "status": {},
+            "cost": {},
+            "kept": {}
+        },
+        "uniform_number": "33",
+        "display_position": "OF",
+        "headshot": {
+            "url": "https://s.yimg.com/iu/api/res/1.2/qpTt8CRXvhkc4FXukmCYKA--~C/YXBwaWQ9eXNwb3J0cztjaD0yMzM2O2NyPTE7Y3c9MTc5MDtkeD04NTc7ZHk9MDtmaT11bGNyb3A7aD02MDtxPTEwMDt3PTQ2/https://s.yimg.com/xe/i/us/sp/v/mlb_cutout/players_l/04142023/12339.png",
+            "size": "small"
+        },
+        "image_url": "https://s.yimg.com/iu/api/res/1.2/qpTt8CRXvhkc4FXukmCYKA--~C/YXBwaWQ9eXNwb3J0cztjaD0yMzM2O2NyPTE7Y3c9MTc5MDtkeD04NTc7ZHk9MDtmaT11bGNyb3A7aD02MDtxPTEwMDt3PTQ2/https://s.yimg.com/xe/i/us/sp/v/mlb_cutout/players_l/04142023/12339.png",
+        "is_undroppable": "0",
+        "position_type": "B",
+        "primary_position": "OF",
+        "eligible_positions": {
+            "position": [
+                "OF",
+                "Util"
+            ]
+        },
+        "has_player_notes": "1",
+        "has_recent_player_notes": "1",
+        "player_notes_last_timestamp": "1681855906",
+        "selected_position": {
+            "coverage_type": "date",
+            "date": "2023-04-18",
+            "position": "OF",
+            "is_flex": "0"
+        },
+        "starting_status": {
+            "coverage_type": "date",
+            "date": "2023-04-18",
+            "is_starting": "1"
+        },
+        "batting_order": {
+            "order_num": "1"
+        },
+        "is_editable": "0"
+    },
+    {
+        "player_key": "422.p.10505",
+        "player_id": "10505",
+        "name": {
+            "full": "Alex Verdugo",
+            "first": "Alex",
+            "last": "Verdugo",
+            "ascii_first": "Alex",
+            "ascii_last": "Verdugo"
+        },
+        "url": "https://sports.yahoo.com/mlb/players/10505",
+        "editorial_player_key": "mlb.p.10505",
+        "editorial_team_key": "mlb.t.2",
+        "editorial_team_full_name": "Boston Red Sox",
+        "editorial_team_abbr": "BOS",
+        "editorial_team_url": "https://sports.yahoo.com/mlb/teams/boston/",
+        "is_keeper": {
+            "status": {},
+            "cost": {},
+            "kept": {}
+        },
+        "uniform_number": "99",
+        "display_position": "OF",
+        "headshot": {
+            "url": "https://s.yimg.com/iu/api/res/1.2/9ufuDN_xB.6yodNrICngzA--~C/YXBwaWQ9eXNwb3J0cztjaD0yMzM2O2NyPTE7Y3c9MTc5MDtkeD04NTc7ZHk9MDtmaT11bGNyb3A7aD02MDtxPTEwMDt3PTQ2/https://s.yimg.com/xe/i/us/sp/v/mlb_cutout/players_l/03232023/10505.png",
+            "size": "small"
+        },
+        "image_url": "https://s.yimg.com/iu/api/res/1.2/9ufuDN_xB.6yodNrICngzA--~C/YXBwaWQ9eXNwb3J0cztjaD0yMzM2O2NyPTE7Y3c9MTc5MDtkeD04NTc7ZHk9MDtmaT11bGNyb3A7aD02MDtxPTEwMDt3PTQ2/https://s.yimg.com/xe/i/us/sp/v/mlb_cutout/players_l/03232023/10505.png",
+        "is_undroppable": "0",
+        "position_type": "B",
+        "primary_position": "OF",
+        "eligible_positions": {
+            "position": [
+                "OF",
+                "Util"
+            ]
+        },
+        "has_player_notes": "1",
+        "player_notes_last_timestamp": "1681739287",
+        "selected_position": {
+            "coverage_type": "date",
+            "date": "2023-04-18",
+            "position": "OF",
+            "is_flex": "0"
+        },
+        "starting_status": {
+            "coverage_type": "date",
+            "date": "2023-04-18",
+            "is_starting": "1"
+        },
+        "batting_order": {
+            "order_num": "1"
+        },
+        "is_editable": "0"
+    },
+    {
+        "player_key": "422.p.9889",
+        "player_id": "9889",
+        "name": {
+            "full": "Hunter Renfroe",
+            "first": "Hunter",
+            "last": "Renfroe",
+            "ascii_first": "Hunter",
+            "ascii_last": "Renfroe"
+        },
+        "url": "https://sports.yahoo.com/mlb/players/9889",
+        "editorial_player_key": "mlb.p.9889",
+        "editorial_team_key": "mlb.t.3",
+        "editorial_team_full_name": "Los Angeles Angels",
+        "editorial_team_abbr": "LAA",
+        "editorial_team_url": "https://sports.yahoo.com/mlb/teams/la-angels/",
+        "is_keeper": {
+            "status": {},
+            "cost": {},
+            "kept": {}
+        },
+        "uniform_number": "12",
+        "display_position": "OF",
+        "headshot": {
+            "url": "https://s.yimg.com/iu/api/res/1.2/jd.cPxuEuGDBqb4sFxyBTw--~C/YXBwaWQ9eXNwb3J0cztjaD0yMzM2O2NyPTE7Y3c9MTc5MDtkeD04NTc7ZHk9MDtmaT11bGNyb3A7aD02MDtxPTEwMDt3PTQ2/https://s.yimg.com/xe/i/us/sp/v/mlb_cutout/players_l/04172023/9889.png",
+            "size": "small"
+        },
+        "image_url": "https://s.yimg.com/iu/api/res/1.2/jd.cPxuEuGDBqb4sFxyBTw--~C/YXBwaWQ9eXNwb3J0cztjaD0yMzM2O2NyPTE7Y3c9MTc5MDtkeD04NTc7ZHk9MDtmaT11bGNyb3A7aD02MDtxPTEwMDt3PTQ2/https://s.yimg.com/xe/i/us/sp/v/mlb_cutout/players_l/04172023/9889.png",
+        "is_undroppable": "0",
+        "position_type": "B",
+        "primary_position": "OF",
+        "eligible_positions": {
+            "position": [
+                "OF",
+                "Util"
+            ]
+        },
+        "has_player_notes": "1",
+        "player_notes_last_timestamp": "1681787105",
+        "selected_position": {
+            "coverage_type": "date",
+            "date": "2023-04-18",
+            "position": "OF",
+            "is_flex": "0"
+        },
+        "starting_status": {
+            "coverage_type": "date",
+            "date": "2023-04-18",
+            "is_starting": "1"
+        },
+        "batting_order": {
+            "order_num": "5"
+        },
+        "is_editable": "0"
+    },
+    {
+        "player_key": "422.p.9724",
+        "player_id": "9724",
+        "name": {
+            "full": "Eugenio Suárez",
+            "first": "Eugenio",
+            "last": "Suárez",
+            "ascii_first": "Eugenio",
+            "ascii_last": "Suárez"
+        },
+        "url": "https://sports.yahoo.com/mlb/players/9724",
+        "editorial_player_key": "mlb.p.9724",
+        "editorial_team_key": "mlb.t.12",
+        "editorial_team_full_name": "Seattle Mariners",
+        "editorial_team_abbr": "SEA",
+        "editorial_team_url": "https://sports.yahoo.com/mlb/teams/seattle/",
+        "is_keeper": {
+            "status": {},
+            "cost": {},
+            "kept": {}
+        },
+        "uniform_number": "28",
+        "display_position": "3B",
+        "headshot": {
+            "url": "https://s.yimg.com/iu/api/res/1.2/7jV_cDvj9InSULak9Z_BHA--~C/YXBwaWQ9eXNwb3J0cztjaD0yMzM2O2NyPTE7Y3c9MTc5MDtkeD04NTc7ZHk9MDtmaT11bGNyb3A7aD02MDtxPTEwMDt3PTQ2/https://s.yimg.com/xe/i/us/sp/v/mlb_cutout/players_l/03222023/9724.png",
+            "size": "small"
+        },
+        "image_url": "https://s.yimg.com/iu/api/res/1.2/7jV_cDvj9InSULak9Z_BHA--~C/YXBwaWQ9eXNwb3J0cztjaD0yMzM2O2NyPTE7Y3c9MTc5MDtkeD04NTc7ZHk9MDtmaT11bGNyb3A7aD02MDtxPTEwMDt3PTQ2/https://s.yimg.com/xe/i/us/sp/v/mlb_cutout/players_l/03222023/9724.png",
+        "is_undroppable": "0",
+        "position_type": "B",
+        "primary_position": "3B",
+        "eligible_positions": {
+            "position": [
+                "3B",
+                "Util"
+            ]
+        },
+        "has_player_notes": "1",
+        "player_notes_last_timestamp": "1681662715",
+        "selected_position": {
+            "coverage_type": "date",
+            "date": "2023-04-18",
+            "position": "Util",
+            "is_flex": "0"
+        },
+        "starting_status": {
+            "coverage_type": "date",
+            "date": "2023-04-18",
+            "is_starting": "1"
+        },
+        "batting_order": {
+            "order_num": "3"
+        },
+        "is_editable": "0"
+    },
+    {
+        "player_key": "422.p.11623",
+        "player_id": "11623",
+        "name": {
+            "full": "Josh Rojas",
+            "first": "Josh",
+            "last": "Rojas",
+            "ascii_first": "Josh",
+            "ascii_last": "Rojas"
+        },
+        "url": "https://sports.yahoo.com/mlb/players/11623",
+        "editorial_player_key": "mlb.p.11623",
+        "editorial_team_key": "mlb.t.29",
+        "editorial_team_full_name": "Arizona Diamondbacks",
+        "editorial_team_abbr": "ARI",
+        "editorial_team_url": "https://sports.yahoo.com/mlb/teams/arizona/",
+        "is_keeper": {
+            "status": {},
+            "cost": {},
+            "kept": {}
+        },
+        "uniform_number": "10",
+        "display_position": "2B,3B",
+        "headshot": {
+            "url": "https://s.yimg.com/iu/api/res/1.2/OSNS60bSNEZpoM4dNNKnbw--~C/YXBwaWQ9eXNwb3J0cztjaD0yMzM2O2NyPTE7Y3c9MTc5MDtkeD04NTc7ZHk9MDtmaT11bGNyb3A7aD02MDtxPTEwMDt3PTQ2/https://s.yimg.com/xe/i/us/sp/v/mlb_cutout/players_l/03142023/11623.png",
+            "size": "small"
+        },
+        "image_url": "https://s.yimg.com/iu/api/res/1.2/OSNS60bSNEZpoM4dNNKnbw--~C/YXBwaWQ9eXNwb3J0cztjaD0yMzM2O2NyPTE7Y3c9MTc5MDtkeD04NTc7ZHk9MDtmaT11bGNyb3A7aD02MDtxPTEwMDt3PTQ2/https://s.yimg.com/xe/i/us/sp/v/mlb_cutout/players_l/03142023/11623.png",
+        "is_undroppable": "0",
+        "position_type": "B",
+        "primary_position": "2B",
+        "eligible_positions": {
+            "position": [
+                "2B",
+                "3B",
+                "Util"
+            ]
+        },
+        "has_player_notes": "1",
+        "player_notes_last_timestamp": "1681563343",
+        "selected_position": {
+            "coverage_type": "date",
+            "date": "2023-04-18",
+            "position": "BN",
+            "is_flex": "0"
+        },
+        "starting_status": {
+            "coverage_type": "date",
+            "date": "2023-04-18",
+            "is_starting": "1"
+        },
+        "batting_order": {
+            "order_num": "2"
+        },
+        "is_editable": "0"
+    },
+    {
+        "player_key": "422.p.9415",
+        "player_id": "9415",
+        "name": {
+            "full": "Alex Wood",
+            "first": "Alex",
+            "last": "Wood",
+            "ascii_first": "Alex",
+            "ascii_last": "Wood"
+        },
+        "url": "https://sports.yahoo.com/mlb/players/9415",
+        "status": "DTD",
+        "status_full": "Day-to-Day",
+        "injury_note": "Hamstring",
+        "editorial_player_key": "mlb.p.9415",
+        "editorial_team_key": "mlb.t.26",
+        "editorial_team_full_name": "San Francisco Giants",
+        "editorial_team_abbr": "SF",
+        "editorial_team_url": "https://sports.yahoo.com/mlb/teams/san-francisco/",
+        "is_keeper": {
+            "status": {},
+            "cost": {},
+            "kept": {}
+        },
+        "uniform_number": "57",
+        "display_position": "SP",
+        "headshot": {
+            "url": "https://s.yimg.com/iu/api/res/1.2/PNnE9ZEe5TBgWaexq3WCSg--~C/YXBwaWQ9eXNwb3J0cztjaD0yMzM2O2NyPTE7Y3c9MTc5MDtkeD04NTc7ZHk9MDtmaT11bGNyb3A7aD02MDtxPTEwMDt3PTQ2/https://s.yimg.com/xe/i/us/sp/v/mlb_cutout/players_l/03232023/9415.png",
+            "size": "small"
+        },
+        "image_url": "https://s.yimg.com/iu/api/res/1.2/PNnE9ZEe5TBgWaexq3WCSg--~C/YXBwaWQ9eXNwb3J0cztjaD0yMzM2O2NyPTE7Y3c9MTc5MDtkeD04NTc7ZHk9MDtmaT11bGNyb3A7aD02MDtxPTEwMDt3PTQ2/https://s.yimg.com/xe/i/us/sp/v/mlb_cutout/players_l/03232023/9415.png",
+        "is_undroppable": "0",
+        "position_type": "P",
+        "primary_position": "SP",
+        "eligible_positions": {
+            "position": [
+                "SP",
+                "P"
+            ]
+        },
+        "has_player_notes": "1",
+        "has_recent_player_notes": "1",
+        "player_notes_last_timestamp": "1681878917",
+        "selected_position": {
+            "coverage_type": "date",
+            "date": "2023-04-18",
+            "position": "SP",
+            "is_flex": "0"
+        },
+        "starting_status": {
+            "coverage_type": "date",
+            "date": "2023-04-18",
+            "is_starting": "1"
+        },
+        "is_editable": "0"
+    },
+    {
+        "player_key": "422.p.12346",
+        "player_id": "12346",
+        "name": {
+            "full": "Félix Bautista",
+            "first": "Félix",
+            "last": "Bautista",
+            "ascii_first": "Félix",
+            "ascii_last": "Bautista"
+        },
+        "url": "https://sports.yahoo.com/mlb/players/12346",
+        "editorial_player_key": "mlb.p.12346",
+        "editorial_team_key": "mlb.t.1",
+        "editorial_team_full_name": "Baltimore Orioles",
+        "editorial_team_abbr": "BAL",
+        "editorial_team_url": "https://sports.yahoo.com/mlb/teams/baltimore/",
+        "is_keeper": {
+            "status": {},
+            "cost": {},
+            "kept": {}
+        },
+        "uniform_number": "74",
+        "display_position": "RP",
+        "headshot": {
+            "url": "https://s.yimg.com/iu/api/res/1.2/Ttrl5r1QdUhP.xZ9wpdhiQ--~C/YXBwaWQ9eXNwb3J0cztjaD0yMzM2O2NyPTE7Y3c9MTc5MDtkeD04NTc7ZHk9MDtmaT11bGNyb3A7aD02MDtxPTEwMDt3PTQ2/https://s.yimg.com/xe/i/us/sp/v/mlb_cutout/players_l/03232023/12346.png",
+            "size": "small"
+        },
+        "image_url": "https://s.yimg.com/iu/api/res/1.2/Ttrl5r1QdUhP.xZ9wpdhiQ--~C/YXBwaWQ9eXNwb3J0cztjaD0yMzM2O2NyPTE7Y3c9MTc5MDtkeD04NTc7ZHk9MDtmaT11bGNyb3A7aD02MDtxPTEwMDt3PTQ2/https://s.yimg.com/xe/i/us/sp/v/mlb_cutout/players_l/03232023/12346.png",
+        "is_undroppable": "0",
+        "position_type": "P",
+        "primary_position": "RP",
+        "eligible_positions": {
+            "position": [
+                "RP",
+                "P"
+            ]
+        },
+        "has_player_notes": "1",
+        "player_notes_last_timestamp": "1681536515",
+        "selected_position": {
+            "coverage_type": "date",
+            "date": "2023-04-18",
+            "position": "RP",
+            "is_flex": "0"
+        },
+        "is_editable": "0"
+    },
+    {
+        "player_key": "422.p.10355",
+        "player_id": "10355",
+        "name": {
+            "full": "Matt Strahm",
+            "first": "Matt",
+            "last": "Strahm",
+            "ascii_first": "Matt",
+            "ascii_last": "Strahm"
+        },
+        "url": "https://sports.yahoo.com/mlb/players/10355",
+        "status": "DTD",
+        "status_full": "Day-to-Day",
+        "injury_note": "Thumb",
+        "editorial_player_key": "mlb.p.10355",
+        "editorial_team_key": "mlb.t.22",
+        "editorial_team_full_name": "Philadelphia Phillies",
+        "editorial_team_abbr": "PHI",
+        "editorial_team_url": "https://sports.yahoo.com/mlb/teams/philadelphia/",
+        "is_keeper": {
+            "status": {},
+            "cost": {},
+            "kept": {}
+        },
+        "uniform_number": "25",
+        "display_position": "SP,RP",
+        "headshot": {
+            "url": "https://s.yimg.com/iu/api/res/1.2/7qOcxQ0ZvB4mwGvmhO9KjA--~C/YXBwaWQ9eXNwb3J0cztjaD0yMzM2O2NyPTE7Y3c9MTc5MDtkeD04NTc7ZHk9MDtmaT11bGNyb3A7aD02MDtxPTEwMDt3PTQ2/https://s.yimg.com/xe/i/us/sp/v/mlb_cutout/players_l/03282023/10355.png",
+            "size": "small"
+        },
+        "image_url": "https://s.yimg.com/iu/api/res/1.2/7qOcxQ0ZvB4mwGvmhO9KjA--~C/YXBwaWQ9eXNwb3J0cztjaD0yMzM2O2NyPTE7Y3c9MTc5MDtkeD04NTc7ZHk9MDtmaT11bGNyb3A7aD02MDtxPTEwMDt3PTQ2/https://s.yimg.com/xe/i/us/sp/v/mlb_cutout/players_l/03282023/10355.png",
+        "is_undroppable": "0",
+        "position_type": "P",
+        "primary_position": "SP",
+        "eligible_positions": {
+            "position": [
+                "SP",
+                "RP",
+                "P"
+            ]
+        },
+        "has_player_notes": "1",
+        "player_notes_last_timestamp": "1681645021",
+        "selected_position": {
+            "coverage_type": "date",
+            "date": "2023-04-18",
+            "position": "RP",
+            "is_flex": "0"
+        },
+        "is_editable": "0"
+    },
+    {
+        "player_key": "422.p.9358",
+        "player_id": "9358",
+        "name": {
+            "full": "Ryan Pressly",
+            "first": "Ryan",
+            "last": "Pressly",
+            "ascii_first": "Ryan",
+            "ascii_last": "Pressly"
+        },
+        "url": "https://sports.yahoo.com/mlb/players/9358",
+        "editorial_player_key": "mlb.p.9358",
+        "editorial_team_key": "mlb.t.18",
+        "editorial_team_full_name": "Houston Astros",
+        "editorial_team_abbr": "HOU",
+        "editorial_team_url": "https://sports.yahoo.com/mlb/teams/houston/",
+        "is_keeper": {
+            "status": {},
+            "cost": {},
+            "kept": {}
+        },
+        "uniform_number": "55",
+        "display_position": "RP",
+        "headshot": {
+            "url": "https://s.yimg.com/iu/api/res/1.2/4TjT2Ecjs2WWc1lMEZnxiA--~C/YXBwaWQ9eXNwb3J0cztjaD0yMzM2O2NyPTE7Y3c9MTc5MDtkeD04NTc7ZHk9MDtmaT11bGNyb3A7aD02MDtxPTEwMDt3PTQ2/https://s.yimg.com/xe/i/us/sp/v/mlb_cutout/players_l/05262022/9358.png",
+            "size": "small"
+        },
+        "image_url": "https://s.yimg.com/iu/api/res/1.2/4TjT2Ecjs2WWc1lMEZnxiA--~C/YXBwaWQ9eXNwb3J0cztjaD0yMzM2O2NyPTE7Y3c9MTc5MDtkeD04NTc7ZHk9MDtmaT11bGNyb3A7aD02MDtxPTEwMDt3PTQ2/https://s.yimg.com/xe/i/us/sp/v/mlb_cutout/players_l/05262022/9358.png",
+        "is_undroppable": "0",
+        "position_type": "P",
+        "primary_position": "RP",
+        "eligible_positions": {
+            "position": [
+                "RP",
+                "P"
+            ]
+        },
+        "has_player_notes": "1",
+        "player_notes_last_timestamp": "1681275231",
+        "selected_position": {
+            "coverage_type": "date",
+            "date": "2023-04-18",
+            "position": "P",
+            "is_flex": "0"
+        },
+        "is_editable": "0"
+    },
+    {
+        "player_key": "422.p.11838",
+        "player_id": "11838",
+        "name": {
+            "full": "Johan Oviedo",
+            "first": "Johan",
+            "last": "Oviedo",
+            "ascii_first": "Johan",
+            "ascii_last": "Oviedo"
+        },
+        "url": "https://sports.yahoo.com/mlb/players/11838",
+        "editorial_player_key": "mlb.p.11838",
+        "editorial_team_key": "mlb.t.23",
+        "editorial_team_full_name": "Pittsburgh Pirates",
+        "editorial_team_abbr": "PIT",
+        "editorial_team_url": "https://sports.yahoo.com/mlb/teams/pittsburgh/",
+        "is_keeper": {
+            "status": {},
+            "cost": {},
+            "kept": {}
+        },
+        "uniform_number": "24",
+        "display_position": "SP,RP",
+        "headshot": {
+            "url": "https://s.yimg.com/iu/api/res/1.2/g7nSDYlj8gCMShqBY314WQ--~C/YXBwaWQ9eXNwb3J0cztjaD0yMzM2O2NyPTE7Y3c9MTc5MDtkeD04NTc7ZHk9MDtmaT11bGNyb3A7aD02MDtxPTEwMDt3PTQ2/https://s.yimg.com/xe/i/us/sp/v/mlb_cutout/players_l/03272023/11838.png",
+            "size": "small"
+        },
+        "image_url": "https://s.yimg.com/iu/api/res/1.2/g7nSDYlj8gCMShqBY314WQ--~C/YXBwaWQ9eXNwb3J0cztjaD0yMzM2O2NyPTE7Y3c9MTc5MDtkeD04NTc7ZHk9MDtmaT11bGNyb3A7aD02MDtxPTEwMDt3PTQ2/https://s.yimg.com/xe/i/us/sp/v/mlb_cutout/players_l/03272023/11838.png",
+        "is_undroppable": "0",
+        "position_type": "P",
+        "primary_position": "SP",
+        "eligible_positions": {
+            "position": [
+                "SP",
+                "RP",
+                "P"
+            ]
+        },
+        "has_player_notes": "1",
+        "player_notes_last_timestamp": "1681539251",
+        "selected_position": {
+            "coverage_type": "date",
+            "date": "2023-04-18",
+            "position": "P",
+            "is_flex": "0"
+        },
+        "is_editable": "0"
+    },
+    {
+        "player_key": "422.p.10326",
+        "player_id": "10326",
+        "name": {
+            "full": "Seth Lugo",
+            "first": "Seth",
+            "last": "Lugo",
+            "ascii_first": "Seth",
+            "ascii_last": "Lugo"
+        },
+        "url": "https://sports.yahoo.com/mlb/players/10326",
+        "editorial_player_key": "mlb.p.10326",
+        "editorial_team_key": "mlb.t.25",
+        "editorial_team_full_name": "San Diego Padres",
+        "editorial_team_abbr": "SD",
+        "editorial_team_url": "https://sports.yahoo.com/mlb/teams/san-diego/",
+        "is_keeper": {
+            "status": {},
+            "cost": {},
+            "kept": {}
+        },
+        "uniform_number": "67",
+        "display_position": "SP,RP",
+        "headshot": {
+            "url": "https://s.yimg.com/iu/api/res/1.2/Ty9o4bhPFWZvIrIuU.unnw--~C/YXBwaWQ9eXNwb3J0cztjaD0yMzM2O2NyPTE7Y3c9MTc5MDtkeD04NTc7ZHk9MDtmaT11bGNyb3A7aD02MDtxPTEwMDt3PTQ2/https://s.yimg.com/xe/i/us/sp/v/mlb_cutout/players_l/03242023/10326.1.png",
+            "size": "small"
+        },
+        "image_url": "https://s.yimg.com/iu/api/res/1.2/Ty9o4bhPFWZvIrIuU.unnw--~C/YXBwaWQ9eXNwb3J0cztjaD0yMzM2O2NyPTE7Y3c9MTc5MDtkeD04NTc7ZHk9MDtmaT11bGNyb3A7aD02MDtxPTEwMDt3PTQ2/https://s.yimg.com/xe/i/us/sp/v/mlb_cutout/players_l/03242023/10326.1.png",
+        "is_undroppable": "0",
+        "position_type": "P",
+        "primary_position": "SP",
+        "eligible_positions": {
+            "position": [
+                "SP",
+                "RP",
+                "P"
+            ]
+        },
+        "has_player_notes": "1",
+        "player_notes_last_timestamp": "1681617087",
+        "selected_position": {
+            "coverage_type": "date",
+            "date": "2023-04-18",
+            "position": "P",
+            "is_flex": "0"
+        },
+        "is_editable": "0"
+    },
+    {
+        "player_key": "422.p.10576",
+        "player_id": "10576",
+        "name": {
+            "full": "Eric Lauer",
+            "first": "Eric",
+            "last": "Lauer",
+            "ascii_first": "Eric",
+            "ascii_last": "Lauer"
+        },
+        "url": "https://sports.yahoo.com/mlb/players/10576",
+        "editorial_player_key": "mlb.p.10576",
+        "editorial_team_key": "mlb.t.8",
+        "editorial_team_full_name": "Milwaukee Brewers",
+        "editorial_team_abbr": "MIL",
+        "editorial_team_url": "https://sports.yahoo.com/mlb/teams/milwaukee/",
+        "is_keeper": {
+            "status": {},
+            "cost": {},
+            "kept": {}
+        },
+        "uniform_number": "52",
+        "display_position": "SP",
+        "headshot": {
+            "url": "https://s.yimg.com/iu/api/res/1.2/oqgGvULMmkVBVfmvvrQE2w--~C/YXBwaWQ9eXNwb3J0cztjaD0yMzM2O2NyPTE7Y3c9MTc5MDtkeD04NTc7ZHk9MDtmaT11bGNyb3A7aD02MDtxPTEwMDt3PTQ2/https://s.yimg.com/xe/i/us/sp/v/mlb_cutout/players_l/04122023/10576.png",
+            "size": "small"
+        },
+        "image_url": "https://s.yimg.com/iu/api/res/1.2/oqgGvULMmkVBVfmvvrQE2w--~C/YXBwaWQ9eXNwb3J0cztjaD0yMzM2O2NyPTE7Y3c9MTc5MDtkeD04NTc7ZHk9MDtmaT11bGNyb3A7aD02MDtxPTEwMDt3PTQ2/https://s.yimg.com/xe/i/us/sp/v/mlb_cutout/players_l/04122023/10576.png",
+        "is_undroppable": "0",
+        "position_type": "P",
+        "primary_position": "SP",
+        "eligible_positions": {
+            "position": [
+                "SP",
+                "P"
+            ]
+        },
+        "has_player_notes": "1",
+        "player_notes_last_timestamp": "1681544953",
+        "selected_position": {
+            "coverage_type": "date",
+            "date": "2023-04-18",
+            "position": "P",
+            "is_flex": "0"
+        },
+        "is_editable": "0"
+    },
+    {
+        "player_key": "422.p.12215",
+        "player_id": "12215",
+        "name": {
+            "full": "Tylor Megill",
+            "first": "Tylor",
+            "last": "Megill",
+            "ascii_first": "Tylor",
+            "ascii_last": "Megill"
+        },
+        "url": "https://sports.yahoo.com/mlb/players/12215",
+        "editorial_player_key": "mlb.p.12215",
+        "editorial_team_key": "mlb.t.21",
+        "editorial_team_full_name": "New York Mets",
+        "editorial_team_abbr": "NYM",
+        "editorial_team_url": "https://sports.yahoo.com/mlb/teams/ny-mets/",
+        "is_keeper": {
+            "status": {},
+            "cost": {},
+            "kept": {}
+        },
+        "uniform_number": "38",
+        "display_position": "SP,RP",
+        "headshot": {
+            "url": "https://s.yimg.com/iu/api/res/1.2/bZSQIx4k_NfTfu8XvYranA--~C/YXBwaWQ9eXNwb3J0cztjaD0yMzM2O2NyPTE7Y3c9MTc5MDtkeD04NTc7ZHk9MDtmaT11bGNyb3A7aD02MDtxPTEwMDt3PTQ2/https://s.yimg.com/xe/i/us/sp/v/mlb_cutout/players_l/04052023/12215.png",
+            "size": "small"
+        },
+        "image_url": "https://s.yimg.com/iu/api/res/1.2/bZSQIx4k_NfTfu8XvYranA--~C/YXBwaWQ9eXNwb3J0cztjaD0yMzM2O2NyPTE7Y3c9MTc5MDtkeD04NTc7ZHk9MDtmaT11bGNyb3A7aD02MDtxPTEwMDt3PTQ2/https://s.yimg.com/xe/i/us/sp/v/mlb_cutout/players_l/04052023/12215.png",
+        "is_undroppable": "0",
+        "position_type": "P",
+        "primary_position": "SP",
+        "eligible_positions": {
+            "position": [
+                "SP",
+                "RP",
+                "P"
+            ]
+        },
+        "has_player_notes": "1",
+        "player_notes_last_timestamp": "1681346412",
+        "selected_position": {
+            "coverage_type": "date",
+            "date": "2023-04-18",
+            "position": "BN",
+            "is_flex": "0"
+        },
+        "starting_status": {
+            "coverage_type": "date",
+            "date": "2023-04-18",
+            "is_starting": "1"
+        },
+        "is_editable": "0"
+    },
+    {
+        "player_key": "422.p.9121",
+        "player_id": "9121",
+        "name": {
+            "full": "Gerrit Cole",
+            "first": "Gerrit",
+            "last": "Cole",
+            "ascii_first": "Gerrit",
+            "ascii_last": "Cole"
+        },
+        "url": "https://sports.yahoo.com/mlb/players/9121",
+        "editorial_player_key": "mlb.p.9121",
+        "editorial_team_key": "mlb.t.10",
+        "editorial_team_full_name": "New York Yankees",
+        "editorial_team_abbr": "NYY",
+        "editorial_team_url": "https://sports.yahoo.com/mlb/teams/ny-yankees/",
+        "is_keeper": {
+            "status": {},
+            "cost": {},
+            "kept": {}
+        },
+        "uniform_number": "45",
+        "display_position": "SP",
+        "headshot": {
+            "url": "https://s.yimg.com/iu/api/res/1.2/252rZYwk.TRSmBKqbnpQzA--~C/YXBwaWQ9eXNwb3J0cztjaD0yMzM2O2NyPTE7Y3c9MTc5MDtkeD04NTc7ZHk9MDtmaT11bGNyb3A7aD02MDtxPTEwMDt3PTQ2/https://s.yimg.com/xe/i/us/sp/v/mlb_cutout/players_l/04032023/9121.png",
+            "size": "small"
+        },
+        "image_url": "https://s.yimg.com/iu/api/res/1.2/252rZYwk.TRSmBKqbnpQzA--~C/YXBwaWQ9eXNwb3J0cztjaD0yMzM2O2NyPTE7Y3c9MTc5MDtkeD04NTc7ZHk9MDtmaT11bGNyb3A7aD02MDtxPTEwMDt3PTQ2/https://s.yimg.com/xe/i/us/sp/v/mlb_cutout/players_l/04032023/9121.png",
+        "is_undroppable": "0",
+        "position_type": "P",
+        "primary_position": "SP",
+        "eligible_positions": {
+            "position": [
+                "SP",
+                "P"
+            ]
+        },
+        "has_player_notes": "1",
+        "player_notes_last_timestamp": "1681686674",
+        "selected_position": {
+            "coverage_type": "date",
+            "date": "2023-04-18",
+            "position": "BN",
+            "is_flex": "0"
+        },
+        "is_editable": "0"
+    },
+    {
+        "player_key": "422.p.10970",
+        "player_id": "10970",
+        "name": {
+            "full": "Nestor Cortes",
+            "first": "Nestor",
+            "last": "Cortes",
+            "ascii_first": "Nestor",
+            "ascii_last": "Cortes"
+        },
+        "url": "https://sports.yahoo.com/mlb/players/10970",
+        "editorial_player_key": "mlb.p.10970",
+        "editorial_team_key": "mlb.t.10",
+        "editorial_team_full_name": "New York Yankees",
+        "editorial_team_abbr": "NYY",
+        "editorial_team_url": "https://sports.yahoo.com/mlb/teams/ny-yankees/",
+        "is_keeper": {
+            "status": {},
+            "cost": {},
+            "kept": {}
+        },
+        "uniform_number": "65",
+        "display_position": "SP",
+        "headshot": {
+            "url": "https://s.yimg.com/iu/api/res/1.2/3W.bOnGSO1meh3lGrZeCKQ--~C/YXBwaWQ9eXNwb3J0cztjaD0yMzM2O2NyPTE7Y3c9MTc5MDtkeD04NTc7ZHk9MDtmaT11bGNyb3A7aD02MDtxPTEwMDt3PTQ2/https://s.yimg.com/xe/i/us/sp/v/mlb_cutout/players_l/04032023/10970.png",
+            "size": "small"
+        },
+        "image_url": "https://s.yimg.com/iu/api/res/1.2/3W.bOnGSO1meh3lGrZeCKQ--~C/YXBwaWQ9eXNwb3J0cztjaD0yMzM2O2NyPTE7Y3c9MTc5MDtkeD04NTc7ZHk9MDtmaT11bGNyb3A7aD02MDtxPTEwMDt3PTQ2/https://s.yimg.com/xe/i/us/sp/v/mlb_cutout/players_l/04032023/10970.png",
+        "is_undroppable": "0",
+        "position_type": "P",
+        "primary_position": "SP",
+        "eligible_positions": {
+            "position": [
+                "SP",
+                "P"
+            ]
+        },
+        "has_player_notes": "1",
+        "player_notes_last_timestamp": "1681535508",
+        "selected_position": {
+            "coverage_type": "date",
+            "date": "2023-04-18",
+            "position": "BN",
+            "is_flex": "0"
+        },
+        "is_editable": "0"
+    },
+    {
+        "player_key": "422.p.12356",
+        "player_id": "12356",
+        "name": {
+            "full": "Ryne Nelson",
+            "first": "Ryne",
+            "last": "Nelson",
+            "ascii_first": "Ryne",
+            "ascii_last": "Nelson"
+        },
+        "url": "https://sports.yahoo.com/mlb/players/12356",
+        "editorial_player_key": "mlb.p.12356",
+        "editorial_team_key": "mlb.t.29",
+        "editorial_team_full_name": "Arizona Diamondbacks",
+        "editorial_team_abbr": "ARI",
+        "editorial_team_url": "https://sports.yahoo.com/mlb/teams/arizona/",
+        "is_keeper": {
+            "status": {},
+            "cost": {},
+            "kept": {}
+        },
+        "uniform_number": "19",
+        "display_position": "SP",
+        "headshot": {
+            "url": "https://s.yimg.com/iu/api/res/1.2/dKfX_GnO2mjwZKC8kQ.Exw--~C/YXBwaWQ9eXNwb3J0cztjaD0yMzM2O2NyPTE7Y3c9MTc5MDtkeD04NTc7ZHk9MDtmaT11bGNyb3A7aD02MDtxPTEwMDt3PTQ2/https://s.yimg.com/xe/i/us/sp/v/mlb_cutout/players_l/03142023/12356.png",
+            "size": "small"
+        },
+        "image_url": "https://s.yimg.com/iu/api/res/1.2/dKfX_GnO2mjwZKC8kQ.Exw--~C/YXBwaWQ9eXNwb3J0cztjaD0yMzM2O2NyPTE7Y3c9MTc5MDtkeD04NTc7ZHk9MDtmaT11bGNyb3A7aD02MDtxPTEwMDt3PTQ2/https://s.yimg.com/xe/i/us/sp/v/mlb_cutout/players_l/03142023/12356.png",
+        "is_undroppable": "0",
+        "position_type": "P",
+        "primary_position": "SP",
+        "eligible_positions": {
+            "position": [
+                "SP",
+                "P"
+            ]
+        },
+        "has_player_notes": "1",
+        "player_notes_last_timestamp": "1681652509",
+        "selected_position": {
+            "coverage_type": "date",
+            "date": "2023-04-18",
+            "position": "BN",
+            "is_flex": "0"
+        },
+        "is_editable": "0"
+    },
+    {
+        "player_key": "422.p.10185",
+        "player_id": "10185",
+        "name": {
+            "full": "Joe Musgrove",
+            "first": "Joe",
+            "last": "Musgrove",
+            "ascii_first": "Joe",
+            "ascii_last": "Musgrove"
+        },
+        "url": "https://sports.yahoo.com/mlb/players/10185",
+        "status": "IL15",
+        "status_full": "15-Day Injured List",
+        "injury_note": "Toe",
+        "on_disabled_list": "1",
+        "editorial_player_key": "mlb.p.10185",
+        "editorial_team_key": "mlb.t.25",
+        "editorial_team_full_name": "San Diego Padres",
+        "editorial_team_abbr": "SD",
+        "editorial_team_url": "https://sports.yahoo.com/mlb/teams/san-diego/",
+        "is_keeper": {
+            "status": {},
+            "cost": {},
+            "kept": {}
+        },
+        "uniform_number": "44",
+        "display_position": "SP",
+        "headshot": {
+            "url": "https://s.yimg.com/iu/api/res/1.2/8W9XoRkEyHzKCtK4cUDe0g--~C/YXBwaWQ9eXNwb3J0cztjaD0yMzM2O2NyPTE7Y3c9MTc5MDtkeD04NTc7ZHk9MDtmaT11bGNyb3A7aD02MDtxPTEwMDt3PTQ2/https://s.yimg.com/xe/i/us/sp/v/mlb_cutout/players_l/03242023/10185.png",
+            "size": "small"
+        },
+        "image_url": "https://s.yimg.com/iu/api/res/1.2/8W9XoRkEyHzKCtK4cUDe0g--~C/YXBwaWQ9eXNwb3J0cztjaD0yMzM2O2NyPTE7Y3c9MTc5MDtkeD04NTc7ZHk9MDtmaT11bGNyb3A7aD02MDtxPTEwMDt3PTQ2/https://s.yimg.com/xe/i/us/sp/v/mlb_cutout/players_l/03242023/10185.png",
+        "is_undroppable": "0",
+        "position_type": "P",
+        "primary_position": "SP",
+        "eligible_positions": {
+            "position": [
+                "SP",
+                "P",
+                "IL"
+            ]
+        },
+        "has_player_notes": "1",
+        "has_recent_player_notes": "1",
+        "player_notes_last_timestamp": "1681873520",
+        "selected_position": {
+            "coverage_type": "date",
+            "date": "2023-04-18",
+            "position": "BN",
+            "is_flex": "0"
+        },
+        "is_editable": "0"
+    },
+    {
+        "player_key": "422.p.9584",
+        "player_id": "9584",
+        "name": {
+            "full": "Corey Seager",
+            "first": "Corey",
+            "last": "Seager",
+            "ascii_first": "Corey",
+            "ascii_last": "Seager"
+        },
+        "url": "https://sports.yahoo.com/mlb/players/9584",
+        "status": "IL10",
+        "status_full": "10-Day Injured List",
+        "injury_note": "Hamstring",
+        "on_disabled_list": "1",
+        "editorial_player_key": "mlb.p.9584",
+        "editorial_team_key": "mlb.t.13",
+        "editorial_team_full_name": "Texas Rangers",
+        "editorial_team_abbr": "TEX",
+        "editorial_team_url": "https://sports.yahoo.com/mlb/teams/texas/",
+        "is_keeper": {
+            "status": "1",
+            "cost": {},
+            "kept": "1"
+        },
+        "uniform_number": "5",
+        "display_position": "SS",
+        "headshot": {
+            "url": "https://s.yimg.com/iu/api/res/1.2/DypEw0W_TQByZbex3HS_AA--~C/YXBwaWQ9eXNwb3J0cztjaD0yMzM2O2NyPTE7Y3c9MTc5MDtkeD04NTc7ZHk9MDtmaT11bGNyb3A7aD02MDtxPTEwMDt3PTQ2/https://s.yimg.com/xe/i/us/sp/v/mlb_cutout/players_l/03172023/9584.png",
+            "size": "small"
+        },
+        "image_url": "https://s.yimg.com/iu/api/res/1.2/DypEw0W_TQByZbex3HS_AA--~C/YXBwaWQ9eXNwb3J0cztjaD0yMzM2O2NyPTE7Y3c9MTc5MDtkeD04NTc7ZHk9MDtmaT11bGNyb3A7aD02MDtxPTEwMDt3PTQ2/https://s.yimg.com/xe/i/us/sp/v/mlb_cutout/players_l/03172023/9584.png",
+        "is_undroppable": "0",
+        "position_type": "B",
+        "primary_position": "SS",
+        "eligible_positions": {
+            "position": [
+                "SS",
+                "Util",
+                "IL"
+            ]
+        },
+        "has_player_notes": "1",
+        "player_notes_last_timestamp": "1681339838",
+        "selected_position": {
+            "coverage_type": "date",
+            "date": "2023-04-18",
+            "position": "IL",
+            "is_flex": "0"
+        },
+        "starting_status": {
+            "coverage_type": "date",
+            "date": "2023-04-18",
+            "is_starting": "0"
+        },
+        "is_editable": "0"
+    },
+    {
+        "player_key": "422.p.9581",
+        "player_id": "9581",
+        "name": {
+            "full": "Adalberto Mondesi",
+            "first": "Adalberto",
+            "last": "Mondesi",
+            "ascii_first": "Adalberto",
+            "ascii_last": "Mondesi"
+        },
+        "url": "https://sports.yahoo.com/mlb/players/9581",
+        "status": "IL60",
+        "status_full": "60-Day Injured List",
+        "injury_note": "Knee",
+        "on_disabled_list": "1",
+        "editorial_player_key": "mlb.p.9581",
+        "editorial_team_key": "mlb.t.2",
+        "editorial_team_full_name": "Boston Red Sox",
+        "editorial_team_abbr": "BOS",
+        "editorial_team_url": "https://sports.yahoo.com/mlb/teams/boston/",
+        "is_keeper": {
+            "status": {},
+            "cost": {},
+            "kept": {}
+        },
+        "uniform_number": "43",
+        "display_position": "SS",
+        "headshot": {
+            "url": "https://s.yimg.com/iu/api/res/1.2/oqrW3n81GFVnGVtobh3qxg--~C/YXBwaWQ9eXNwb3J0cztjaD0yMzM2O2NyPTE7Y3c9MTc5MDtkeD04NTc7ZHk9MDtmaT11bGNyb3A7aD02MDtxPTEwMDt3PTQ2/https://s.yimg.com/xe/i/us/sp/v/mlb_cutout/players_l/03072023/9581.png",
+            "size": "small"
+        },
+        "image_url": "https://s.yimg.com/iu/api/res/1.2/oqrW3n81GFVnGVtobh3qxg--~C/YXBwaWQ9eXNwb3J0cztjaD0yMzM2O2NyPTE7Y3c9MTc5MDtkeD04NTc7ZHk9MDtmaT11bGNyb3A7aD02MDtxPTEwMDt3PTQ2/https://s.yimg.com/xe/i/us/sp/v/mlb_cutout/players_l/03072023/9581.png",
+        "is_undroppable": "0",
+        "position_type": "B",
+        "primary_position": "SS",
+        "eligible_positions": {
+            "position": [
+                "SS",
+                "Util",
+                "IL"
+            ]
+        },
+        "has_player_notes": "1",
+        "player_notes_last_timestamp": "1681173714",
+        "selected_position": {
+            "coverage_type": "date",
+            "date": "2023-04-18",
+            "position": "IL",
+            "is_flex": "0"
+        },
+        "starting_status": {
+            "coverage_type": "date",
+            "date": "2023-04-18",
+            "is_starting": "0"
+        },
+        "is_editable": "0"
+    },
+    {
+        "player_key": "422.p.9902",
+        "player_id": "9902",
+        "name": {
+            "full": "Raisel Iglesias",
+            "first": "Raisel",
+            "last": "Iglesias",
+            "ascii_first": "Raisel",
+            "ascii_last": "Iglesias"
+        },
+        "url": "https://sports.yahoo.com/mlb/players/9902",
+        "status": "IL15",
+        "status_full": "15-Day Injured List",
+        "injury_note": "Shoulder",
+        "on_disabled_list": "1",
+        "editorial_player_key": "mlb.p.9902",
+        "editorial_team_key": "mlb.t.15",
+        "editorial_team_full_name": "Atlanta Braves",
+        "editorial_team_abbr": "ATL",
+        "editorial_team_url": "https://sports.yahoo.com/mlb/teams/atlanta/",
+        "is_keeper": {
+            "status": "1",
+            "cost": {},
+            "kept": "1"
+        },
+        "uniform_number": "26",
+        "display_position": "RP",
+        "headshot": {
+            "url": "https://s.yimg.com/iu/api/res/1.2/McNY2hkdR.SDFG2ZWoMgbQ--~C/YXBwaWQ9eXNwb3J0cztjaD0yMzM2O2NyPTE7Y3c9MTc5MDtkeD04NTc7ZHk9MDtmaT11bGNyb3A7aD02MDtxPTEwMDt3PTQ2/https://s.yimg.com/xe/i/us/sp/v/mlb_cutout/players_l/03082023/9902.png",
+            "size": "small"
+        },
+        "image_url": "https://s.yimg.com/iu/api/res/1.2/McNY2hkdR.SDFG2ZWoMgbQ--~C/YXBwaWQ9eXNwb3J0cztjaD0yMzM2O2NyPTE7Y3c9MTc5MDtkeD04NTc7ZHk9MDtmaT11bGNyb3A7aD02MDtxPTEwMDt3PTQ2/https://s.yimg.com/xe/i/us/sp/v/mlb_cutout/players_l/03082023/9902.png",
+        "is_undroppable": "0",
+        "position_type": "P",
+        "primary_position": "RP",
+        "eligible_positions": {
+            "position": [
+                "RP",
+                "P",
+                "IL"
+            ]
+        },
+        "has_player_notes": "1",
+        "player_notes_last_timestamp": "1681789720",
+        "selected_position": {
+            "coverage_type": "date",
+            "date": "2023-04-18",
+            "position": "IL",
+            "is_flex": "0"
+        },
+        "is_editable": "0"
+    },
+    {
+        "player_key": "422.p.9122",
+        "player_id": "9122",
+        "name": {
+            "full": "Trevor Bauer",
+            "first": "Trevor",
+            "last": "Bauer",
+            "ascii_first": "Trevor",
+            "ascii_last": "Bauer"
+        },
+        "url": "https://sports.yahoo.com/mlb/players/9122",
+        "status": "NA",
+        "status_full": "Not Active",
+        "editorial_player_key": "mlb.p.9122",
+        "editorial_team_key": "mlb.t.19",
+        "editorial_team_full_name": "Los Angeles Dodgers",
+        "editorial_team_abbr": "LAD",
+        "editorial_team_url": "https://sports.yahoo.com/mlb/teams/la-dodgers/",
+        "is_keeper": {
+            "status": {},
+            "cost": {},
+            "kept": {}
+        },
+        "uniform_number": {},
+        "display_position": "SP",
+        "headshot": {
+            "url": "https://s.yimg.com/iu/api/res/1.2/fx4.YX14cJK_oLnkpjdoWw--~C/YXBwaWQ9eXNwb3J0cztjaD0yMzM2O2NyPTE7Y3c9MTc5MDtkeD04NTc7ZHk9MDtmaT11bGNyb3A7aD02MDtxPTEwMDt3PTQ2/https://s.yimg.com/xe/i/us/sp/v/mlb_cutout/players_l/03102021/9122.png",
+            "size": "small"
+        },
+        "image_url": "https://s.yimg.com/iu/api/res/1.2/fx4.YX14cJK_oLnkpjdoWw--~C/YXBwaWQ9eXNwb3J0cztjaD0yMzM2O2NyPTE7Y3c9MTc5MDtkeD04NTc7ZHk9MDtmaT11bGNyb3A7aD02MDtxPTEwMDt3PTQ2/https://s.yimg.com/xe/i/us/sp/v/mlb_cutout/players_l/03102021/9122.png",
+        "is_undroppable": "0",
+        "position_type": "P",
+        "primary_position": "SP",
+        "eligible_positions": {
+            "position": [
+                "SP",
+                "P",
+                "NA"
+            ]
+        },
+        "selected_position": {
+            "coverage_type": "date",
+            "date": "2023-04-18",
+            "position": "NA",
+            "is_flex": "0"
+        },
+        "is_editable": "0"
+    }
+]
