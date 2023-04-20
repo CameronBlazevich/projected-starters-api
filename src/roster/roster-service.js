@@ -26,6 +26,10 @@ const getRosteredPlayerProjections = async (user, leagueId, teamId) => {
         
 
     } catch (err) {
+        console.error(`Couldn't GetMyPlayers() status: ${err.response?.status} ${err.response?.statusText} code: ${err.code} desc: ${err.response.data}`)
+        if (err.response?.data?.includes(`Invalid team key`)) {
+          throw new Error(`Invalid team key`);
+        }
         console.error(err)
         throw err;
     }

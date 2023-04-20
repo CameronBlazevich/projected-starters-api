@@ -26,6 +26,9 @@ router.get("/getProjectedStarters/:leagueId/:teamId", auth, async (req, res) => 
     } catch (err) {
         if (err.message?.includes("401")) {
             return res.status(400).json({error: "Yahoo authentication failure"})
+        } 
+        if (err.message === "Invalid team key") {
+            return res.status(400).json({error: "invalid-team-key"})
         }
         return res.status(500).json({ error: "Something went wrong" })
     }

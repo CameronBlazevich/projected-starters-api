@@ -49,7 +49,7 @@ router.post("/deleteUserLeague", auth, async (req, res) => {
 });
 
 const mapLeagues = (league) => {
-    const mapped = {league_id: league.league_id, league_type_id: league.league_type_id};
+    const mapped = {league_id: league.league_id, league_type_id: league.league_type_id, team_id: league.team_id};
     return mapped;
 }
 
