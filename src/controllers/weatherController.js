@@ -39,9 +39,6 @@ router.get("/", async (req, res) => {
                 const formattedDate = gameTimeAtStadium.slice(0,10);
                 
                 const weatherInfoForDayOfGame = weatherInfoAtStadium.forecast.days.find(day => day.date === formattedDate);
-                
-
-                // console.log(weatherInfoForDayOfGame)
 
                 const weatherAroundGame = []
                 for (let k = -2; k < 5; k++) {
