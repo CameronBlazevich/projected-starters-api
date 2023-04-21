@@ -24,7 +24,7 @@ async function refreshWeatherInfoCache() {
     }
 
     cacheManager.setInCache('weather-info', weatherResults, 35 * 60 * 1000);
-    storeData(JSON.stringify(weatherResults), './weatherInfo.json')
+
     console.log("Finished refreshing weather cache...")
 }
 
