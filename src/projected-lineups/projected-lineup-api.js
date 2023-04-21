@@ -9,6 +9,12 @@ const formatResponse = (resp) => {
     homeTeam: game.HomeTeam,
     awayPitcher: game.AwayTeamProbablePitcherDetails,
     homePitcher: game.HomeTeamProbablePitcherDetails,
+    date: game.DateString,
+    dateTime:game.DateTime,
+    gameTime: {
+      time: game.GameTime,
+      tz: "America/New_York" // haven't spent too much time double checking this
+    }, 
   });
   const games = resp.map(mapGame);
 
@@ -21,7 +27,7 @@ const formatResponse = (resp) => {
 };
 
 const getLineups = async () => {
-  const totalDatesToGet = process.env.NODE_ENV === 'production' ? 7 : 3;
+  const totalDatesToGet = process.env.NODE_ENV === 'production' ? 7 : 2;
   const dates = dateHelper.getTodayAndXMore(totalDatesToGet);
 
   let requestPromises = [];

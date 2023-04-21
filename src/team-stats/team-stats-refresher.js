@@ -18,7 +18,7 @@ async function refreshStatsCache() {
     team.losses = teamRecord.losses;
   })
 
-  cacheManager.setInCache('team-stats', enhancedStats, 18000);
+  cacheManager.setInCache('team-stats', enhancedStats, 35 * 60 * 1000);
 }
 
 refreshStatsCache();
