@@ -221,7 +221,7 @@ const stadiumLocations  = [
     {
       "park": "Nationals Park",
       "teamName": "Washington Nationals",
-      "teamAbbr": "WAS",
+      "teamAbbr": "WSH",
       "lattitude": 38.87277778,
       "longitude": -77.0075
     }
