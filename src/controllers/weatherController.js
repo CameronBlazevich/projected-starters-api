@@ -25,7 +25,7 @@ router.get("/", async (req, res) => {
 
                 const weatherInfoAtStadium = weatherInfo.find(wi => wi.teamAbbr === game.homeTeam);
                 if (!weatherInfoAtStadium) {
-                    console.log(`Didn't find any weather info for ${game.homeTeam.teamAbbr}`)
+                    console.log(`Didn't find any weather info for ${game.homeTeam}`)
                 }
 
                 // get gameTime in local time
