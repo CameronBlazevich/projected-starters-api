@@ -21,7 +21,6 @@ const weatherRefresher = require('./weather/weather-refresher')
 const teamStatsRefresher = require('./team-stats/team-stats-refresher');
 const projectedLineupRefresher = require('./projected-lineups/projected-lineup-refresher');
 
-
 // import the controllers
 const freeAgentsController = require('./controllers/freeAgentsController');
 const loginController = require('./controllers/loginController')
@@ -32,6 +31,7 @@ const rosterController = require('./controllers/rosterController')
 const teamStatsController = require('./controllers/teamStatsController')
 const userTeamController = require('./controllers/userTeamController')
 const weatherController = require('./controllers/weatherController')
+const watchlistController = require('./controllers/watchlistController')
 
 app.use('/getFreeAgents', freeAgentsController);
 app.use('/login', loginController);
@@ -42,6 +42,7 @@ app.use('/roster', rosterController);
 app.use('/teamStats', teamStatsController)
 app.use('/userTeams', userTeamController)
 app.use('/weather', weatherController)
+app.use('/watchlist', watchlistController);
 // start the server
 const port = (process.env.PORT || 3000);
 app.listen(port, () => {

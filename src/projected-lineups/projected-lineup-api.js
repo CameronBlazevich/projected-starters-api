@@ -3,19 +3,26 @@ const dateHelper = require('../utilities/dateHelper');
 const { getPlayerStats } = require('./player-stats-api');
 const fs = require("fs");
 
-const formatResponse = (resp) => {
-  const mapGame = (game) => ({
-    awayTeam: game.AwayTeam,
-    homeTeam: game.HomeTeam,
-    awayPitcher: game.AwayTeamProbablePitcherDetails,
-    homePitcher: game.HomeTeamProbablePitcherDetails,
-    date: game.DateString,
-    dateTime:game.DateTime,
-    gameTime: {
-      time: game.GameTime,
-      tz: "America/New_York" // haven't spent too much time double checking this
-    }, 
-  });
+const formatResponse = (resp) => {  
+  const mapGame = (game) => {
+    const battingOrder = getBattingLineups(game);
+    const mapped = {
+      mlb_com_game_id: game.GameID,
+      awayTeam: game.AwayTeam,
+      homeTeam: game.HomeTeam,
+      awayPitcher: game.AwayTeamProbablePitcherDetails,
+      homePitcher: game.HomeTeamProbablePitcherDetails,
+      awayBattingOrder: battingOrder.awayTeamBattingOrder,
+      homeBattingOrder: battingOrder.homeTeamBattingOrder,
+      date: game.DateString,
+      dateTime: game.DateTime,
+      gameTime: {
+        time: game.GameTime,
+        tz: "America/New_York" // haven't spent too much time double checking this
+      },
+    };
+    return mapped;
+  }
   const games = resp.map(mapGame);
 
   const formatted = {
@@ -25,6 +32,17 @@ const formatResponse = (resp) => {
 
   return formatted;
 };
+
+const getBattingLineups = (game) => {
+  const homeTeamHitters = game.PlayerGameProjections.filter(pgp => pgp.Team === game.HomeTeam);
+  const awayTeamHitters = game.PlayerGameProjections.filter(pgp => pgp.Team === game.AwayTeam);
+
+  const homeTeamBattingOrder = homeTeamHitters.sort((a, b) => a.BattingOrder - b.BattingOrder);
+  const awayTeamBattingOrder = awayTeamHitters.sort((a, b) => a.BattingOrder - b.BattingOrder);
+
+  return { homeTeamBattingOrder, awayTeamBattingOrder }
+
+}
 
 const getLineups = async () => {
   const totalDatesToGet = process.env.NODE_ENV === 'production' ? 7 : 2;
@@ -85,7 +103,7 @@ const getLineups = async () => {
       }
     }
   }
-  
+
   return completedRequestPromises;
 };
 

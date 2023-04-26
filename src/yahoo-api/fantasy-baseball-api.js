@@ -326,18 +326,27 @@ exports.yfbb = {
         // Remove trailing comma
         playerIDList = playerIDList.substring(0, playerIDList.length - 1);
 
-        const playerStatsUrl = `${this.YAHOO}/players;player_keys=${playerIDList};out=stats`;
-
-        const playerStatsResponse  =  await this.makeAPIrequest(playerStatsUrl, user);
-
-        const playerStats = playerStatsResponse.fantasy_content.players.player;
-        // console.log(playerStats)
+        const playerStats = await this.getPlayersByIds(user, playerIDList, leagueId);
+        
         return playerStats;
       }
     } catch (err) {
       console.error(`Error in getMyPlayersStats(): ${err}`);
       return err;
     }
+  },
+
+  async getPlayersByIds(user, playerIdsList, leagueId) {
+    const playerStatsUrl = `${this.YAHOO}/players;player_keys=${playerIdsList};out=stats`;
+
+    const temp = `${this.YAHOO}/league/422.l.${leagueId
+    }/players;status=A;player_keys=${playerIdsList};sort=AR;out=stats`;
+
+    const playerStatsResponse  =  await this.makeAPIrequest(temp, user);
+
+    const playerStats = playerStatsResponse.fantasy_content.league.players.player;
+    return playerStats;
+        // console.log(playerStats)
   },
 
   // Get what week it is in the season

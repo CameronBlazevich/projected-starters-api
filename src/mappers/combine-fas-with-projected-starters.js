@@ -16,26 +16,42 @@ function getTeamStats(abbr, teamStats) {
   return {};
 }
 
-function extractGameDates(arr, teamStats) {
+function hydrateMatchupsWithTeamStats(projectedLineups, teamStats) {
+  projectedLineups.forEach(dayOfGames => {
+    dayOfGames.games.forEach(game => {
+      if (game.awayTeam) {
+        game.awayTeam = getTeamStats(game.awayTeam, teamStats);
+        // console.log(`away stats ${JSON.stringify(awayStats)}`)
+      }
+      if (game.homeTeam) {
+        game.homeTeam = getTeamStats(game.homeTeam, teamStats);
+      }
+    })
+  })
+}
+
+function addStatsAndShapeResponse(projectedLineups, teamStats) {
   const result = [];
-  arr.forEach((subArr) => {
-    subArr.forEach((game) => {
+  projectedLineups.forEach((dayOfGames) => {
+    dayOfGames.forEach((game) => {
       const gameDate = game.gameDate.split(',')[0]; // extract just the date
       let awayStats = {};
       let homeStats = {};
       if (game.awayTeam) {
         awayStats = getTeamStats(game.awayTeam, teamStats);
+        // console.log(`away stats ${JSON.stringify(awayStats)}`)
       }
       if (game.homeTeam) {
         homeStats = getTeamStats(game.homeTeam, teamStats);
       }
+      // console.log(`away stats ${JSON.stringify(awayStats)}`)
+      // console.log(`home stats ${JSON.stringify(homeStats)}`)
       const gameObj = {
-        // create object with just the necessary data
-        awayTeam: awayStats,
-        homeTeam: homeStats,
-        awayPitcher: game.awayPitcher,
-        homePitcher: game.homePitcher,
+        ...game,
       };
+
+      gameObj.awayTeam = awayStats;
+      gameObj.homeTeam = homeStats;
       if (gameObj.awayPitcher || gameObj.homePitcher) {
         // check if gameObj contains at least one non-empty value
         let gameDateObj = result.find((obj) => obj.gameDate === gameDate); // check if gameDate already exists in result array
@@ -105,14 +121,15 @@ function combineMatchupsAndFreeAgents(
 
       // If there is a match for either pitcher, add a new object to the combined data array
       if (awayPitcherMatch || homePitcherMatch) {
-        const pitcher = {
+        const gameToAdd = {
           gameDate: projectedMatchups[i].date,
-          awayTeam: game.awayTeam,
-          homeTeam: game.homeTeam,
+          gameId: game.mlb_com_game_id,
+          ...game,
           awayPitcher: awayPitcherMatch || null,
           homePitcher: homePitcherMatch || null,
+
         }
-        dailyData.push(pitcher);
+        dailyData.push(gameToAdd);
       } else {
         dailyData.push({ gameDate: projectedMatchups[i].date });
       }
@@ -121,11 +138,11 @@ function combineMatchupsAndFreeAgents(
   }
   // Return the combined data array
   const result = //convertPitchers(
-    extractGameDates(combinedData, teamStats);
+    addStatsAndShapeResponse(combinedData, teamStats);
   //  teamStats
   //);
   // replaceOpposingTeams(result, teamStats);
   return result;
 }
 
-module.exports = { combineMatchupsAndFreeAgents };
+module.exports = { combineMatchupsAndFreeAgents, hydrateMatchupsWithTeamStats };
