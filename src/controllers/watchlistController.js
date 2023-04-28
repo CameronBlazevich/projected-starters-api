@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const auth = require('../request-handling/middleware');
-const {getWatchedPlayers} = require('../watchlist/watchlist-service')
+const {getWatchedPlayers, addToWatchlist} = require('../watchlist/watchlist-service')
+const { PlayerIdTypes } = require('../enums');
 
 
 
@@ -31,12 +32,18 @@ router.post("/addToWatchlist", auth, async (req, res) => {
         return res.status(400).send("No playerId in request")
     }
 
+    const {leagueId, gameId, playerId} = req.body;
+
 
     const user = req.user;
 
+    const gameTime = new Date()
+    const watchlistArgs = {userId: user.user_id, playerId, playerIdTypeId: PlayerIdTypes.YahooPlayerId, leagueId, gameId, gameTime}
+
+    const result = await addToWatchlist(watchlistArgs)
     
 
-    return res.status(200).json({});
+    return res.status(200).json({result});
 });
 
 module.exports = router;

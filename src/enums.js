@@ -1,5 +1,7 @@
 const LeagueTypes = Object.freeze({ 'YAHOO': 1, 'ESPN': 2 });
 
+const PlayerIdTypes = Object.freeze({ 'YahooPlayerId' : 1});
+
 const TeamIds = Object.freeze(
     {
         "TB": 139,
@@ -37,4 +39,4 @@ const TeamIds = Object.freeze(
     }
 )
 
-module.exports = { LeagueTypes, TeamIds }
+module.exports = { LeagueTypes, TeamIds, PlayerIdTypes }

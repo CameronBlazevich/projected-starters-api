@@ -337,12 +337,14 @@ exports.yfbb = {
   },
 
   async getPlayersByIds(user, playerIdsList, leagueId) {
-    const playerStatsUrl = `${this.YAHOO}/players;player_keys=${playerIdsList};out=stats`;
-
+    const countPlayers = playerIdsList.split(',').length;
+    let playersStatsUrl = `${this.YAHOO}/league/422.l.${leagueId
+    }/players;player_keys=${playerIdsList};sort=AR;out=stats`;
+    
     const temp = `${this.YAHOO}/league/422.l.${leagueId
     }/players;status=A;player_keys=${playerIdsList};sort=AR;out=stats`;
 
-    const playerStatsResponse  =  await this.makeAPIrequest(temp, user);
+    const playerStatsResponse  =  await this.makeAPIrequest(playersStatsUrl, user);
 
     const playerStats = playerStatsResponse.fantasy_content.league.players.player;
     return playerStats;
