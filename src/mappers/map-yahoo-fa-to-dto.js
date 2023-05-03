@@ -66,6 +66,7 @@ const json = [
 ];
 
 function mapFA(yahooFA) {
+  
   const mapped = {
     name: yahooFA.name,
     team: yahooFA.editorial_team_abbr,
@@ -73,6 +74,8 @@ function mapFA(yahooFA) {
     imageUrl: yahooFA.image_url,
     playerId: yahooFA.player_id,
     eligiblePositions: yahooFA.eligible_positions,
+    playerStats: yahooFA.player_stats,
+    playerStatsAdvanced: yahooFA.player_advanced_stats
     // headshot: yahooFA.headshot,
   };
 

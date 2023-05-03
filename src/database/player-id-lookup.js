@@ -1,5 +1,20 @@
 const { pool } = require('./postgresDB');
 
+async function getByYahooId(yahooPlayerId) {
+    const sql = `
+        SELECT * FROM player_id_lookup
+        WHERE yahooid = $1;
+    `
+    try {
+        const results = await pool.query(sql, [yahooPlayerId]);
+        return results.rows[0];
+    } catch (err) {
+        console.error("Something went wrong")
+        console.error(err);
+        throw err;
+    }
+}
+
 async function getMlbIdsFromYahooIds(yahooIdArray) {
     const sql = `
         SELECT mlbid, yahooid FROM player_id_lookup
@@ -45,4 +60,4 @@ async function getPlayerNamesFromYahooName(yahooNamesArray) {
     }
 }
 
-module.exports = { getMlbIdFromYahooName, getPlayerNamesFromYahooName, getMlbIdsFromYahooIds }
+module.exports = { getMlbIdFromYahooName, getPlayerNamesFromYahooName, getMlbIdsFromYahooIds, getByYahooId }

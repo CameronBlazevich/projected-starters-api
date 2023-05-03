@@ -14,7 +14,7 @@ router.get('/:leagueId', auth, async (req, res) => {
   const projectedLineups = cacheManager.getFromCache('projected-lineups');
 
   try {
-    yahooApi.yfbb.WEEK = await yahooApi.yfbb.getCurrentWeek(req.user);
+    yahooApi.yfbb.WEEK = await yahooApi.yfbb.getCurrentWeek(req.user, leagueId);
   } catch (err) {
     if (err.message?.includes("401")) {
       return res.status(400).json({error: "Yahoo authentication failure"})

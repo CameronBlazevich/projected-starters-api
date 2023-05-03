@@ -4,6 +4,7 @@ const axios = require('axios');
 const parser = require('xml2json');
 const CONFIG = require('../../config.json');
 const { getAuthCode } = require('../database/user-yahoo-info');
+const { mapStatsOntoPlayers, addKnownAdvancedStats } = require('../mappers/yahoo-stats-mapper');
 
 const USER_ID = 1;
 
@@ -134,8 +135,8 @@ exports.yfbb = {
   scoreboard() {
     return `${this.YAHOO}/league/${CONFIG.LEAGUE_KEY}/scoreboard;week=${this.WEEK}`;
   },
-  metadata() {
-    return `${this.YAHOO}/league/${CONFIG.LEAGUE_KEY}/metadata`;
+  metadata(leagueId) {
+    return `${this.YAHOO}/league/422.l.${leagueId}/metadata`;
   },
   transactions() {
     return `${this.YAHOO}/league/${CONFIG.LEAGUE_KEY}/transactions;types=add,trade,drop`;
@@ -341,21 +342,22 @@ exports.yfbb = {
     let playersStatsUrl = `${this.YAHOO}/league/422.l.${leagueId
     }/players;player_keys=${playerIdsList};sort=AR;out=stats`;
     
-    const temp = `${this.YAHOO}/league/422.l.${leagueId
-    }/players;status=A;player_keys=${playerIdsList};sort=AR;out=stats`;
-
     const playerStatsResponse  =  await this.makeAPIrequest(playersStatsUrl, user);
 
+    const statIds = await this.getStatsIDs(user); // ToDo: This should just be a static lookup, no need to go to Yahoo each time!!!
+    // addKnownAdvancedStats(statIds)
     const playerStats = playerStatsResponse.fantasy_content.league.players.player;
+
+    // mapStatsOntoPlayers(playerStats, statIds);
     return playerStats;
-        // console.log(playerStats)
   },
+  
 
   // Get what week it is in the season
-  async getCurrentWeek(user) {
+  async getCurrentWeek(user, leagueId) {
     try {
       console.log(`Getting current week for userId: ${user.user_id} email: ${user?.email}`);
-      const results = await this.makeAPIrequest(this.metadata(), user);
+      const results = await this.makeAPIrequest(this.metadata(leagueId), user);
       return results.fantasy_content.league.current_week;
     } catch (err) {
       console.error(`Error in getCurrentWeek(): ${err}`);
