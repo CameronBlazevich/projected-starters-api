@@ -10,6 +10,7 @@ router.get("/:leagueId", auth, async (req, res) => {
    const user = req.user;
     try {
         const result = await getWatchedPlayers(user, req.params.leagueId);
+        console.log(result)
         return res.status(200).json(result);
     } catch (err) {
         console.error(err);
