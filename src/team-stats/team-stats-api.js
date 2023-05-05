@@ -1,4 +1,5 @@
 const axios = require('axios');
+const { logError } = require('../axios/error-logger');
 
 const statsUrl =
   'https://bdfed.stitch.mlbinfra.com/bdfed/stats/team?stitch_env=prod&sportId=1&gameType=R&group=hitting&order=desc&sortStat=runs&stats=season&season=2023&limit=30&offset=0';
@@ -31,8 +32,7 @@ const getTeamStats = async () => {
 
     mapped = mapResponse(resp);
   } catch (err) {
-    console.log(err);
-    console.error("Couldn't get team stats");
+    logError(err)
   }
 
   return mapped;
@@ -47,7 +47,7 @@ const getTeamStandings = async () => {
       return resp.data.records;
     }
   } catch (err) {
-    console.error(err);
+    logError(err)
   }
 }
 

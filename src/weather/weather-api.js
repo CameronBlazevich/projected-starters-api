@@ -1,4 +1,5 @@
-const axios = require('axios')
+const axios = require('axios');
+const { logError } = require('../axios/error-logger');
 
 const weatherUrl = 'http://api.weatherapi.com/v1/forecast.json?';
 const key = process.env.WEATHER_API_KEY;
@@ -10,7 +11,7 @@ const getWeatherForecast = async (lat, lon) => {
         const response = await axios.get(reqUrl);
         return response.data;
     } catch (err) {
-        console.error(err)
+        logError(err)
     }
 }
 

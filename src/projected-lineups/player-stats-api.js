@@ -1,4 +1,5 @@
 const axios = require('axios');
+const { logError } = require('../axios/error-logger');
 
 const getPlayerStats = async (playerId) => {
   const url = `https://fantasydata.com/MLB_Player/PlayerSeasonStats`;
@@ -10,7 +11,7 @@ const getPlayerStats = async (playerId) => {
     console.log(
       `Something went wrong getting player stats for playerId ${playerId}`
     );
-    console.error(err);
+    logError(err)
   }
 };
 

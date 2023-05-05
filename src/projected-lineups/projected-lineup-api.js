@@ -2,6 +2,7 @@ const axios = require('axios');
 const dateHelper = require('../utilities/dateHelper');
 const { getPlayerStats } = require('./player-stats-api');
 const fs = require("fs");
+const { logError } = require('../axios/error-logger');
 
 const formatResponse = (resp) => {  
   const mapGame = (game) => {
@@ -121,7 +122,7 @@ async function makeAPIRequest(filter) {
     const formatted = formatResponse(jsonData);
     return formatted;
   } catch (err) {
-    console.error(`Some shit hit the fan getting projected lineups: ${err}`);
+    logError(err)
   }
 }
 

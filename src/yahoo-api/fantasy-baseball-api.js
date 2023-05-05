@@ -5,6 +5,7 @@ const parser = require('xml2json');
 const CONFIG = require('../../config.json');
 const { getAuthCode } = require('../database/user-yahoo-info');
 const { mapStatsOntoPlayers, addKnownAdvancedStats } = require('../mappers/yahoo-stats-mapper');
+const { logError } = require('../axios/error-logger');
 
 const USER_ID = 1;
 
@@ -169,21 +170,7 @@ exports.yfbb = {
       }),
     }).catch((err) => {
       console.error(`Error in refreshAuthorizationToken(): ${err}`);
-      if (err.response) {
-        // The request was made and the server responded with a status code
-        // that falls out of the range of 2xx
-        console.log(err.response.data);
-        console.log(err.response.status);
-        console.log(err.response.headers);
-      } else if (err.request) {
-        // The request was made but no response was received
-        // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-        // http.ClientRequest in node.js
-        console.log(err.request);
-      } else {
-        // Something happened in setting up the request that triggered an Error
-        console.log('Error', err.message);
-      }
+      logError(err)
       console.log(err.config);
     });
   },
@@ -232,6 +219,7 @@ exports.yfbb = {
           );
         }
       } else {
+        logError(err);
         console.error(
           `Error with credentials in makeAPIrequest()/refreshAuthorizationToken(): ${err}`
         );

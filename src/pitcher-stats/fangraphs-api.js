@@ -1,4 +1,5 @@
 const axios = require('axios');
+const { logError } = require('../axios/error-logger');
 
 
 const getPitcherSplits = async playerId => {
@@ -7,7 +8,7 @@ const getPitcherSplits = async playerId => {
     const response = await axios.get(url);
     return response.data;
     } catch (err) {
-        console.error(err);
+        logError(err);
     }
 }
 
@@ -18,7 +19,7 @@ const getSeasonStats = async playerId => {
     const response = await axios.get(url);
     return response.data;
     } catch (err) {
-        console.error(err);
+        logError(err);
     }
 }
 
