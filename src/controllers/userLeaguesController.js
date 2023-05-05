@@ -28,11 +28,16 @@ router.post("/createUserLeague", auth, async (req, res) => {
 
     const user = req.user;
 
-    const result = await createUserLeague(user.user_id, req.body.leagueId, req.body.leagueTypeId)
+    try {
+        const result = await createUserLeague(user.user_id, req.body.leagueId, req.body.leagueTypeId)
 
-    const mappedResult = mapToDto(result);
+        const mappedResult = mapToDto(result);
 
-    return res.status(200).json(mappedResult);
+        return res.status(200).json(mappedResult);
+    } catch (err) {
+        console.error(err);
+        return res.status(500).json(err);
+    }
 });
 
 router.post("/deleteUserLeague", auth, async (req, res) => {
@@ -42,14 +47,19 @@ router.post("/deleteUserLeague", auth, async (req, res) => {
     }
     const user = req.user;
 
-    const result = await deleteUserLeague(user.user_id, req.body.leagueId)
-    const mapped = mapToDto(result);
+    try {
+        const result = await deleteUserLeague(user.user_id, req.body.leagueId)
+        const mapped = mapToDto(result);
 
-    return res.status(200).json(mapped);
+        return res.status(200).json(mapped);
+    } catch (err) {
+        console.error(err);
+        return res.status(500).json(err)
+    }
 });
 
 const mapLeagues = (league) => {
-    const mapped = {league_id: league.league_id, league_type_id: league.league_type_id, team_id: league.team_id};
+    const mapped = { league_id: league.league_id, league_type_id: league.league_type_id, team_id: league.team_id };
     return mapped;
 }
 
