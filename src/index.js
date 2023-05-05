@@ -1,17 +1,10 @@
-// import the express module and create an express app
 require("dotenv").config();
-// console.log(process.env) // Get environment variables from .env file(s)
 
 const express = require('express');
 
 const cors = require('cors')
 
 const bodyParser = require('body-parser')
-
-
-
-// const database = require('./database/initialize-database');
-// database.init();
 
 const app = express();
 app.use(cors());
