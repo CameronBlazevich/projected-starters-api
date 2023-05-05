@@ -52,10 +52,15 @@ router.post("/addToWatchlist", auth, async (req, res) => {
     const gameTime = new Date()
     const watchlistArgs = {userId: user.user_id, playerId, playerIdTypeId: PlayerIdTypes.YahooPlayerId, leagueId, gameId, gameTime}
 
+    try {
     const result = await addToWatchlist(watchlistArgs)
     
 
     return res.status(200).json(result);
+    } catch (err) {
+        console.error(err);
+        return res.status(500).json(err);
+    }
 });
 
 router.get("/getPlayerIds/:leagueId", auth, async (req, res) => {
@@ -86,15 +91,18 @@ router.post("/removeFromWatchlist", auth, async (req, res) => {
 
     const {leagueId, gameId, playerId} = req.body;
 
-
     const user = req.user;
 
-    const gameTime = new Date()
     const watchlistArgs = {userId: user.user_id, playerId, leagueId, gameId}
 
+    try {
     const result = await removeFromWatchlist(watchlistArgs)
     
     return res.status(200).json(result);
+    } catch (err) {
+        console.error(err);
+        return res.status(500).json(err)
+    }
 });
 
 module.exports = router;
