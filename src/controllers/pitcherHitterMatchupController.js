@@ -10,13 +10,14 @@ router.post('/', auth, async (req, res) => {
     const hittingTeam = req.body.hittingTeamAbbr;
 
     const request = {pitcherName, pitcherTeam, lineup, hittingTeam};
-
-
-
-
-    const result = await getPitcherHitterMatchups(request)
-
+    try {
+    const result = await getPitcherHitterMatchups(request);
     return res.status(200).json(result);
+    } catch (err) {
+        console.error(err);
+        return res.status(500).json(err)
+    }
+   
 }
 )
 
