@@ -18,10 +18,15 @@ router.post("/createUserTeam", auth, async (req, res) => {
 
     const user = req.user;
 
+    try {
     await createUserTeam(user.user_id, req.body.leagueId, req.body.teamId);
     const userLeagues = await getUserLeagues(user.user_id);
 
     return res.status(200).json(userLeagues);
+    } catch (err) {
+        console.error(err);
+        return res.status(500).json(err)
+    }
 });
 
 module.exports = router;
