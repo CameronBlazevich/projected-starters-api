@@ -8,7 +8,13 @@ const getPitcherHitterMatchups = async (request) => {
     const { pitcherName, pitcherTeam, lineup, hittingTeam } = request;
 
     const hittingTeamId = getMlbComTeamIdOrDefault(hittingTeam);
+    if (!hittingTeamId) {
+        console.log(`No hitting team id found for ${hittingTeam}`)
+    }
     const pitchingTeamId = getMlbComTeamIdOrDefault(pitcherTeam);
+    if (!pitchingTeamId) {
+        console.log(`No pitching team id found for ${pitcherTeam}`)
+    }
     const mlbPitcherId = await getMlbIdFromYahooName(pitcherName);
     const matchupResults = await getMatchups(mlbPitcherId, hittingTeamId, pitchingTeamId);
 

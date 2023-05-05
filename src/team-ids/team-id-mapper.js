@@ -7,7 +7,7 @@ const mlbTeamIds =  [
     ,{teamId: 158, teamAbbr:  "MIL", teamName: "Brewers"}
     ,{teamId: 138, teamAbbr:  "STL", teamName: "Cardinals"}
     ,{teamId: 112, teamAbbr:  "CHC", teamName: "Cubs"}
-    ,{teamId: 109, teamAbbr:  "AZ", teamName: "D-backs"}
+    ,{teamId: 109, teamAbbr:  "ARI", teamName: "D-backs"}
     ,{teamId: 119, teamAbbr:  "LAD", teamName: "Dodgers"}
     ,{teamId: 137, teamAbbr:  "SF", teamName: "Giants"}
     ,{teamId: 114, teamAbbr:  "CLE", teamName: "Guardians"}
@@ -32,6 +32,9 @@ const mlbTeamIds =  [
     ];
     
      const getMlbComTeamIdOrDefault = (teamAbbr) => {
+        if (teamAbbr === "AZ") {
+            teamAbbr = "ARI"
+        }
         return mlbTeamIds.find(t => t.teamAbbr === teamAbbr)?.teamId;
     }
 

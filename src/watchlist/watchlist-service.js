@@ -5,12 +5,28 @@ const {
   } = require('../mappers/combine-fas-with-projected-starters');
   const { mapFACollection } = require('../mappers/map-yahoo-fa-to-dto');
 
-const { addWatchlistEntry, getWatchlist } = require('../database/user-watchlist');
+const { addWatchlistEntry, getWatchlist, removeWatchlistEntry } = require('../database/user-watchlist');
 
 
 const addToWatchlist = async (watchlistArgs) => {
     await addWatchlistEntry(watchlistArgs)
     return watchlistArgs;
+}
+
+const removeFromWatchlist = async(watchlistArgs) => {
+    const result = await removeWatchlistEntry(watchlistArgs)
+    return result;
+}
+
+const getWatchedPlayerIds = async (user, leagueId) => {
+    const watchList = await getWatchlist(user.user_id, leagueId);
+    if (!watchList?.length > 0) {
+        return [];
+    }
+
+    const playerIds = watchList.map(entry => entry.player_id);
+   
+    return playerIds;
 }
 
 
@@ -43,4 +59,4 @@ const getWatchedPlayers = async (user, leagueId) => {
 
 }
 
-module.exports = { getWatchedPlayers, addToWatchlist}
+module.exports = { getWatchedPlayers, getWatchedPlayerIds, addToWatchlist, removeFromWatchlist}

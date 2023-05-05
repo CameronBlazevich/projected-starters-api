@@ -14,7 +14,28 @@ async function addWatchlistEntry(args) {
         console.error(err);
         throw err;
     }
+}
 
+async function removeWatchlistEntry(args) {
+    const { playerId, leagueId, gameId, userId } = args;
+
+    //ToDo: For now, we're ignoring gameId
+    const deleteSql = `
+        DELETE FROM user_watchlist
+        WHERE user_id = $1
+            AND player_id = $2
+            AND league_id = $3
+            -- AND game_id = $4
+    `
+
+    try {
+        await pool.query(deleteSql, [userId, playerId, leagueId]);
+        const remainingWatchlist = await getWatchlist(userId, leagueId);
+        return remainingWatchlist;
+    } catch (err) {
+        console.error(err);
+        throw err;
+    }
 }
 
 async function getWatchlist(userId, leagueId) {
@@ -33,7 +54,7 @@ async function getWatchlist(userId, leagueId) {
     }
 }
 
-module.exports = { addWatchlistEntry, getWatchlist }
+module.exports = { addWatchlistEntry, getWatchlist, removeWatchlistEntry }
 
 
 

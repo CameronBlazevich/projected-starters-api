@@ -1,10 +1,11 @@
 const axios = require('axios');
 
 const getMatchups = async (mlbPitcherId, hittingTeamId, pitchingTeamId) => {
-    const url = `http://localhost:3001/pitcherMatchups/${hittingTeamId}/${pitchingTeamId}/${mlbPitcherId}`;
+    
+    const url = process.env.RETROSHEET_SERVICE_URL;
+    const urlParams = `pitcherMatchups/${hittingTeamId}/${pitchingTeamId}/${mlbPitcherId}`
 
-    console.log(`Making req to ${url}`)
-    const resp = await axios.get(url);
+    const resp = await axios.get(`${url}${urlParams}`);
     return resp.data;
 
 
