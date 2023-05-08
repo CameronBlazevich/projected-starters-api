@@ -130,11 +130,23 @@ exports.yfbb = {
     console.log(url)
     return url;
   },
-  myWeeklyStats() {
-    return `${this.YAHOO}/team/${CONFIG.LEAGUE_KEY}.t.${CONFIG.TEAM}/stats;type=week;week=${this.WEEK}`;
+  weeklyStats(leagueId, teamId, weekNumber) {
+    return `${this.YAHOO}/team/422.l.${leagueId}.t.${teamId}/stats;type=week;week=${weekNumber}`;
   },
-  scoreboard() {
-    return `${this.YAHOO}/league/${CONFIG.LEAGUE_KEY}/scoreboard;week=${this.WEEK}`;
+  teamSeasonStats(leagueId, teamId) {
+    return `${this.YAHOO}/team/422.l.${leagueId}.t.${teamId}/stats;type=season`;
+  },
+  leagueSeasonStats(leagueId) {
+    return `${this.YAHOO}/league/422.l.${leagueId}/standings`;
+  },
+  leagueSettings(leagueId) {
+    return `${this.YAHOO}/league/422.l.${leagueId}/settings`;
+  },
+  teamMatchups(leagueId, teamId) {
+    return `${this.YAHOO}/team/422.l.${leagueId}.t.${teamId}/matchups`;
+  },
+  scoreboard(leagueId, weekNumber) {
+    return `${this.YAHOO}/league/422.l.${leagueId}/scoreboard;week=${weekNumber}`;
   },
   metadata(leagueId) {
     return `${this.YAHOO}/league/422.l.${leagueId}/metadata`;
@@ -278,20 +290,61 @@ exports.yfbb = {
   },
 
   // Get my weekly stats
-  async getMyWeeklyStats() {
+  async getWeeklyStats(user, leagueId, teamId, weekNumber) {
     try {
-      const results = await this.makeAPIrequest(this.myWeeklyStats());
+      const results = await this.makeAPIrequest(this.weeklyStats(leagueId, teamId, weekNumber), user);
       return results.fantasy_content.team.team_stats.stats.stat;
     } catch (err) {
-      console.error(`Error in getMyweeklyStats(): ${err}`);
+      console.error(`Error in getWeeklyStats(): ${err}`);
       return err;
     }
   },
 
+    // Get my weekly stats
+    async getTeamSeasonStats(user, leagueId, teamId) {
+      try {
+        const results = await this.makeAPIrequest(this.seasonStats(leagueId, teamId), user);
+        return results.fantasy_content.team.team_stats.stats.stat;
+      } catch (err) {
+        console.error(`Error in getWeeklyStats(): ${err}`);
+        return err;
+      }
+    },
+
+        // Get my weekly stats
+    async getLeagueSeasonStats(user, leagueId) {
+      try {
+        const results = await this.makeAPIrequest(this.leagueSeasonStats(leagueId), user);
+        return results.fantasy_content.league;
+      } catch (err) {
+        console.error(`Error in getWeeklyStats(): ${err}`);
+        return err;
+      }
+    },
+
+    async getLeagueSettings(user, leagueId) {
+      try {
+        const results = await this.makeAPIrequest(this.leagueSettings(leagueId), user);
+        return results.fantasy_content.league;
+      } catch (err) {
+        console.error(`Error in getWeeklyStats(): ${err}`);
+        return err;
+      }
+    },
+    async getTeamMatchups(user, leagueId, teamId) {
+      try {
+        const results = await this.makeAPIrequest(this.teamMatchups(leagueId, teamId), user);
+        return results.fantasy_content.team.matchups.matchup;
+      } catch (err) {
+        console.error(`Error in getWeeklyStats(): ${err}`);
+        return err;
+      }
+    },
+
   // Get my scoreboard
-  async getMyScoreboard() {
+  async getMyScoreboard(user, leagueId, weekNumber) {
     try {
-      const results = await this.makeAPIrequest(this.scoreboard());
+      const results = await this.makeAPIrequest(this.scoreboard(leagueId, weekNumber), user);
       return results.fantasy_content.league.scoreboard.matchups.matchup;
     } catch (err) {
       console.error(`Error in getMyweeklyScoreboard(): ${err}`);

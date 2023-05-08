@@ -27,6 +27,7 @@ const weatherController = require('./controllers/weatherController')
 const watchlistController = require('./controllers/watchlistController')
 const pitcherHitterMatchupController = require('./controllers/pitcherHitterMatchupController')
 const pitcherStatsController = require('./controllers/pitcherStatsController')
+const leagueMatchupController = require('./controllers/leagueMatchupController')
 
 app.use('/getFreeAgents', freeAgentsController);
 app.use('/login', loginController);
@@ -40,6 +41,7 @@ app.use('/weather', weatherController)
 app.use('/watchlist', watchlistController);
 app.use('/pitcherHitterMatchups', pitcherHitterMatchupController)
 app.use('/pitcherStats', pitcherStatsController)
+app.use('/leagueMatchups/', leagueMatchupController)
 // start the server
 const port = (process.env.PORT || 3000);
 app.listen(port, () => {

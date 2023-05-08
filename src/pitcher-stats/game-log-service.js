@@ -1,4 +1,5 @@
 const axios = require('axios');
+const { logError } = require('../axios/error-logger');
 
 const getGameLog = async (yahooPitcherId) => {
     const url = `https://graphite-secure.sports.yahoo.com/v1/query/shangrila/gameLogBaseballPitching`
@@ -9,7 +10,7 @@ const getGameLog = async (yahooPitcherId) => {
         const mapped = mapResponse(response.data);
         return mapped;
     } catch (err) {
-        console.error(err);
+        logError(err);
     }
 
 }
