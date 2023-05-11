@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const auth = require('../request-handling/middleware');
 const { getUserLeagues, createUserLeague, deleteUserLeague } = require('../database/user-leagues')
+const { createErrorResponse } = require('./responses/error-response');
 
 
 router.get("/getUserLeagues", auth, async (req, res) => {
@@ -10,8 +11,7 @@ router.get("/getUserLeagues", auth, async (req, res) => {
         const result = await getUserLeagues(user.user_id);
         return res.status(200).json(result);
     } catch (err) {
-        console.error(err);
-        return res.status(500).json({ error: "Something went wrong" })
+        return createErrorResponse(res, err);
     }
 })
 
@@ -35,8 +35,7 @@ router.post("/createUserLeague", auth, async (req, res) => {
 
         return res.status(200).json(mappedResult);
     } catch (err) {
-        console.error(err);
-        return res.status(500).json(err);
+        return createErrorResponse(res, err);
     }
 });
 
@@ -53,8 +52,7 @@ router.post("/deleteUserLeague", auth, async (req, res) => {
 
         return res.status(200).json(mapped);
     } catch (err) {
-        console.error(err);
-        return res.status(500).json(err)
+        return createErrorResponse(res, err);
     }
 });
 

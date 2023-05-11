@@ -44,9 +44,7 @@ const getWatchedPlayers = async (user, leagueId) => {
     }
     const playerIdsString = yahooPlayerIds.join(`,`);
 
-    const yahooResponse = await yahooApi.yfbb.getPlayersByIds(user, playerIdsString, leagueId)
-    // console.log(JSON.stringify(yahooResponse[0]))
-    // console.log(JSON.stringify(yahooResponse[1].player_advanced_stats))
+    const yahooResponse = await yahooApi.yfbb.getPlayersByIds(user.user_id, playerIdsString, leagueId)
 
     const teamStats = cacheManager.getFromCache('team-stats');
     const projectedLineups = cacheManager.getFromCache('projected-lineups');

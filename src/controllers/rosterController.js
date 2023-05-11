@@ -1,36 +1,28 @@
 const express = require('express');
 const router = express.Router();
 const auth = require('../request-handling/middleware');
-const {getRosteredPlayerProjections, getRosteredPlayers} = require('../roster/roster-service');
+const { getRosteredPlayerProjections, getRosteredPlayers } = require('../roster/roster-service');
+const { createErrorResponse } = require('./responses/error-response')
 
 
-
-
-// router.get("/getProjectedStarters/:leagueId", auth, async (req, res) => {
 router.get("/getProjectedStarters/:leagueId/:teamId", auth, async (req, res) => {
     const leagueId = req.params.leagueId;
     const teamId = req.params.teamId;
     if (!leagueId) {
-        return res.status(400).json({error: "LeagueId is required."})
+        return res.status(400).json({ error: "LeagueId is required." })
     }
 
     if (!teamId) {
-        return res.status(400).json({error: "teamId is required."})
+        return res.status(400).json({ error: "teamId is required." })
     }
 
     const user = req.user;
     try {
-        const result = await getRosteredPlayerProjections(user, leagueId, teamId)
-        
+        const result = await getRosteredPlayerProjections(user.user_id, leagueId, teamId)
+
         return res.status(200).json(result);
     } catch (err) {
-        if (err.message?.includes("401")) {
-            return res.status(400).json({error: "Yahoo authentication failure"})
-        } 
-        if (err.message === "Invalid team key") {
-            return res.status(400).json({error: "invalid-team-key"})
-        }
-        return res.status(500).json({ error: "Something went wrong" })
+        return createErrorResponse(res, err);
     }
 })
 
@@ -43,13 +35,11 @@ router.get("/getRoster/:leagueId/:teamId", auth, async (req, res) => {
     // }
 
     const user = req.user;
-
     try {
-    const result = await getRosteredPlayers(user, req.params.leagueId)
-    return res.status(200).json(result);
+        const result = await getRosteredPlayers(user.user_id, req.params.leagueId)
+        return res.status(200).json(result);
     } catch (err) {
-        console.error(err)
-        return res.status(500).json({ error: "Something went wrong" })
+        return createErrorResponse(res, err);
     }
 })
 

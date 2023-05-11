@@ -1,33 +1,31 @@
 const express = require('express');
 const router = express.Router();
 const auth = require('../request-handling/middleware');
-const {getWatchedPlayers, getWatchedPlayerIds, addToWatchlist, removeFromWatchlist} = require('../watchlist/watchlist-service')
+const { getWatchedPlayers, getWatchedPlayerIds, addToWatchlist, removeFromWatchlist } = require('../watchlist/watchlist-service')
 const { PlayerIdTypes } = require('../enums');
+const { createErrorResponse } = require('./responses/error-response');
 
 
 
 router.get("/:leagueId", auth, async (req, res) => {
-   const user = req.user;
+    const user = req.user;
     try {
         const result = await getWatchedPlayers(user, req.params.leagueId);
-        console.log(result)
         return res.status(200).json(result);
     } catch (err) {
-        console.error(err);
-        return res.status(500).json({ error: "Something went wrong" })
+        return createErrorResponse(ers, err);
     }
 })
 
 router.get("/getPlayerIds/:leagueId", auth, async (req, res) => {
     const user = req.user;
-     try {
-         const result = await getWatchedPlayerIds(user, req.params.leagueId);
-         return res.status(200).json(result);
-     } catch (err) {
-         console.error(err);
-         return res.status(500).json({ error: "Something went wrong" })
-     }
- })
+    try {
+        const result = await getWatchedPlayerIds(user, req.params.leagueId);
+        return res.status(200).json(result);
+    } catch (err) {
+        return createErrorResponse(res, err);
+    }
+})
 
 router.post("/addToWatchlist", auth, async (req, res) => {
 
@@ -39,40 +37,35 @@ router.post("/addToWatchlist", auth, async (req, res) => {
         return res.status(400).send("No gameId in request")
     }
 
-    
     if (!req.body.playerId) {
         return res.status(400).send("No playerId in request")
     }
 
-    const {leagueId, gameId, playerId} = req.body;
+    const { leagueId, gameId, playerId } = req.body;
 
 
     const user = req.user;
 
     const gameTime = new Date()
-    const watchlistArgs = {userId: user.user_id, playerId, playerIdTypeId: PlayerIdTypes.YahooPlayerId, leagueId, gameId, gameTime}
+    const watchlistArgs = { userId: user.user_id, playerId, playerIdTypeId: PlayerIdTypes.YahooPlayerId, leagueId, gameId, gameTime }
 
     try {
-    const result = await addToWatchlist(watchlistArgs)
-    
-
-    return res.status(200).json(result);
+        const result = await addToWatchlist(watchlistArgs)
+        return res.status(200).json(result);
     } catch (err) {
-        console.error(err);
-        return res.status(500).json(err);
+        createErrorResponse(err);
     }
 });
 
 router.get("/getPlayerIds/:leagueId", auth, async (req, res) => {
     const user = req.user;
-     try {
-         const result = await getWatchedPlayerIds(user, req.params.leagueId);
-         return res.status(200).json(result);
-     } catch (err) {
-         console.error(err);
-         return res.status(500).json({ error: "Something went wrong" })
-     }
- })
+    try {
+        const result = await getWatchedPlayerIds(user, req.params.leagueId);
+        return res.status(200).json(result);
+    } catch (err) {
+        return createErrorResponse(res, err);
+    }
+})
 
 router.post("/removeFromWatchlist", auth, async (req, res) => {
 
@@ -84,24 +77,22 @@ router.post("/removeFromWatchlist", auth, async (req, res) => {
     // if (!req.body.gameId) {
     //     return res.status(400).send("No gameId in request")
     // }
-    
+
     if (!req.body.playerId) {
         return res.status(400).send("No playerId in request")
     }
 
-    const {leagueId, gameId, playerId} = req.body;
+    const { leagueId, gameId, playerId } = req.body;
 
     const user = req.user;
 
-    const watchlistArgs = {userId: user.user_id, playerId, leagueId, gameId}
+    const watchlistArgs = { userId: user.user_id, playerId, leagueId, gameId }
 
     try {
-    const result = await removeFromWatchlist(watchlistArgs)
-    
-    return res.status(200).json(result);
+        const result = await removeFromWatchlist(watchlistArgs)
+        return res.status(200).json(result);
     } catch (err) {
-        console.error(err);
-        return res.status(500).json(err)
+        return createErrorResponse(res, err);
     }
 });
 

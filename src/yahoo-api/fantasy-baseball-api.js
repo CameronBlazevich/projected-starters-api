@@ -4,10 +4,13 @@ const axios = require('axios');
 const parser = require('xml2json');
 const CONFIG = require('../../config.json');
 const { getAuthCode } = require('../database/user-yahoo-info');
-const { mapStatsOntoPlayers, addKnownAdvancedStats } = require('../mappers/yahoo-stats-mapper');
 const { logError } = require('../axios/error-logger');
-
-const USER_ID = 1;
+const ApiUnauthorizedError = require('../errors/api-unauthorized-error');
+const { parseErrorMessage } = require('./yahoo-error-parser');
+const ApiForbiddenError = require('../errors/api-forbidden-error');
+const httpStatusCodes = require('../errors/http-status-codes');
+const ApiBaseError = require('../errors/api-base-error');
+const logger = require('../logger/logger')
 
 function getAuthHeader() {
   const authHeader = Buffer.from(
@@ -62,25 +65,22 @@ async function getInitialAuthorization(userAuthCode) {
 }
 
 // Read the Yahoo OAuth credentials from the db
-async function getCredentials(user) {
+async function getCredentials(userId) {
   try {
-    console.log(`Inside getCredentials(): ${user?.email}`)
-    const credentials = await credentialManager.getCredentials(user.user_id);
-    if (credentials?.access_token) { 
+    const credentials = await credentialManager.getCredentials(userId);
+    if (credentials?.access_token) {
       return credentials;
     } else {
-      console.log('No creds found in db...');
-      console.log('Does user have a YahooAuthCode?')
-      const userAuthCode = await getAuthCode(user.user_id);
+      const userAuthCode = await getAuthCode(userId);
       if (!userAuthCode) {
         return {};
       }
-      console.log(`User Auth Code Found: ${JSON.stringify(userAuthCode)}`);
+      logger.debug(`User Auth Code Found: ${JSON.stringify(userAuthCode)}`);
 
       const newToken = await getInitialAuthorization(userAuthCode.auth_code);
       if (newToken && newToken.data && newToken.data.access_token) {
         const newCreds = await credentialManager.storeCredentials(
-          user.user_id,
+          userId,
           newToken.data.access_token,
           newToken.data.refresh_token
         );
@@ -90,24 +90,17 @@ async function getCredentials(user) {
           refresh_token: newToken.data.refresh_token
         }
 
-        console.log("Successfully got new creds...")
+        logger.debug("Successfully got new creds...")
         return updatedCreds;
       }
       return credentials;
     }
   } catch (err) {
-    console.error(err);
-    if (err.message.startsWith('Credentials not found')) {
-
-      // Use the new credentials to make API calls
-      // ...
-
-    } else {
-      console.error(`Error retrieving credentials for user ${user?.email}: ${err}`);
-      process.exit();
-    }
+    logger.info(`Error retrieving credentials for user ${userId}: ${err}`);
+    logger.error(err);
   }
 }
+
 
 exports.yfbb = {
   // Global week variable, start at 1
@@ -121,12 +114,12 @@ exports.yfbb = {
   freeAgents(i, leagueId) {
     const startNum = i;
     const url = `${this.YAHOO}/league/422.l.${leagueId
-    }/players;status=A;count=25;start=${startNum * 25};position=SP;sort=AR`;
+      }/players;status=A;count=25;start=${startNum * 25};position=SP;sort=AR`;
     // console.log(url);
     return url;
   },
   myTeam(leagueId, teamId) {
-    const url =  `${this.YAHOO}/team/422.l.${leagueId}.t.${teamId}/roster/`;
+    const url = `${this.YAHOO}/team/422.l.${leagueId}.t.${teamId}/roster/`;
     console.log(url)
     return url;
   },
@@ -187,8 +180,8 @@ exports.yfbb = {
     });
   },
 
-  async makeApiRequestWithCreds(url, user, credentials) {
-    // console.log(`making an api request with credentials: ${JSON.stringify(credentials)}`)
+  async makeApiRequestWithCreds(url, userId, credentials) {
+    logger.info(`making an api request to ${url}`)
     let response;
     try {
       response = await axios({
@@ -215,9 +208,8 @@ exports.yfbb = {
           credentials.refresh_token
         );
         if (newToken && newToken.data && newToken.data.access_token) {
-          console.log(`Got new access token. ${JSON.stringify(user)} Storing it.`)
           await credentialManager.storeCredentials(
-            user.user_id,
+            userId,
             newToken.data.access_token,
             newToken.data.refresh_token
           );
@@ -226,62 +218,70 @@ exports.yfbb = {
           credentials.refresh_token = newToken.data.refresh_token;
           return this.makeApiRequestWithCreds(
             url,
-            user,
+            userId,
             credentials
           );
         }
       } else {
-        logError(err);
-        console.error(
-          `Error with credentials in makeAPIrequest()/refreshAuthorizationToken(): ${err}`
-        );
+          logError(err);
+          if (err.response?.status === 401) {
+            throw new ApiUnauthorizedError("Yahoo authentication failure.", httpStatusCodes.FORBIDDEN);
+          } else if (err.response?.status === 403) { 
+            const errorDesc = parseErrorMessage(err);
+            logger.debug(errorDesc)
+            throw new ApiForbiddenError(errorDesc, httpStatusCodes.FORBIDDEN);
+          } else {
+            const errorDesc = parseErrorMessage(err);
+            throw new ApiBaseError(err.response?.status, httpStatusCodes.FORBIDDEN, errorDesc)
+          }
       }
-      throw err;
     }
   },
 
-  // Hit the Yahoo Fantasy API
-  async makeAPIrequest(url, user) {
-    const credentials = await getCredentials(user);
 
-    return await this.makeApiRequestWithCreds(url, user, credentials)
+  async makeAPIrequest(url, userId) {
+    const credentials = await getCredentials(userId);
+      const result = await this.makeApiRequestWithCreds(url, userId, credentials)
+      return result;
+  },
+
+  async getFreeAgentsWithCredentials(credentials, leagueId, userId) {
+    const freeAgentPageLimit = 10;
+
+    const results = [];
+    try {
+    for (let i = 0; i <= freeAgentPageLimit; i++) {
+      const reqUrl = this.freeAgents(i, leagueId);
+      const result = await this.makeApiRequestWithCreds(reqUrl, userId, credentials);
+
+      if (
+        result.fantasy_content &&
+        result.fantasy_content.league &&
+        result.fantasy_content.league.players &&
+        result.fantasy_content.league.players.player
+      ) {
+        results.push(...result.fantasy_content.league.players.player);
+      }
+
+    }
+    return results;
+  } catch (err) {
+    logger.error(err);
+    throw err;
+  }
   },
 
   // Get a list of free agents
-  async getFreeAgents(user, leagueId) {
-    try {
-      const credentials = await getCredentials(user);
-      const freeAgentPageLimit = 10;
-
-      const results = [];
-      for (let i = 0; i <= freeAgentPageLimit; i++) {
-        const reqUrl = this.freeAgents(i, leagueId);
-        console.log(reqUrl)
-
-        const result = await this.makeApiRequestWithCreds(reqUrl, user, credentials);
-        // console.log(JSON.stringify(result))
-
-        if (
-          result.fantasy_content &&
-          result.fantasy_content.league &&
-          result.fantasy_content.league.players &&
-          result.fantasy_content.league.players.player
-        ) {
-          results.push(...result.fantasy_content.league.players.player);
-        }
-
-      }
-      return results;
-    } catch (err) {
-      console.error(`Error in getFreeAgents(): ${err}`);
-      return err;
-    }
+  async getFreeAgents(userId, leagueId) {
+      const credentials = await getCredentials(userId);
+      const result = await this.getFreeAgentsWithCredentials(credentials, leagueId, userId);
+      return result;
   },
 
   // Get a list of players on my team
-  async getMyPlayers(user, leagueId, teamId) {
+  async getMyPlayers(userId, leagueId, teamId) {
     try {
-      const results = await this.makeAPIrequest(this.myTeam(leagueId, teamId), user);
+      const results = await this.makeAPIrequest(this.myTeam(leagueId, teamId), userId);
       return results.fantasy_content.team.roster.players.player;
     } catch (err) {
       console.error(`Error in getMyPlayers(): ${err}`);
@@ -290,72 +290,72 @@ exports.yfbb = {
   },
 
   // Get my weekly stats
-  async getWeeklyStats(user, leagueId, teamId, weekNumber) {
+  async getWeeklyStats(userId, leagueId, teamId, weekNumber) {
     try {
-      const results = await this.makeAPIrequest(this.weeklyStats(leagueId, teamId, weekNumber), user);
+      const results = await this.makeAPIrequest(this.weeklyStats(leagueId, teamId, weekNumber), userId);
       return results.fantasy_content.team.team_stats.stats.stat;
     } catch (err) {
       console.error(`Error in getWeeklyStats(): ${err}`);
-      return err;
+      throw err;
     }
   },
 
-    // Get my weekly stats
-    async getTeamSeasonStats(user, leagueId, teamId) {
-      try {
-        const results = await this.makeAPIrequest(this.seasonStats(leagueId, teamId), user);
-        return results.fantasy_content.team.team_stats.stats.stat;
-      } catch (err) {
-        console.error(`Error in getWeeklyStats(): ${err}`);
-        return err;
-      }
-    },
+  // Get my weekly stats
+  async getTeamSeasonStats(userId, leagueId, teamId) {
+    try {
+      const results = await this.makeAPIrequest(this.seasonStats(leagueId, teamId), userId);
+      return results.fantasy_content.team.team_stats.stats.stat;
+    } catch (err) {
+      console.error(`Error in getWeeklyStats(): ${err}`);
+      throw err;
+    }
+  },
 
-        // Get my weekly stats
-    async getLeagueSeasonStats(user, leagueId) {
-      try {
-        const results = await this.makeAPIrequest(this.leagueSeasonStats(leagueId), user);
-        return results.fantasy_content.league;
-      } catch (err) {
-        console.error(`Error in getWeeklyStats(): ${err}`);
-        return err;
-      }
-    },
+  // Get my weekly stats
+  async getLeagueSeasonStats(userId, leagueId) {
+    try {
+      const results = await this.makeAPIrequest(this.leagueSeasonStats(leagueId), userId);
+      return results.fantasy_content.league;
+    } catch (err) {
+      console.error(`Error in getWeeklyStats(): ${err}`);
+      throw err;
+    }
+  },
 
-    async getLeagueSettings(user, leagueId) {
-      try {
-        const results = await this.makeAPIrequest(this.leagueSettings(leagueId), user);
-        return results.fantasy_content.league;
-      } catch (err) {
-        console.error(`Error in getWeeklyStats(): ${err}`);
-        return err;
-      }
-    },
-    async getTeamMatchups(user, leagueId, teamId) {
-      try {
-        const results = await this.makeAPIrequest(this.teamMatchups(leagueId, teamId), user);
-        return results.fantasy_content.team.matchups.matchup;
-      } catch (err) {
-        console.error(`Error in getWeeklyStats(): ${err}`);
-        return err;
-      }
-    },
+  async getLeagueSettings(userId, leagueId) {
+    try {
+      const results = await this.makeAPIrequest(this.leagueSettings(leagueId), userId);
+      return results.fantasy_content.league;
+    } catch (err) {
+      console.error(`Error in getWeeklyStats(): ${err}`);
+      throw err;
+    }
+  },
+  async getTeamMatchups(userId, leagueId, teamId) {
+    try {
+      const results = await this.makeAPIrequest(this.teamMatchups(leagueId, teamId), userId);
+      return results.fantasy_content.team.matchups.matchup;
+    } catch (err) {
+      console.error(`Error in getWeeklyStats(): ${err}`);
+      throw err;
+    }
+  },
 
   // Get my scoreboard
-  async getMyScoreboard(user, leagueId, weekNumber) {
+  async getMyScoreboard(userId, leagueId, weekNumber) {
     try {
-      const results = await this.makeAPIrequest(this.scoreboard(leagueId, weekNumber), user);
+      const results = await this.makeAPIrequest(this.scoreboard(leagueId, weekNumber), userId);
       return results.fantasy_content.league.scoreboard.matchups.matchup;
     } catch (err) {
       console.error(`Error in getMyweeklyScoreboard(): ${err}`);
-      return err;
+      throw err;
     }
   },
 
   // Get a JSON object of your players
-  async getMyPlayersStats(user , leagueId) {
+  async getMyPlayersStats(userId, leagueId) {
     try {
-      const players = await this.getMyPlayers(user, leagueId);;
+      const players = await this.getMyPlayers(userId, leagueId);;
       console.log(`Players: ${players}`)
 
       // Build the list
@@ -368,37 +368,36 @@ exports.yfbb = {
         // Remove trailing comma
         playerIDList = playerIDList.substring(0, playerIDList.length - 1);
 
-        const playerStats = await this.getPlayersByIds(user, playerIDList, leagueId);
-        
+        const playerStats = await this.getPlayersByIds(userId, playerIDList, leagueId);
+
         return playerStats;
       }
     } catch (err) {
       console.error(`Error in getMyPlayersStats(): ${err}`);
-      return err;
+      throw err;
     }
   },
 
-  async getPlayersByIds(user, playerIdsList, leagueId) {
+  async getPlayersByIds(userId, playerIdsList, leagueId) {
     const countPlayers = playerIdsList.split(',').length;
     let playersStatsUrl = `${this.YAHOO}/league/422.l.${leagueId
-    }/players;player_keys=${playerIdsList};sort=AR;out=stats`;
-    
-    const playerStatsResponse  =  await this.makeAPIrequest(playersStatsUrl, user);
+      }/players;player_keys=${playerIdsList};sort=AR;out=stats`;
 
-    const statIds = await this.getStatsIDs(user); // ToDo: This should just be a static lookup, no need to go to Yahoo each time!!!
+    const playerStatsResponse = await this.makeAPIrequest(playersStatsUrl, userId);
+
+    const statIds = await this.getStatsIDs(userId); // ToDo: This should just be a static lookup, no need to go to Yahoo each time!!!
     // addKnownAdvancedStats(statIds)
     const playerStats = playerStatsResponse.fantasy_content.league.players.player;
 
     // mapStatsOntoPlayers(playerStats, statIds);
     return playerStats;
   },
-  
+
 
   // Get what week it is in the season
-  async getCurrentWeek(user, leagueId) {
+  async getCurrentWeek(userId, leagueId) {
     try {
-      console.log(`Getting current week for userId: ${user.user_id} email: ${user?.email}`);
-      const results = await this.makeAPIrequest(this.metadata(leagueId), user);
+      const results = await this.makeAPIrequest(this.metadata(leagueId), userId);
       return results.fantasy_content.league.current_week;
     } catch (err) {
       console.error(`Error in getCurrentWeek(): ${err}`);
@@ -440,13 +439,13 @@ exports.yfbb = {
   },
 
   // Get stats IDs
-  async getStatsIDs(user) {
+  async getStatsIDs(userId) {
     try {
-      const results = await this.makeAPIrequest(this.statsID(), user);
+      const results = await this.makeAPIrequest(this.statsID(), userId);
       return results.fantasy_content.game.stat_categories.stats;
     } catch (err) {
       console.error(`Error in getStatsIDs(): ${err}`);
-      return err;
+      throw err;
     }
   },
 
@@ -457,7 +456,7 @@ exports.yfbb = {
       return results.fantasy_content.team.roster.players;
     } catch (err) {
       console.error(`Error in getCurrentRoster(): ${err}`);
-      return err;
+      throw err;
     }
   },
 };

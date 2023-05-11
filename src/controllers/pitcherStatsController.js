@@ -3,6 +3,7 @@ const router = express.Router();
 const { getGameLog } = require('../pitcher-stats/game-log-service');
 const { getSplits } = require('../pitcher-stats/splits-service');
 const { getStats } = require('../pitcher-stats/season-stats-service');
+const { createErrorResponse } = require('./responses/error-response')
 
 
 
@@ -11,8 +12,7 @@ router.get("/gameLog/:pitcherId", async (req, res) => {
         const gameLog = await getGameLog(req.params.pitcherId);
         return res.status(200).json(gameLog);
     } catch (err) {
-        console.error(err);
-        return res.status(500).json({ error: "Something went wrong" })
+        createErrorResponse(res, err);
     }
 })
 
@@ -21,8 +21,7 @@ router.get("/splits/:yahooPlayerId", async (req, res) => {
         const splits = await getSplits(req.params.yahooPlayerId);
         return res.status(200).json(splits);
     } catch (err) {
-        console.error(err);
-        return res.status(500).json({ error: "Something went wrong" })
+        createErrorResponse(res, err);
     }
 })
 
@@ -31,8 +30,7 @@ router.get("/seasons/:yahooPlayerId", async (req, res) => {
         const seasons = await getStats(req.params.yahooPlayerId);
         return res.status(200).json(seasons);
     } catch (err) {
-        console.error(err);
-        return res.status(500).json({ error: "Something went wrong" })
+        createErrorResponse(res, err);
     }
 })
 

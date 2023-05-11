@@ -6,11 +6,9 @@ const {
 } = require('../mappers/combine-fas-with-projected-starters');
 
 
-const getRosteredPlayerProjections = async (user, leagueId, teamId) => {
-
-  try {
-    const teamPlayers = await yahooApi.yfbb.getMyPlayers(user, leagueId, teamId);
-    // console.log(`teamPlayers = ${teamPlayers}`);
+const getRosteredPlayerProjections = async (userId, leagueId, teamId) => {
+    const teamPlayers = await yahooApi.yfbb.getMyPlayers(userId, leagueId, teamId);
+   
     const mappedTeamPlayers = mapFACollection(teamPlayers);
 
     const teamStats = cacheManager.getFromCache('team-stats');
@@ -23,29 +21,14 @@ const getRosteredPlayerProjections = async (user, leagueId, teamId) => {
     );
 
     return combined;
-
-
-  } catch (err) {
-    console.error(`Couldn't GetMyPlayers() status: ${err.response?.status} ${err.response?.statusText} code: ${err.code} desc: ${err.response.data}`)
-    if (err.response?.data?.includes(`Invalid team key`)) {
-      throw new Error(`Invalid team key`);
-    }
-    console.error(err)
-    throw err;
-  }
-
 }
 
 
 
-const getRosteredPlayers = async (user, leagueId) => {
-  try {
-    const players = await yahooApi.yfbb.getMyPlayersStats(user, leagueId);
+const getRosteredPlayers = async (userId, leagueId) => {
+    const players = await yahooApi.yfbb.getMyPlayersStats(userId, leagueId);
 
-    const statIds = await yahooApi.yfbb.getStatsIDs(user);
-
-
-    const result = [];
+    const statIds = await yahooApi.yfbb.getStatsIDs(userId);
 
     for (let i = 0; i < players.length; i++) {
       const playerStats = players[i].player_stats.stats.stat;
@@ -69,10 +52,6 @@ const getRosteredPlayers = async (user, leagueId) => {
 
     }
     return players;
-  } catch (err) {
-    console.error(err);
-    throw err;
-  }
 }
 
 const getStatInfo = (statInfo, statId) => {
@@ -83,10 +62,6 @@ const getStatInfo = (statInfo, statId) => {
     console.log(`no match for stat id ${statId}`)
     return {}
   }
-}
-
-const mapStats = (playersStats, statInfo) => {
-
 }
 
 module.exports = { getRosteredPlayerProjections, getRosteredPlayers }

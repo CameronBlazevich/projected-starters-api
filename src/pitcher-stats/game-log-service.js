@@ -1,4 +1,5 @@
 const axios = require('axios');
+const logger = require('../logger/logger')
 const { logError } = require('../axios/error-logger');
 
 const getGameLog = async (yahooPitcherId) => {
@@ -20,7 +21,7 @@ module.exports = { getGameLog }
 const mapResponse = (gameLogResponse) => {
     const player = gameLogResponse.data.players?.[0];
     if (!player) {
-        console.log(`No player returned for game log request.`)
+        logger.info(`No player returned for game log request.`)
         return {};
     }
 

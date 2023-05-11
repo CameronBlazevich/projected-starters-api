@@ -23,10 +23,8 @@ const testSomeShit = async (user, leagueId) => {
     leagueSeasonStats.current_matchup = myMatchup;
 
     let myMatchupTeamIds = myMatchup.teams.team.map(t => parseInt(t.team_id));
-    console.log(myMatchupTeamIds)
 
-    // myMatchupTeamIds = [5,9]
-    const includeNextWeeksMatchup = true;
+    const includeNextWeeksMatchup = false;
     if (includeNextWeeksMatchup) {
         // myMatchupTeamIds.push(parseInt(nextWeeksOpponentId))
     }
