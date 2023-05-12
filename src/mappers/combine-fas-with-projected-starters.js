@@ -85,9 +85,6 @@ function combineMatchupsAndFreeAgents(
   teamStats
 ) {
   const combinedData = [];
-
-  // console.log(`Returned ${projectedMatchups?.length}`)
-  // Loop through each game in the projected matchups
   for (let i = 0; i < projectedMatchups?.length; i++) {
     const dailyData = [];
     for (const game of projectedMatchups[i].games) {
@@ -107,18 +104,14 @@ function combineMatchupsAndFreeAgents(
 
       if (homePitcherMatch) {    
         homePitcherMatch.stats = game.homePitcher.stats;
-        // homePitcherMatch.mlbComPlayerId = game.homePitcher.PlayerID; // I thought this would be the id needed to get the same
-        // images from mlb.com/probable-pitchers but it's not
       }
 
       if (awayPitcherMatch) {
         awayPitcherMatch.stats = game.awayPitcher.stats;
-        // awayPitcherMatch.mlbComPlayerId = game.awayPitcher.PlayerID;
       }
 
       // If there is a match for either pitcher, add a new object to the combined data array
       if (awayPitcherMatch || homePitcherMatch) {
-        // console.log(awayPitcherMatch?.name?.full, homePitcherMatch?.name?.full)
         const gameToAdd = {
           gameDate: projectedMatchups[i].date,
           gameId: game.mlb_com_game_id,
@@ -134,12 +127,9 @@ function combineMatchupsAndFreeAgents(
     }
     combinedData.push(dailyData);
   }
-  // Return the combined data array
-  const result = //convertPitchers(
+
+  const result = 
     addStatsAndShapeResponse(combinedData, teamStats);
-  //  teamStats
-  //);
-  // replaceOpposingTeams(result, teamStats);
   return result;
 }
 

@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const auth = require('../request-handling/middleware');
-const { getWatchedPlayers, getWatchedPlayerIds, addToWatchlist, removeFromWatchlist } = require('../watchlist/watchlist-service')
+const { getWatchedPlayers, getWatchedPlayerKeys, addToWatchlist, removeFromWatchlist } = require('../watchlist/watchlist-service')
 const { PlayerIdTypes } = require('../enums');
 const { createErrorResponse } = require('./responses/error-response');
 
@@ -20,7 +20,7 @@ router.get("/:leagueId", auth, async (req, res) => {
 router.get("/getPlayerIds/:leagueId", auth, async (req, res) => {
     const user = req.user;
     try {
-        const result = await getWatchedPlayerIds(user, req.params.leagueId);
+        const result = await getWatchedPlayerKeys(user, req.params.leagueId);
         return res.status(200).json(result);
     } catch (err) {
         return createErrorResponse(res, err);
@@ -56,16 +56,6 @@ router.post("/addToWatchlist", auth, async (req, res) => {
         createErrorResponse(err);
     }
 });
-
-router.get("/getPlayerIds/:leagueId", auth, async (req, res) => {
-    const user = req.user;
-    try {
-        const result = await getWatchedPlayerIds(user, req.params.leagueId);
-        return res.status(200).json(result);
-    } catch (err) {
-        return createErrorResponse(res, err);
-    }
-})
 
 router.post("/removeFromWatchlist", auth, async (req, res) => {
 

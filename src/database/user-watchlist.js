@@ -1,3 +1,4 @@
+const logger = require('../logger/logger');
 const { pool } = require('./postgresDB');
 
 async function addWatchlistEntry(args) {
@@ -19,17 +20,17 @@ async function addWatchlistEntry(args) {
 async function removeWatchlistEntry(args) {
     const { playerId, leagueId, gameId, userId } = args;
 
-    //ToDo: For now, we're ignoring gameId
+    logger.debug(`playerId ${playerId} leagueId ${leagueId} gameId ${gameId} userId ${userId}`)
     const deleteSql = `
         DELETE FROM user_watchlist
         WHERE user_id = $1
             AND player_id = $2
             AND league_id = $3
-            -- AND game_id = $4
+            AND game_id = $4
     `
 
     try {
-        await pool.query(deleteSql, [userId, playerId, leagueId]);
+        await pool.query(deleteSql, [userId, playerId, leagueId, gameId]);
         const remainingWatchlist = await getWatchlist(userId, leagueId);
         return remainingWatchlist;
     } catch (err) {

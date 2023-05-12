@@ -3,8 +3,9 @@ const dateHelper = require('../utilities/dateHelper');
 const { getPlayerStats } = require('./player-stats-api');
 const fs = require("fs");
 const { logError } = require('../axios/error-logger');
+const logger = require('../logger/logger');
 
-const formatResponse = (resp) => {  
+const formatResponse = (resp) => {
   const mapGame = (game) => {
     const battingOrder = getBattingLineups(game);
     const mapped = {
@@ -87,21 +88,30 @@ const getLineups = async () => {
   for (let j = 0; j < completedRequestPromises.length; j++) {
     const dayOfGames = completedRequestPromises[j];
     console.log(`Getting pitcher stats for ${dayOfGames.date}`)
-    for (let i = 0; i < dayOfGames.games.length; i++) {
-      const game = dayOfGames.games[i];
 
-      const awayPitcherId = game.awayPitcher?.PlayerID;
-      const homePitcherId = game.homePitcher?.PlayerID;
+    try {
+      // Sometimes these requests time out, but I don't want to kill the whole process when this happens
+      // Instead, some pitchers won't have their stats
+      for (let i = 0; i < dayOfGames.games.length; i++) {
+        const game = dayOfGames.games[i];
 
-      if (awayPitcherId) {
-        const awayPitcherStats = await getPlayerStats(awayPitcherId);
-        game.awayPitcher.stats = mapStats(awayPitcherStats);
+        const awayPitcherId = game.awayPitcher?.PlayerID;
+        const homePitcherId = game.homePitcher?.PlayerID;
+
+        if (awayPitcherId) {
+          const awayPitcherStats = await getPlayerStats(awayPitcherId);
+          game.awayPitcher.stats = mapStats(awayPitcherStats);
+        }
+
+        if (homePitcherId) {
+          const homePitcherStats = await getPlayerStats(homePitcherId);
+          game.homePitcher.stats = mapStats(homePitcherStats);
+        }
       }
-
-      if (homePitcherId) {
-        const homePitcherStats = await getPlayerStats(homePitcherId);
-        game.homePitcher.stats = mapStats(homePitcherStats);
-      }
+    } catch (err) {
+      logger.info(`An error occured getting stats. Swallowing and continuing`)
+      logger.error(err)
+      continue;
     }
   }
 
@@ -128,7 +138,7 @@ async function makeAPIRequest(filter) {
 
 const mapStats = (fullStats) => {
   const season = 2023;
-  const thisSeason = fullStats.find((s) => s.Season === season);
+  const thisSeason = fullStats?.find((s) => s.Season === season);
   if (thisSeason) {
     mapped = {
       innings_pitched: thisSeason.InningsPitched,
