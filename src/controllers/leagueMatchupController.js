@@ -6,7 +6,7 @@ const router = express.Router();
 router.get("/:leagueId", auth, async (req, res) => {
     try {
         const leagueId = req.params.leagueId;
-        const teamStats = await testSomeShit(req.user, leagueId )
+        const teamStats = await testSomeShit(req.user.user_id, leagueId )
         return res.status(200).json(teamStats);
     } catch (err) {
         console.error(err);
