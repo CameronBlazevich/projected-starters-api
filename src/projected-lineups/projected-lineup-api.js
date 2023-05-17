@@ -139,12 +139,17 @@ async function makeAPIRequest(filter) {
 const mapStats = (fullStats) => {
   const season = 2023;
   const thisSeason = fullStats?.find((s) => s.Season === season);
+  
   if (thisSeason) {
     mapped = {
       innings_pitched: thisSeason.InningsPitched,
       era: thisSeason.EarnedRunAverage,
       strikeouts: thisSeason.PitchingStrikeouts,
       whip: thisSeason.WalksHitsPerInningsPitched,
+      wins: thisSeason.Wins,
+      losses: thisSeason.Losses,
+      games_started: thisSeason.Started,
+      games: thisSeason.Games
     };
 
     return mapped;
