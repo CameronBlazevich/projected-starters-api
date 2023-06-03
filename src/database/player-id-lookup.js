@@ -15,6 +15,21 @@ async function getByYahooId(yahooPlayerId) {
     }
 }
 
+async function getByYahooIds(yahooPlayerIdArray) {
+    const sql = `
+        SELECT * FROM player_id_lookup
+        WHERE yahooid = ANY($1::int[]);
+    `
+    try {
+        const results = await pool.query(sql, [yahooPlayerIdArray]);
+        return results.rows;
+    } catch (err) {
+        console.error("Something went wrong")
+        console.error(err);
+        throw err;
+    }
+}
+
 async function getMlbIdsFromYahooIds(yahooIdArray) {
     const sql = `
         SELECT mlbid, yahooid FROM player_id_lookup
@@ -60,4 +75,4 @@ async function getPlayerNamesFromYahooName(yahooNamesArray) {
     }
 }
 
-module.exports = { getMlbIdFromYahooName, getPlayerNamesFromYahooName, getMlbIdsFromYahooIds, getByYahooId }
+module.exports = { getMlbIdFromYahooName, getPlayerNamesFromYahooName, getMlbIdsFromYahooIds, getByYahooId, getByYahooIds }

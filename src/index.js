@@ -13,6 +13,7 @@ app.use(bodyParser.json())
 const weatherRefresher = require('./weather/weather-refresher')
 const teamStatsRefresher = require('./team-stats/team-stats-refresher');
 const projectedLineupRefresher = require('./projected-lineups/projected-lineup-refresher');
+const addDropExecutor = require('./roster/add-drop-executor')
 
 // import the controllers
 const freeAgentsController = require('./controllers/freeAgentsController');

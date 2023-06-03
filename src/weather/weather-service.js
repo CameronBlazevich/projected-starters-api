@@ -10,11 +10,15 @@ const getWeatherInfoAtStadiums = async () => {
     const weatherResults = [];
 
     for (let i = 0; i < stadiumLocations.length; i++) {
+        try {
         const stadiumForecast = await getWeatherForecast(stadiumLocations[i].lattitude, stadiumLocations[i].longitude);
 
         // map result to only useful info
         const mapped = mapStadiumForecast(stadiumForecast, stadiumLocations[i]);
         weatherResults.push(mapped);
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     return weatherResults;

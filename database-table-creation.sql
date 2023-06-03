@@ -119,8 +119,37 @@ CREATE TABLE IF NOT EXISTS player_id_lookup
  CREATE INDEX  IF NOT EXISTS pil_mlbname_idx ON player_id_lookup (lower(MLBNAME));
  CREATE INDEX  IF NOT EXISTS pil_espnid_idx ON player_id_lookup (ESPNID);
  CREATE INDEX  IF NOT EXISTS pil_espnname_idx ON player_id_lookup (lower(ESPNNAME));
+
+
+CREATE TABLE IF NOT EXISTS add_drop_schedule (
+ 	id serial NOT NULL PRIMARY KEY, 
+	 user_id INTEGER NOT NULL,
+	 add_player_id VARCHAR(200) NOT NULL,
+	 drop_player_id VARCHAR(200),
+	 league_id VARCHAR(150) NOT NULL,
+	 team_id VARCHAR(150) NOT NULL,
+	 earliest_add_time_utc TIMESTAMPTZ,
+	 has_executed boolean DEFAULT FALSE,
+	 attempts INTEGER DEFAULT 0,
+	 last_attempt_utc TIMESTAMPTZ,
+ 
+	 FOREIGN KEY (league_id, user_id) REFERENCES user_league(league_id, user_id),
+	 FOREIGN KEY (team_id, league_id) REFERENCES user_team(team_id, league_id),
+	 FOREIGN KEY (user_id) REFERENCES users(id),
+	 UNIQUE(user_id, add_player_id, drop_player_id, league_id, team_id)
+ );
  
  
  
 
+ --===================================================================================================================================================
+ -- MANUAL PLAYER UPDATES RAN --
  
+
+	
+ UPDATE player_id_lookup SET YAHOONAME = 'Jake Irvin' 			, YAHOOID = 11560 WHERE IDPlayer = 'irvinja01'; 
+ UPDATE player_id_lookup SET YAHOONAME = 'Matt McLain' 			, YAHOOID = 12390 WHERE IDPlayer = 'mclaima01'; 
+ UPDATE player_id_lookup SET YAHOONAME = 'J.P. France' 			, YAHOOID = 12725 WHERE IDPlayer = 'francjp01';  
+ UPDATE player_id_lookup SET YAHOONAME = 'Huascar Brazoban' 	, YAHOOID = 12658 WHERE IDPlayer = 'brazohu01'; 
+ UPDATE player_id_lookup SET YAHOONAME = 'Jhony Brito' 			, YAHOOID = 12716 WHERE IDPlayer = 'britojh01'; 
+ UPDATE player_id_lookup SET YAHOONAME = 'Peyton Battenfield' 	, YAHOOID = 12402 WHERE IDPlayer = 'battepe01'; 

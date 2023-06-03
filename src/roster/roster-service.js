@@ -4,6 +4,9 @@ const { mapFACollection } = require('../mappers/map-yahoo-fa-to-dto');
 const {
   combineMatchupsAndFreeAgents,
 } = require('../mappers/combine-fas-with-projected-starters');
+const logger = require('../logger/logger');
+const { createAddDropEntry, removeAddDropEntry, getAddDropSchedule } = require('../database/add-drop-schedule');
+const { getByYahooIds } = require('../database/player-id-lookup');
 
 
 const getRosteredPlayerProjections = async (userId, leagueId, teamId) => {
@@ -25,8 +28,8 @@ const getRosteredPlayerProjections = async (userId, leagueId, teamId) => {
 
 
 
-const getRosteredPlayers = async (userId, leagueId) => {
-    const players = await yahooApi.yfbb.getMyPlayersStats(userId, leagueId);
+const getRosteredPlayers = async (userId, leagueId, teamId) => {
+    const players = await yahooApi.yfbb.getMyPlayersStats(userId, leagueId, teamId);
 
     const statIds = await yahooApi.yfbb.getStatsIDs(userId);
 
@@ -64,4 +67,44 @@ const getStatInfo = (statInfo, statId) => {
   }
 }
 
-module.exports = { getRosteredPlayerProjections, getRosteredPlayers }
+const getScheduledAddDrops = async (userId, leagueId, teamId) => {
+  const schedule = await getAddDropSchedule(userId, leagueId, teamId);
+  const result = await populatePlayerNamesOnSchedule(schedule);
+  return result;
+}
+
+const scheduleAddDrop = async (args) => {
+  logger.debug(`Adding Player ${args.addPlayerId}. Dropping player ${args.dropPlayerId}. LeagueId: ${args.leagueId}. TeamId: ${args.teamId}. EarliestAddTime: ${args.earliestAddTimeUtc}`)
+  const schedule = await createAddDropEntry(args);
+  const result = await populatePlayerNamesOnSchedule(schedule);
+  return result;
+}
+
+const removeScheduledAddDrop = async (args) => {
+  logger.debug(`Removing add/drop record Player ${args.addPlayerId}. Dropping player ${args.dropPlayerId}. LeagueId: ${args.leagueId}. TeamId: ${args.teamId}.`)
+  const schedule = await removeAddDropEntry(args);
+  const result = await populatePlayerNamesOnSchedule(schedule);
+  return result;
+}
+
+const populatePlayerNamesOnSchedule = async (schedule) => {
+  const playerIds = schedule.reduce((result, schedRecord) => {
+    result.push(schedRecord.add_player_id, schedRecord.drop_player_id);
+    return result;
+  }, []);
+
+  const players = await getByYahooIds(playerIds);
+
+  const result = [];
+  for (let i=0; i < schedule.length; i++) {
+    const record = schedule[i];
+    record.addPlayerName = players.find(p => p.yahooid == record.add_player_id)?.yahooname;
+    record.dropPlayerName = players.find(p => p.yahooid == record.drop_player_id)?.yahooname;
+    result.push(record)
+  }
+
+  return result;
+  
+}
+
+module.exports = { getRosteredPlayerProjections, getRosteredPlayers, scheduleAddDrop, removeScheduledAddDrop, getScheduledAddDrops }

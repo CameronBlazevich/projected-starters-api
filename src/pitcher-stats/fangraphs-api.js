@@ -2,11 +2,13 @@ const axios = require('axios');
 const { logError } = require('../axios/error-logger');
 const ApiServiceUnavailableError = require('../errors/api-service-unavaible');
 const httpStatusCodes = require('../errors/http-status-codes');
+const logger = require('../logger/logger');
 
 
 const getPitcherSplits = async playerId => {
     const url = `https://www.fangraphs.com/api/players/splits?playerid=${playerId}&position=P&season=0&split=&`;
     try {
+        logger.debug(`Making request to ${url}`)
     const response = await axios.get(url);
     return response.data;
     } catch (err) {

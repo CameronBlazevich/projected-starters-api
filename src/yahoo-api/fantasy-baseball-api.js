@@ -216,7 +216,7 @@ exports.yfbb = {
 
           credentials.access_token = newToken.data.access_token;
           credentials.refresh_token = newToken.data.refresh_token;
-          return this.makeApiRequestWithCreds(
+          return await this.makeApiRequestWithCreds(
             url,
             userId,
             credentials
@@ -276,6 +276,99 @@ exports.yfbb = {
       const credentials = await getCredentials(userId);
       const result = await this.getFreeAgentsWithCredentials(credentials, leagueId, userId);
       return result;
+  },
+
+  async addPlayerWithCredentials(userId, addPlayerId, dropPlayerId, leagueId, teamId, credentials) {
+    const url = `${this.YAHOO}/league/422.l.${leagueId}/transactions`;
+
+    const headers = {
+      Authorization: `Bearer ${credentials.access_token}`,
+      'Content-Type': 'application/xml',
+      'User-Agent':
+        'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.109 Safari/537.36',
+    };
+
+    const addDropXmlBody = `
+    <fantasy_content>
+      <transaction>
+        <type>add/drop</type>
+        <players>
+          <player>
+            <player_key>422.p.${addPlayerId}</player_key>
+            <transaction_data>
+              <type>add</type>
+              <destination_team_key>422.l.${leagueId}.t.${teamId}</destination_team_key>
+            </transaction_data>
+          </player>
+          <player>
+            <player_key>>422.p.${dropPlayerId}</player_key>
+            <transaction_data>
+              <type>drop</type>
+              <source_team_key>422.l.${leagueId}.t.${teamId}</source_team_key>
+            </transaction_data>
+          </player>
+        </players>
+      </transaction>
+    </fantasy_content>
+    `
+
+    try {
+      logger.debug(`url: ${url}. headers: ${headers}. body: ${addDropXmlBody}`)
+      const response = await axios.post(url, addDropXmlBody, {headers});
+      return response;
+    } catch (err) {
+      logError(err);
+      if (
+        err.response?.data &&
+        err.response.data.error &&
+        err.response.data.error.description &&
+        err.response.data.error.description.includes('token_expired')
+      ) {
+        console.log("Access token requires refresh")
+        const newToken = await this.refreshAuthorizationToken(
+          credentials.refresh_token
+        );
+        if (newToken && newToken.data && newToken.data.access_token) {
+          await credentialManager.storeCredentials(
+            userId,
+            newToken.data.access_token,
+            newToken.data.refresh_token
+          );
+
+          credentials.access_token = newToken.data.access_token;
+          credentials.refresh_token = newToken.data.refresh_token;
+          const response = await this.addPlayerWithCredentials(
+            userId,
+            addPlayerId,
+            dropPlayerId,
+            leagueId, 
+            teamId,
+            credentials
+          );
+
+          return response;
+        }
+      } else {
+          logError(err);
+          if (err.response?.status === 401) {
+            throw new ApiUnauthorizedError("Yahoo authentication failure.", httpStatusCodes.FORBIDDEN);
+          } else if (err.response?.status === 403) { 
+            const errorDesc = parseErrorMessage(err);
+            logger.debug(errorDesc)
+            throw new ApiForbiddenError(errorDesc, httpStatusCodes.FORBIDDEN);
+          } else {
+            const errorDesc = parseErrorMessage(err);
+            throw new ApiBaseError(err.response?.status, httpStatusCodes.FORBIDDEN, errorDesc)
+          }
+      }
+    }
+  },
+
+  async addPlayer(userId, addPlayerId, dropPlayerId, leagueId, teamId) {
+    const credentials = await getCredentials(userId);
+    
+    return await this.addPlayerWithCredentials(userId, addPlayerId, dropPlayerId, leagueId, teamId, credentials)
+
   },
 
   // Get a list of players on my team
@@ -353,9 +446,9 @@ exports.yfbb = {
   },
 
   // Get a JSON object of your players
-  async getMyPlayersStats(userId, leagueId) {
+  async getMyPlayersStats(userId, leagueId, teamId) {
     try {
-      const players = await this.getMyPlayers(userId, leagueId);;
+      const players = await this.getMyPlayers(userId, leagueId, teamId);;
       console.log(`Players: ${players}`)
 
       // Build the list
