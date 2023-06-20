@@ -26,9 +26,12 @@ const getRosteredPlayerProjections = async (userId, leagueId, teamId) => {
     return combined;
 }
 
-
-
 const getRosteredPlayers = async (userId, leagueId, teamId) => {
+    const players = await yahooApi.yfbb.getMyPlayers(userId, leagueId, teamId);
+    return players;
+}
+
+const getRosteredPlayersWithStats = async (userId, leagueId, teamId) => {
     const players = await yahooApi.yfbb.getMyPlayersStats(userId, leagueId, teamId);
 
     const statIds = await yahooApi.yfbb.getStatsIDs(userId);
@@ -107,4 +110,4 @@ const populatePlayerNamesOnSchedule = async (schedule) => {
   
 }
 
-module.exports = { getRosteredPlayerProjections, getRosteredPlayers, scheduleAddDrop, removeScheduledAddDrop, getScheduledAddDrops }
+module.exports = { getRosteredPlayerProjections, getRosteredPlayersWithStats, scheduleAddDrop, removeScheduledAddDrop, getScheduledAddDrops, getRosteredPlayers }

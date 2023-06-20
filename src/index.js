@@ -14,6 +14,7 @@ const weatherRefresher = require('./weather/weather-refresher')
 const teamStatsRefresher = require('./team-stats/team-stats-refresher');
 const projectedLineupRefresher = require('./projected-lineups/projected-lineup-refresher');
 const addDropExecutor = require('./roster/add-drop-executor')
+const getLiveGameStats = require('./gamecast/live-game-refresher')
 
 // import the controllers
 const freeAgentsController = require('./controllers/freeAgentsController');
@@ -29,6 +30,7 @@ const watchlistController = require('./controllers/watchlistController')
 const pitcherHitterMatchupController = require('./controllers/pitcherHitterMatchupController')
 const pitcherStatsController = require('./controllers/pitcherStatsController')
 const leagueMatchupController = require('./controllers/leagueMatchupController')
+const gamecastController = require('./controllers/gamecastController');
 
 app.use('/getFreeAgents', freeAgentsController);
 app.use('/login', loginController);
@@ -43,6 +45,7 @@ app.use('/watchlist', watchlistController);
 app.use('/pitcherHitterMatchups', pitcherHitterMatchupController)
 app.use('/pitcherStats', pitcherStatsController)
 app.use('/leagueMatchups/', leagueMatchupController)
+app.use('/gamecast', gamecastController)
 // start the server
 const port = (process.env.PORT || 3000);
 app.listen(port, () => {

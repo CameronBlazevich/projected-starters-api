@@ -15,23 +15,25 @@ async function executeAddDrop() {
 
     // loop over them and execute them one at a time, updating the attempts and wasSuccessul and errorMessage columns
     logger.debug(`Found ${addDropsToExecute.length} records to execute...`)
-    for (let i=0; i<addDropsToExecute.length; i++ ) {
+    for (let i = 0; i < addDropsToExecute.length; i++) {
         const record = addDropsToExecute[i];
         try {
-            if (process.env.NODE_ENV === 'production') {
-                logger.debug(`Adding: ${record.add_player_id} Dropping: ${record.drop_player_id} LeagueId: ${record.league_id}`)
-                //   const response = yahooApi.yfbb.addPlayer(record.user_id, record.add_player_id, record.drop_player_id, record.league_id, record.team_id);
+            if (process.env.NODE_ENV == 'production') {
+
+                logger.debug(`Actual Execution. Adding: ${record.add_player_id} Dropping: ${record.drop_player_id} LeagueId: ${record.league_id}`)
+                // const response = yahooApi.yfbb.addPlayer(record.user_id, record.add_player_id, record.drop_player_id, record.league_id, record.team_id);   
             } else {
-                logger.debug(`Adding: ${record.add_player_id} Dropping: ${record.drop_player_id} LeagueId: ${record.league_id}`)
+                logger.debug(`Dev Execution. Adding: ${record.add_player_id} Dropping: ${record.drop_player_id} LeagueId: ${record.league_id}`)
             }
-           
-            // update success/completed column move on
             await setCompleted(record.id);
         } catch (error) {
-            // increment attempts variable
-            logger.info('Unable to execute add/drop.')
-            logger.error(error);
-            incrementAttempts(record.id)
+            try {
+                incrementAttempts(record.id)
+                logger.info('Unable to execute add/drop.')
+                logger.error(error);
+            } catch (err) {
+                logger.info('swallowing error')
+            }
             // update error message
         }
     }
@@ -40,8 +42,7 @@ async function executeAddDrop() {
 
 executeAddDrop();
 
-setInterval(executeAddDrop, 3* 60 * 1000)
-// setInterval(executeAddDrop, 6000)
+setInterval(executeAddDrop, 3 * 60 * 1000)
 
 
-module.exports = {executeAddDrop}
+module.exports = { executeAddDrop }

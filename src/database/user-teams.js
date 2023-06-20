@@ -18,4 +18,20 @@ async function createUserTeam(userId, leagueId, teamId) {
     }
 }
 
-module.exports = { createUserTeam }
+
+async function getUserTeams(userId) {
+    const sql = `
+    SELECT * FROM user_team
+    WHERE user_id = $1
+    `
+    try {
+        const result = await pool.query(sql, [userId]);
+        return result.rows
+    } catch (err) {
+        console.error("Something went wrong creating user team:")
+        console.error(err);
+        throw err;
+    }
+}
+
+module.exports = { createUserTeam, getUserTeams }

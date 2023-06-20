@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const auth = require('../request-handling/middleware');
-const { getRosteredPlayerProjections, getRosteredPlayers, scheduleAddDrop, removeScheduledAddDrop, getScheduledAddDrops } = require('../roster/roster-service');
+const { getRosteredPlayerProjections, getRosteredPlayersWithStats, scheduleAddDrop, removeScheduledAddDrop, getScheduledAddDrops } = require('../roster/roster-service');
 const { createErrorResponse } = require('./responses/error-response')
 
 
@@ -36,7 +36,7 @@ router.get("/getRoster/:leagueId/:teamId", auth, async (req, res) => {
 
     const user = req.user;
     try {
-        const result = await getRosteredPlayers(user.user_id, req.params.leagueId, req.params.teamId)
+        const result = await getRosteredPlayersWithStats(user.user_id, req.params.leagueId, req.params.teamId)
         return res.status(200).json(result);
     } catch (err) {
         return createErrorResponse(res, err);
