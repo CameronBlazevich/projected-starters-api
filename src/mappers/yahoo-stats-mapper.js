@@ -84,7 +84,7 @@ const getStatInfo = (statInfo, statId) => {
     if (info) {
         return info;
     } else {
-        console.log(`no match for stat id ${statId}`)
+        // console.log(`no match for stat id ${statId}`)
         return null
     }
 }

@@ -21,7 +21,7 @@ async function executeAddDrop() {
             if (process.env.NODE_ENV == 'production') {
 
                 logger.info(`Actual Execution. Adding: ${record.add_player_id} Dropping: ${record.drop_player_id} LeagueId: ${record.league_id}`)
-                // const response = yahooApi.yfbb.addPlayer(record.user_id, record.add_player_id, record.drop_player_id, record.league_id, record.team_id);   
+                const response = yahooApi.yfbb.addPlayer(record.user_id, record.add_player_id, record.drop_player_id, record.league_id, record.team_id);   
             } else {
                 logger.info(`Dev Execution. Adding: ${record.add_player_id} Dropping: ${record.drop_player_id} LeagueId: ${record.league_id}`)
             }
