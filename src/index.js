@@ -31,6 +31,7 @@ const pitcherHitterMatchupController = require('./controllers/pitcherHitterMatch
 const pitcherStatsController = require('./controllers/pitcherStatsController')
 const leagueMatchupController = require('./controllers/leagueMatchupController')
 const gamecastController = require('./controllers/gamecastController');
+const projectedLineupsController = require('./controllers/projectedLineupsController')
 
 app.use('/getFreeAgents', freeAgentsController);
 app.use('/login', loginController);
@@ -46,6 +47,7 @@ app.use('/pitcherHitterMatchups', pitcherHitterMatchupController)
 app.use('/pitcherStats', pitcherStatsController)
 app.use('/leagueMatchups/', leagueMatchupController)
 app.use('/gamecast', gamecastController)
+app.use('/projectedLineups', projectedLineupsController)
 // start the server
 const port = (process.env.PORT || 3000);
 app.listen(port, () => {

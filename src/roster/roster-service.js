@@ -110,4 +110,22 @@ const populatePlayerNamesOnSchedule = async (schedule) => {
   
 }
 
-module.exports = { getRosteredPlayerProjections, getRosteredPlayersWithStats, scheduleAddDrop, removeScheduledAddDrop, getScheduledAddDrops, getRosteredPlayers }
+const getIdsForRosteredPlayers = async (userId, leagueId, teamId) => {
+  const rosteredPlayers = [];
+  try {
+    const myPlayers = await getRosteredPlayers(userId, leagueId, teamId);
+    const playerIds = myPlayers.map(p => p.player_id);
+
+    const playerInfo = await getByYahooIds(playerIds);
+    const mapped = playerInfo.map(pi => {
+        const mapped = {name: pi.mlbname, yahoo_id: pi.yahooid, mlbid: pi.mlbid};
+        return mapped;
+    })
+    rosteredPlayers.push(...mapped)
+    return rosteredPlayers;
+} catch (error) {
+    console.error(error)
+}
+}
+
+module.exports = { getRosteredPlayerProjections, getRosteredPlayersWithStats, scheduleAddDrop, removeScheduledAddDrop, getScheduledAddDrops, getRosteredPlayers, getIdsForRosteredPlayers }

@@ -1,6 +1,6 @@
 const express = require('express');
 const { getUserTeams } = require('../database/user-teams');
-const { getRosteredPlayers } = require('../roster/roster-service');
+const { getRosteredPlayers, getIdsForRosteredPlayers } = require('../roster/roster-service');
 const { getByYahooIds } = require('../database/player-id-lookup');
 const auth = require('../request-handling/middleware');
 const router = express.Router();
@@ -68,19 +68,8 @@ router.get('/allRosteredPlayers', auth, async (req, res) => {
 
     for (let i = 0; i < allTeams.length; i++) {
         const team = allTeams[i];
-        try {
-            const myPlayers = await getRosteredPlayers(team.user_id, team.league_id, team.team_id);
-            const playerIds = myPlayers.map(p => p.player_id);
-
-            const playerInfo = await getByYahooIds(playerIds);
-            const mapped = playerInfo.map(pi => {
-                const mapped = {name: pi.mlbname, yahoo_id: pi.yahooid, mlbid: pi.mlbid};
-                return mapped;
-            })
-            rosteredPlayers.push(...mapped)
-        } catch (error) {
-            console.error(error)
-        }
+        const playerIds = getIdsForRosteredPlayers(team.user_id, team.league_id, team.team_id);
+        rosteredPlayers.push(playerIds)
     }
 
     return res.status(200).json(rosteredPlayers);

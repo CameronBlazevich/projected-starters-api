@@ -47,7 +47,7 @@ const getBattingLineups = (game) => {
 }
 
 const getLineups = async () => {
-  const totalDatesToGet = process.env.NODE_ENV === 'production' ? 7 : 5;
+  const totalDatesToGet = process.env.NODE_ENV === 'production' ? 7 : 1;
   const dates = dateHelper.getTodayAndXMore(totalDatesToGet);
 
   let requestPromises = [];

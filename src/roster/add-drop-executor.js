@@ -14,16 +14,16 @@ async function executeAddDrop() {
     }
 
     // loop over them and execute them one at a time, updating the attempts and wasSuccessul and errorMessage columns
-    logger.debug(`Found ${addDropsToExecute.length} records to execute...`)
+    logger.info(`Found ${addDropsToExecute.length} records to execute...`)
     for (let i = 0; i < addDropsToExecute.length; i++) {
         const record = addDropsToExecute[i];
         try {
             if (process.env.NODE_ENV == 'production') {
 
-                logger.debug(`Actual Execution. Adding: ${record.add_player_id} Dropping: ${record.drop_player_id} LeagueId: ${record.league_id}`)
+                logger.info(`Actual Execution. Adding: ${record.add_player_id} Dropping: ${record.drop_player_id} LeagueId: ${record.league_id}`)
                 // const response = yahooApi.yfbb.addPlayer(record.user_id, record.add_player_id, record.drop_player_id, record.league_id, record.team_id);   
             } else {
-                logger.debug(`Dev Execution. Adding: ${record.add_player_id} Dropping: ${record.drop_player_id} LeagueId: ${record.league_id}`)
+                logger.info(`Dev Execution. Adding: ${record.add_player_id} Dropping: ${record.drop_player_id} LeagueId: ${record.league_id}`)
             }
             await setCompleted(record.id);
         } catch (error) {
