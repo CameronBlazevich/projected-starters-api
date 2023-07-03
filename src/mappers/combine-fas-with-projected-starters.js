@@ -87,44 +87,46 @@ function combineMatchupsAndFreeAgents(
   const combinedData = [];
   for (let i = 0; i < projectedMatchups?.length; i++) {
     const dailyData = [];
-    for (const game of projectedMatchups[i].games) {
-      // Check if there is a matching free agent for the away pitcher
-      const awayPitcherMatch = freeAgents.find(
-        (agent) =>
-          agent.name.full?.normalize().toLowerCase() ===
-          game.awayPitcher?.Name?.normalize().toLowerCase()
-      );
+    if (projectedMatchups[i].games?.length > 0) {
+      for (const game of projectedMatchups[i].games) {
+        // Check if there is a matching free agent for the away pitcher
+        const awayPitcherMatch = freeAgents.find(
+          (agent) =>
+            agent.name.full?.normalize().toLowerCase() ===
+            game.awayPitcher?.Name?.normalize().toLowerCase()
+        );
 
-      // Check if there is a matching free agent for the home pitcher
-      const homePitcherMatch = freeAgents.find(
-        (agent) =>
-          agent.name.full?.normalize().toLowerCase() ===
-          game.homePitcher?.Name?.normalize().toLowerCase()
-      );
+        // Check if there is a matching free agent for the home pitcher
+        const homePitcherMatch = freeAgents.find(
+          (agent) =>
+            agent.name.full?.normalize().toLowerCase() ===
+            game.homePitcher?.Name?.normalize().toLowerCase()
+        );
 
-      if (homePitcherMatch) {
-        homePitcherMatch.stats = game.homePitcher.stats;
+        if (homePitcherMatch) {
+          homePitcherMatch.stats = game.homePitcher.stats;
+        }
+
+        if (awayPitcherMatch) {
+          awayPitcherMatch.stats = game.awayPitcher.stats;
+        }
+
+        // If there is a match for either pitcher, add a new object to the combined data array
+        if (awayPitcherMatch || homePitcherMatch) {
+          const gameToAdd = {
+            gameDate: projectedMatchups[i].date,
+            gameId: game.mlb_com_game_id,
+            ...game,
+            awayPitcher: awayPitcherMatch || null,
+            homePitcher: homePitcherMatch || null,
+          };
+          dailyData.push(gameToAdd);
+        } else {
+          dailyData.push({ gameDate: projectedMatchups[i].date });
+        }
       }
-
-      if (awayPitcherMatch) {
-        awayPitcherMatch.stats = game.awayPitcher.stats;
-      }
-
-      // If there is a match for either pitcher, add a new object to the combined data array
-      if (awayPitcherMatch || homePitcherMatch) {
-        const gameToAdd = {
-          gameDate: projectedMatchups[i].date,
-          gameId: game.mlb_com_game_id,
-          ...game,
-          awayPitcher: awayPitcherMatch || null,
-          homePitcher: homePitcherMatch || null,
-        };
-        dailyData.push(gameToAdd);
-      } else {
-        dailyData.push({ gameDate: projectedMatchups[i].date });
-      }
+      combinedData.push(dailyData);
     }
-    combinedData.push(dailyData);
   }
 
   const result = addStatsAndShapeResponse(combinedData, teamStats);
