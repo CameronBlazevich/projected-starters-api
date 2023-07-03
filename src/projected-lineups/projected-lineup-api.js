@@ -1,7 +1,7 @@
 const axios = require('axios');
 const dateHelper = require('../utilities/dateHelper');
 const { getPlayerStats } = require('./player-stats-api');
-const fs = require("fs");
+const fs = require('fs');
 const { logError } = require('../axios/error-logger');
 const logger = require('../logger/logger');
 
@@ -20,11 +20,11 @@ const formatResponse = (resp) => {
       dateTime: game.DateTime,
       gameTime: {
         time: game.GameTime,
-        tz: "America/New_York" // haven't spent too much time double checking this
+        tz: 'America/New_York', // haven't spent too much time double checking this
       },
     };
     return mapped;
-  }
+  };
   const games = resp.map(mapGame);
 
   const formatted = {
@@ -36,15 +36,22 @@ const formatResponse = (resp) => {
 };
 
 const getBattingLineups = (game) => {
-  const homeTeamHitters = game.PlayerGameProjections.filter(pgp => pgp.Team === game.HomeTeam);
-  const awayTeamHitters = game.PlayerGameProjections.filter(pgp => pgp.Team === game.AwayTeam);
+  const homeTeamHitters = game.PlayerGameProjections.filter(
+    (pgp) => pgp.Team === game.HomeTeam
+  );
+  const awayTeamHitters = game.PlayerGameProjections.filter(
+    (pgp) => pgp.Team === game.AwayTeam
+  );
 
-  const homeTeamBattingOrder = homeTeamHitters.sort((a, b) => a.BattingOrder - b.BattingOrder);
-  const awayTeamBattingOrder = awayTeamHitters.sort((a, b) => a.BattingOrder - b.BattingOrder);
+  const homeTeamBattingOrder = homeTeamHitters.sort(
+    (a, b) => a.BattingOrder - b.BattingOrder
+  );
+  const awayTeamBattingOrder = awayTeamHitters.sort(
+    (a, b) => a.BattingOrder - b.BattingOrder
+  );
 
-  return { homeTeamBattingOrder, awayTeamBattingOrder }
-
-}
+  return { homeTeamBattingOrder, awayTeamBattingOrder };
+};
 
 const getLineups = async () => {
   const totalDatesToGet = process.env.NODE_ENV === 'production' ? 7 : 1;
@@ -87,7 +94,7 @@ const getLineups = async () => {
 
   for (let j = 0; j < completedRequestPromises.length; j++) {
     const dayOfGames = completedRequestPromises[j];
-    console.log(`Getting pitcher stats for ${dayOfGames.date}`)
+    console.log(`Getting pitcher stats for ${dayOfGames?.date}`);
 
     try {
       // Sometimes these requests time out, but I don't want to kill the whole process when this happens
@@ -109,8 +116,8 @@ const getLineups = async () => {
         }
       }
     } catch (err) {
-      logger.info(`An error occured getting stats. Swallowing and continuing`)
-      logger.error(err)
+      logger.info(`An error occured getting stats. Swallowing and continuing`);
+      logger.error(err);
       continue;
     }
   }
@@ -132,14 +139,14 @@ async function makeAPIRequest(filter) {
     const formatted = formatResponse(jsonData);
     return formatted;
   } catch (err) {
-    logError(err)
+    logError(err);
   }
 }
 
 const mapStats = (fullStats) => {
   const season = 2023;
   const thisSeason = fullStats?.find((s) => s.Season === season);
-  
+
   if (thisSeason) {
     mapped = {
       innings_pitched: thisSeason.InningsPitched,
@@ -149,7 +156,7 @@ const mapStats = (fullStats) => {
       wins: thisSeason.Wins,
       losses: thisSeason.Losses,
       games_started: thisSeason.Started,
-      games: thisSeason.Games
+      games: thisSeason.Games,
     };
 
     return mapped;
