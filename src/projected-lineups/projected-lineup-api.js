@@ -54,7 +54,7 @@ const getBattingLineups = (game) => {
 };
 
 const getLineups = async () => {
-  const totalDatesToGet = process.env.NODE_ENV === 'production' ? 7 : 1;
+  const totalDatesToGet = process.env.NODE_ENV === 'production' ? 7 : 7;
   const dates = dateHelper.getTodayAndXMore(totalDatesToGet);
 
   let requestPromises = [];
@@ -136,8 +136,11 @@ async function makeAPIRequest(filter) {
     });
 
     const jsonData = resp.data;
-    const formatted = formatResponse(jsonData);
-    return formatted;
+    if (resp.data?.length > 0) {
+      const formatted = formatResponse(jsonData);
+      return formatted;
+    }
+    return [];
   } catch (err) {
     logError(err);
   }
