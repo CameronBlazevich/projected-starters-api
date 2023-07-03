@@ -1,13 +1,13 @@
 function getTeamStats(abbr, teamStats) {
-  const replaced = teamStats.map(team => {
-    if (team.teamAbbr === "AZ") {
-      team.teamAbbr = "ARI"
+  const replaced = teamStats.map((team) => {
+    if (team.teamAbbr === 'AZ') {
+      team.teamAbbr = 'ARI';
     }
-    if (team.teamAbbr === "CWS") {
-      team.teamAbbr = "CHW"
+    if (team.teamAbbr === 'CWS') {
+      team.teamAbbr = 'CHW';
     }
     return team;
-  })
+  });
   const stats = replaced.find((team) => team.teamAbbr === abbr);
   if (stats) {
     return stats;
@@ -17,8 +17,8 @@ function getTeamStats(abbr, teamStats) {
 }
 
 function hydrateMatchupsWithTeamStats(projectedLineups, teamStats) {
-  projectedLineups.forEach(dayOfGames => {
-    dayOfGames.games.forEach(game => {
+  projectedLineups.forEach((dayOfGames) => {
+    dayOfGames.games.forEach((game) => {
       if (game.awayTeam) {
         game.awayTeam = getTeamStats(game.awayTeam, teamStats);
         // console.log(`away stats ${JSON.stringify(awayStats)}`)
@@ -26,8 +26,8 @@ function hydrateMatchupsWithTeamStats(projectedLineups, teamStats) {
       if (game.homeTeam) {
         game.homeTeam = getTeamStats(game.homeTeam, teamStats);
       }
-    })
-  })
+    });
+  });
 }
 
 function addStatsAndShapeResponse(projectedLineups, teamStats) {
@@ -87,7 +87,7 @@ function combineMatchupsAndFreeAgents(
   const combinedData = [];
   for (let i = 0; i < projectedMatchups?.length; i++) {
     const dailyData = [];
-    for (const game of projectedMatchups[i].games) {
+    for (const game of projectedMatchups[i]?.games) {
       // Check if there is a matching free agent for the away pitcher
       const awayPitcherMatch = freeAgents.find(
         (agent) =>
@@ -102,7 +102,7 @@ function combineMatchupsAndFreeAgents(
           game.homePitcher?.Name?.normalize().toLowerCase()
       );
 
-      if (homePitcherMatch) {    
+      if (homePitcherMatch) {
         homePitcherMatch.stats = game.homePitcher.stats;
       }
 
@@ -118,8 +118,7 @@ function combineMatchupsAndFreeAgents(
           ...game,
           awayPitcher: awayPitcherMatch || null,
           homePitcher: homePitcherMatch || null,
-
-        }
+        };
         dailyData.push(gameToAdd);
       } else {
         dailyData.push({ gameDate: projectedMatchups[i].date });
@@ -128,8 +127,7 @@ function combineMatchupsAndFreeAgents(
     combinedData.push(dailyData);
   }
 
-  const result = 
-    addStatsAndShapeResponse(combinedData, teamStats);
+  const result = addStatsAndShapeResponse(combinedData, teamStats);
   return result;
 }
 
