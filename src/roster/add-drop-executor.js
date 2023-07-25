@@ -42,7 +42,7 @@ async function executeAddDrop() {
 
 executeAddDrop();
 
-setInterval(executeAddDrop, 3 * 60 * 1000)
+setInterval(executeAddDrop, 1 * 60 * 1000)
 
 
 module.exports = { executeAddDrop }
