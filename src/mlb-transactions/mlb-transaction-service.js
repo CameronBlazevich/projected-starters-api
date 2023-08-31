@@ -9,7 +9,7 @@ const get_mlb_transactions = async () => {
     return resp;
 }
 
-const get_mlb_transactions_with_free_agent_info = async () => {
+const get_mlb_transactions_with_free_agent_info = async (userId) => {
     const statusToIgnore = ["signed"];
     const mlb_transactions =  await get_mlb_transactions();
     const filtered_mlb_transactions = mlb_transactions.filter(t => !statusToIgnore.includes(t.status))
@@ -18,10 +18,8 @@ const get_mlb_transactions_with_free_agent_info = async () => {
 
     const player_id_info = await getByMlbIds(mlbIds);
 
-    
 
     // ToDo: hard-coded values hardcoded
-    const userId = 26;
     const leagueId = '92842'
     // const test = await yahooApi.yfbb.getPlayersInLeagueContext(userId, leagueId, yahooIds);
     const rosteredPlayerYahooIds = await get_league_rosters(userId, leagueId);
