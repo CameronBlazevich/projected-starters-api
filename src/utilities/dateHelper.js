@@ -85,8 +85,24 @@ function addOneDay(dateString) {
 }
 
 
+function getFormattedYYYYMMDDDate(date) {
+  const year = date.getUTCFullYear();
+  const month = String(date.getUTCMonth() + 1).padStart(2, '0'); // Month is 0-indexed, so add 1 and pad with 0 if needed
+  const day = String(date.getUTCDate()).padStart(2, '0');
+
+  return `${year}-${month}-${day}`;
+}
+
+function get_tomorrows_date() {
+  const today = new Date();
+  const todayUTC = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate()));
+
+  const tomorrow = new Date(todayUTC);
+  tomorrow.setUTCDate(tomorrow.getUTCDate() + 1);
+
+  return getFormattedYYYYMMDDDate(tomorrow);
+}
 
 
 
-
-module.exports = { getTodayAndXMore, roundToNearestHourAndConvertTimezone, addHoursToTimestamp, addHoursToDate, addOneDay };
+module.exports = { getTodayAndXMore, roundToNearestHourAndConvertTimezone, addHoursToTimestamp, addHoursToDate, addOneDay, get_tomorrows_date };
