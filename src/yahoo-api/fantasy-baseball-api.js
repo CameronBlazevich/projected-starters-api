@@ -118,6 +118,20 @@ exports.yfbb = {
     // console.log(url);
     return url;
   },
+  playersInLeagueContextTaken(leagueId, playerIds) {
+    const mapped = playerIds.map(p => `422.p.${p}`);
+    const playerIdString = mapped.join(',');
+    const url = `${this.YAHOO}/league/422.l.${leagueId
+    }/players;status=W;player_keys=${playerIdString};`;
+    return url;
+  },  
+  playersInLeagueContextAvailable(leagueId, playerIds) {
+    const mapped = playerIds.map(p => `422.p.${p}`);
+    const playerIdString = mapped.join(',');
+    const url = `${this.YAHOO}/league/422.l.${leagueId
+    }/players;status=FA;player_keys=${playerIdString};`;
+    return url;
+  },
   myTeam(leagueId, teamId) {
     const url = `${this.YAHOO}/team/422.l.${leagueId}.t.${teamId}/roster/`;
     console.log(url)
@@ -153,8 +167,8 @@ exports.yfbb = {
   statsID() {
     return `${this.YAHOO}/game/422/stat_categories`;
   },
-  roster(leagueId) {
-    return `${this.YAHOO}/team/422.l.${leagueId}.t.${CONFIG.TEAM}/roster/players`;
+  roster(leagueId, teamId, date) {
+    return `${this.YAHOO}/team/422.l.${leagueId}.t.${teamId}/roster;date=${date}`;
   },
 
   // If authorization token is stale, refresh it
@@ -382,6 +396,20 @@ exports.yfbb = {
     }
   },
 
+  async getPlayersInLeagueContext(userId, leagueId, playerIdArray) {
+    try {
+      const takenPlayers = await this.makeAPIrequest(this.playersInLeagueContextTaken(leagueId, playerIdArray), userId)
+      const availablePlayers = await this.makeAPIrequest(this.playersInLeagueContextAvailable(leagueId, playerIdArray), userId)
+      
+      return {taken: takenPlayers.fantasy_content.league.players, available: availablePlayers.fantasy_content.league.players};
+      return results.fantasy_content.league.players;
+    } catch (error) {
+      console.error(`Error in getPlayersInLeagueContext(): ${error}`);
+      throw error;
+    }
+  },
+
+
   // Get my weekly stats
   async getWeeklyStats(userId, leagueId, teamId, weekNumber) {
     try {
@@ -543,9 +571,10 @@ exports.yfbb = {
   },
 
   // See who's starting on your team
-  async getCurrentRoster() {
+  async getRoster(leagueId, teamId, userId, date) {
+    //date format date=2011-05-01
     try {
-      const results = await this.makeAPIrequest(this.roster());
+      const results = await this.makeAPIrequest(this.roster(leagueId, teamId, date), userId);
       return results.fantasy_content.team.roster.players;
     } catch (err) {
       console.error(`Error in getCurrentRoster(): ${err}`);
