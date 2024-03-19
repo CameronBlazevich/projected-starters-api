@@ -12,6 +12,8 @@ const httpStatusCodes = require('../errors/http-status-codes');
 const ApiBaseError = require('../errors/api-base-error');
 const logger = require('../logger/logger')
 
+const SeasonPrefix = '431';
+
 function getAuthHeader() {
   const authHeader = Buffer.from(
     `${process.env.YAHOO_CLIENT_ID}:${process.env.YAHOO_CLIENT_SECRET}`,
@@ -113,50 +115,50 @@ exports.yfbb = {
   },
   freeAgents(i, leagueId) {
     const startNum = i;
-    const url = `${this.YAHOO}/league/422.l.${leagueId
+    const url = `${this.YAHOO}/league/${SeasonPrefix}.l.${leagueId
       }/players;status=A;count=25;start=${startNum * 25};position=SP;sort=AR`;
     // console.log(url);
     return url;
   },
   playersInLeagueContextTaken(leagueId, playerIds) {
-    const mapped = playerIds.map(p => `422.p.${p}`);
+    const mapped = playerIds.map(p => `${SeasonPrefix}.p.${p}`);
     const playerIdString = mapped.join(',');
-    const url = `${this.YAHOO}/league/422.l.${leagueId
+    const url = `${this.YAHOO}/league/${SeasonPrefix}.l.${leagueId
     }/players;status=W;player_keys=${playerIdString};`;
     return url;
   },  
   playersInLeagueContextAvailable(leagueId, playerIds) {
-    const mapped = playerIds.map(p => `422.p.${p}`);
+    const mapped = playerIds.map(p => `${SeasonPrefix}.p.${p}`);
     const playerIdString = mapped.join(',');
-    const url = `${this.YAHOO}/league/422.l.${leagueId
+    const url = `${this.YAHOO}/league/${SeasonPrefix}.l.${leagueId
     }/players;status=FA;player_keys=${playerIdString};`;
     return url;
   },
   myTeam(leagueId, teamId) {
-    const url = `${this.YAHOO}/team/422.l.${leagueId}.t.${teamId}/roster/`;
+    const url = `${this.YAHOO}/team/${SeasonPrefix}.l.${leagueId}.t.${teamId}/roster/`;
     console.log(url)
     return url;
   },
   weeklyStats(leagueId, teamId, weekNumber) {
-    return `${this.YAHOO}/team/422.l.${leagueId}.t.${teamId}/stats;type=week;week=${weekNumber}`;
+    return `${this.YAHOO}/team/${SeasonPrefix}.l.${leagueId}.t.${teamId}/stats;type=week;week=${weekNumber}`;
   },
   teamSeasonStats(leagueId, teamId) {
-    return `${this.YAHOO}/team/422.l.${leagueId}.t.${teamId}/stats;type=season`;
+    return `${this.YAHOO}/team/${SeasonPrefix}.l.${leagueId}.t.${teamId}/stats;type=season`;
   },
   leagueSeasonStats(leagueId) {
-    return `${this.YAHOO}/league/422.l.${leagueId}/standings`;
+    return `${this.YAHOO}/league/${SeasonPrefix}.l.${leagueId}/standings`;
   },
   leagueSettings(leagueId) {
-    return `${this.YAHOO}/league/422.l.${leagueId}/settings`;
+    return `${this.YAHOO}/league/${SeasonPrefix}.l.${leagueId}/settings`;
   },
   teamMatchups(leagueId, teamId) {
-    return `${this.YAHOO}/team/422.l.${leagueId}.t.${teamId}/matchups`;
+    return `${this.YAHOO}/team/${SeasonPrefix}.l.${leagueId}.t.${teamId}/matchups`;
   },
   scoreboard(leagueId, weekNumber) {
-    return `${this.YAHOO}/league/422.l.${leagueId}/scoreboard;week=${weekNumber}`;
+    return `${this.YAHOO}/league/${SeasonPrefix}.l.${leagueId}/scoreboard;week=${weekNumber}`;
   },
   metadata(leagueId) {
-    return `${this.YAHOO}/league/422.l.${leagueId}/metadata`;
+    return `${this.YAHOO}/league/${SeasonPrefix}.l.${leagueId}/metadata`;
   },
   transactions() {
     return `${this.YAHOO}/league/${CONFIG.LEAGUE_KEY}/transactions;types=add,trade,drop`;
@@ -165,10 +167,10 @@ exports.yfbb = {
     return `${this.YAHOO}/users;use_login=1/games`;
   },
   statsID() {
-    return `${this.YAHOO}/game/422/stat_categories`;
+    return `${this.YAHOO}/game/${SeasonPrefix}/stat_categories`;
   },
   roster(leagueId, teamId, date) {
-    return `${this.YAHOO}/team/422.l.${leagueId}.t.${teamId}/roster;date=${date}`;
+    return `${this.YAHOO}/team/${SeasonPrefix}.l.${leagueId}.t.${teamId}/roster;date=${date}`;
   },
 
   // If authorization token is stale, refresh it
@@ -293,7 +295,7 @@ exports.yfbb = {
   },
 
   async addPlayerWithCredentials(userId, addPlayerId, dropPlayerId, leagueId, teamId, credentials) {
-    const url = `${this.YAHOO}/league/422.l.${leagueId}/transactions`;
+    const url = `${this.YAHOO}/league/${SeasonPrefix}.l.${leagueId}/transactions`;
 
     const headers = {
       Authorization: `Bearer ${credentials.access_token}`,
@@ -308,17 +310,17 @@ exports.yfbb = {
         <type>add/drop</type>
         <players>
           <player>
-            <player_key>422.p.${addPlayerId}</player_key>
+            <player_key>${SeasonPrefix}.p.${addPlayerId}</player_key>
             <transaction_data>
               <type>add</type>
-              <destination_team_key>422.l.${leagueId}.t.${teamId}</destination_team_key>
+              <destination_team_key>${SeasonPrefix}.l.${leagueId}.t.${teamId}</destination_team_key>
             </transaction_data>
           </player>
           <player>
-            <player_key>>422.p.${dropPlayerId}</player_key>
+            <player_key>>${SeasonPrefix}.p.${dropPlayerId}</player_key>
             <transaction_data>
               <type>drop</type>
-              <source_team_key>422.l.${leagueId}.t.${teamId}</source_team_key>
+              <source_team_key>${SeasonPrefix}.l.${leagueId}.t.${teamId}</source_team_key>
             </transaction_data>
           </player>
         </players>
@@ -501,7 +503,7 @@ exports.yfbb = {
 
   async getPlayersByIds(userId, playerIdsList, leagueId) {
     const countPlayers = playerIdsList.split(',').length;
-    let playersStatsUrl = `${this.YAHOO}/league/422.l.${leagueId
+    let playersStatsUrl = `${this.YAHOO}/league/${SeasonPrefix}.l.${leagueId
       }/players;player_keys=${playerIdsList};sort=AR;out=stats`;
 
     const playerStatsResponse = await this.makeAPIrequest(playersStatsUrl, userId);
